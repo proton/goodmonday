@@ -11,6 +11,7 @@ gem 'bson_ext'
 gem 'symbolize', :require => 'symbolize/mongoid'
 
 gem 'haml'
+gem 'haml-rails'
 gem 'compass'
 
 gem 'mongoid_auto_increment'
@@ -18,10 +19,10 @@ gem 'mongoid_activity'
 gem 'mongoid_denormalize'
 gem 'mongoid_slug'
 gem 'mongoid-eager-loading'
-gem 'mongoid_nested_set', :git => "git://github.com/proton/mongoid_nested_set.git"
 
 gem 'simple_form'
 gem 'nested_form', :git => "git://github.com/fxposter/nested_form.git"
+gem 'twitter-bootstrap-rails'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
