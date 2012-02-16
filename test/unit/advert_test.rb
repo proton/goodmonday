@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SiteControllerTest < ActionController::TestCase
+class AdvertTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

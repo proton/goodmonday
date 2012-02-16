@@ -1,2 +1,0 @@
-class SiteController < ApplicationController
-end
