@@ -3,6 +3,13 @@ Cpa::Application.routes.draw do
 
 	root :to => 'home#index'
 
+	resource :robot do
+		get :banner
+		get :redirect
+		get :visit
+		get :target
+	end
+
 
 
   # The priority is based upon order of creation:
