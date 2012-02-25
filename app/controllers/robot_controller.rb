@@ -1,28 +1,37 @@
 class RobotController < ApplicationController
-	def banner
+
+	def advert
+		@ground = Ground.find(params[:ground_id])
+		if @ground
+			@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first #TODO: алгоритм, учесть кампании без банеров
+			@advert = @offer.adverts.first
+			@offer.inc(:shows, 1)
+		end
 	end
 
 	def redirect
 		ip = request.remote_ip
-		#check_for_bl
-		#линк аля robot/:webmaster_id/redirect/:offer_id/:banner_id
-		webmaster = Webmaster.find(params[:webmaster_id])
-		#TODO: use webmaster_id
-		offer = Offer.find(params[:offer_id])
-		if offer
-			banner = Offer.adverts.find(params[:banner_id])
-			if banner
-				url = banner.url
-				visitor = Visitor.new
-				visitor.offer = offer
-				visitor.banner_id = banner.id
-				visitor.initial_ip = ip
-				visitor.initial_page = request.referer
-				if visitor.save
-					cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
-					#:path - The path for which this cookie applies. Defaults to the root of the application.
-					#:domain - The domain for which this cookie applies.
-					redirect_to url
+		if BlackIp.exclude(ip)
+			ground = Ground.find(params[:ground_id])
+			if ground
+				offer = Offer.find(params[:offer_id])
+				if offer
+					advert = offer.adverts.find(params[:advert_id])
+					if advert
+						url = advert.url
+						visitor = Visitor.new
+						visitor.ground = ground
+						visitor.offer = offer
+						visitor.advert_id = advert.id
+						visitor.initial_ip = ip
+						visitor.initial_page = request.referer
+						if visitor.save
+							cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
+							#:path - The path for which this cookie applies. Defaults to the root of the application.
+							#:domain - The domain for which this cookie applies.
+							redirect_to url
+						end
+					end
 				end
 			end
 		end
@@ -30,19 +39,48 @@ class RobotController < ApplicationController
 	end
 
 	def visit
-		#линк аля robot/:offer_id/visit
+		#@response.headers['Last-Modified'] = Time.now.httpdate
 		offer = Offer.find(params[:offer_id])
-		unless cookies[offer.id.to_s].empty?
+		if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
 			visitor_id = cookies[offer.id.to_s]
 			visitor = Visitor.find(visitor_id)
 			if visitor
 				visitor.page_visits.create(:ip => request.remote_ip, :page => request.referer)
 			end
 		end
-		#отдаём прозрачный пиксел
+		redirect_to "/pixel.png", :status => 307
 	end
 
 	def target
-		#TODO: подумать!
+		ip = request.remote_ip
+		if BlackIp.exclude(ip)
+			offer = Offer.find(params[:offer_id])
+			if offer
+				if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
+					visitor_id = cookies[offer.id.to_s]
+					visitor = Visitor.find(visitor_id)
+					if visitor && visitor.offer == offer
+						target_id = params[:target_id]
+						target = offer.targets.find(target_id)
+						if target
+							if Achievement.where(:visitor_id => visitor_id, :target_id => target_id).size==0
+								achievement = Achievement.new
+								achievement.webmaster = visitor.ground.webmaster
+								achievement.advertiser = offer.advertiser
+								achievement.ground = visitor.ground
+								achievement.offer = offer
+								achievement.visitor = visitor
+								achievement.target_id = target_id
+								achievement.ip = ip
+								achievement.page = request.referer
+								achievement.save
+							end
+						end
+					end
+				end
+			end
+		end
+		redirect_to "/pixel.png"
 	end
+
 end

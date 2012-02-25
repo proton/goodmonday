@@ -1,0 +1,2 @@
+class Banner < Advert
+end

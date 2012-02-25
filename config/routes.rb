@@ -3,14 +3,11 @@ Cpa::Application.routes.draw do
 
 	root :to => 'home#index'
 
-	resource :robot do
-		get :banner
-		get :redirect
-		get :visit
-		get :target
-	end
-
-
+	match 'robot/:ground_id/advert' => 'robot#advert'
+	match 'robot/:ground_id/advert/:offer_id' => 'robot#advert'
+	match 'robot/:ground_id/goto/:offer_id/:advert_id' => 'robot#redirect'
+	match 'robot/:offer_id/visit' => 'robot#visit'
+	match 'robot/:offer_id/target/:target_id' => 'robot#target'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -4,8 +4,9 @@ class Visitor
 	embeds_many :page_visits
 	belongs_to :ground
 	belongs_to :offer
+	has_many :achievements
 
-	field :banner_id, type: BSON::ObjectId
+	field :advert_id, type: BSON::ObjectId
 
 	field :initial_page, type: String
 	field :initial_ip, type: String
