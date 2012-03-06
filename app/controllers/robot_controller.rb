@@ -1,9 +1,27 @@
 class RobotController < ApplicationController
 
+	def rotator
+		@ground = Ground.find(params[:ground_id])
+		render :nothing => true, :status => whatever unless @ground
+	end
+
 	def advert
+		@size = params[:size].to_sym
 		@ground = Ground.find(params[:ground_id])
 		if @ground
-			@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first #TODO: алгоритм, учесть кампании без банеров
+			offers = @ground.accepted_offers.for_advert_size(@size)
+			#TODO: алгоритм:
+			n = case Random.rand(6)
+				when 0 then 0
+				when 1 then Random.rand([offers.count, 3].min)
+				when 2 then Random.rand([offers.count, 5].min)
+				when 3 then Random.rand([offers.count, 10].min)
+				when 4 then Random.rand([offers.count, 50].min)
+				else Random.rand(offers.count)
+			end
+			@offer = offers.all.skip(n).limit(1)
+			#
+			#@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first
 			#@entry = Entry.skip(rand(Entry.count)).limit(1)
 			@advert = @offer.adverts.first
 			@offer.inc(:shows, 1)
