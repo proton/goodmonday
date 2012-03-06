@@ -4,6 +4,7 @@ class RobotController < ApplicationController
 		@ground = Ground.find(params[:ground_id])
 		if @ground
 			@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first #TODO: алгоритм, учесть кампании без банеров
+			#@entry = Entry.skip(rand(Entry.count)).limit(1)
 			@advert = @offer.adverts.first
 			@offer.inc(:shows, 1)
 		end
@@ -25,6 +26,7 @@ class RobotController < ApplicationController
 						visitor.advert_id = advert.id
 						visitor.initial_ip = ip
 						visitor.initial_page = request.referer
+						visitor.user_agent = request.user_agent
 						if visitor.save
 							cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
 							#:path - The path for which this cookie applies. Defaults to the root of the application.

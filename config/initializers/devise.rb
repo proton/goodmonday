@@ -162,7 +162,7 @@ Devise.setup do |config|
   # config.reset_password_keys = [ :email ]
 
   # Time interval you can reset your password with a reset password key.
-  # Don't put a too small interval or your users won't have the time to
+  # Don't put a too small interval or your devise won't have the time to
   # change their passwords.
   config.reset_password_within = 6.hours
 
@@ -180,7 +180,7 @@ Devise.setup do |config|
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
-  # "users/sessions/new". It's turned off by default because it's slower if you
+  # "devise/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
   # config.scoped_views = false
 
@@ -189,7 +189,7 @@ Devise.setup do |config|
   # config.default_scope = :user
 
   # Configure sign_out behavior.
-  # Sign_out action can be scoped (i.e. /users/sign_out affects only :user scope).
+  # Sign_out action can be scoped (i.e. /devise/sign_out affects only :user scope).
   # The default is true, which means any logout action will sign out all active scopes.
   # config.sign_out_all_scopes = true
 

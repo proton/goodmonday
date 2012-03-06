@@ -1,0 +1,11 @@
+.span3
+	.well.sidebar-nav
+		%ul.nav.nav-list
+			%li.nav-header= 'Sidebar'
+			%li= link_to 'Кабинет', my_path
+			%li
+				- case current_user.class
+					- when Advertiser
+						= link_to 'Offers', my_offers_path
+					- when Webmaster
+						= link_to 'Grounds', my_grounds_path

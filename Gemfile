@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.2.2'
 
 gem 'thin'
 gem 'unicorn'
@@ -39,8 +39,6 @@ gem 'jquery-rails'
 gem 'inherited_resources'
 
 gem 'devise'
-gem 'hpricot'
-gem 'ruby_parser'
 
 gem 'russian'
 gem 'ru_propisju'
@@ -51,6 +49,8 @@ gem 'rb-inotify' #for sass
 
 group :development, :test do
    gem 'rnotify'
+	 gem 'hpricot'
+	 gem 'ruby_parser'
 end
 
 gem 'cucumber' #хз зачем, но без него не стартует ( O_o )

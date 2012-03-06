@@ -1,0 +1,30 @@
+%section
+	.page-header
+		%h1= 'Площадки'
+	.row
+		= render 'my/sidebar'
+		.span9
+			%table.table.table-bordered.table-striped
+				%thread
+					%tr
+						%th= 'Сайт'
+						%th= 'Режим'
+						%th= 'Действия'
+				%tbody
+					- @grounds.each do |ground|
+						%tr
+							%td= ground.url
+							%td= ground.mode
+							%td
+								= link_to my_ground_path(ground), :class => 'btn btn-small' do
+									%i.icon-cog
+									= 'Настройки'
+								= link_to edit_my_ground_path(ground), :class => 'btn btn-small' do
+									%i.icon-pencil
+									= 'Редактировать'
+								= link_to my_ground_path(ground), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+									%i.icon-trash.icon-white
+									= 'Удалить'
+			= link_to new_my_ground_path, :class => 'btn btn-primary' do
+				%i.icon-plus-sign.icon-white
+				= 'Добавить'

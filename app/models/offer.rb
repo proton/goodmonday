@@ -1,6 +1,7 @@
 class Offer
 	include Mongoid::Document
 	belongs_to :advertiser
+	#field :advertiser_id, type: Fields::Serializable::ForeignKeys::Object, default: lambda{current_user.id}
 	embeds_many :targets
 	embeds_many :adverts #TODO: подумать над автообъявлениями (к примеру на основе яндекс.маркета)
 	has_and_belongs_to_many :grounds

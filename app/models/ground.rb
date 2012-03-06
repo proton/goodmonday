@@ -3,6 +3,7 @@ class Ground
 	include Mongoid::Symbolize
 
 	belongs_to :webmaster
+	#field :webmaster_id, type: Fields::Serializable::ForeignKeys::Object, default: -> {current_user.id}
 
 	symbolize :mode, :in => [:manual, :automatic], :default => :manual
 	#if manual:
@@ -24,4 +25,6 @@ class Ground
 	end
 
 	field :url, type: String
+
+	#validates :url, :uniqueness => true
 end
