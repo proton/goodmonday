@@ -10,7 +10,6 @@ class RobotController < ApplicationController
 		@ground = Ground.find(params[:ground_id])
 		if @ground
 			offers = @ground.accepted_offers.for_advert_size(@size)
-			#TODO: алгоритм:
 			n = case Random.rand(6)
 				when 0 then 0
 				when 1 then Random.rand([offers.count, 3].min)
@@ -19,11 +18,12 @@ class RobotController < ApplicationController
 				when 4 then Random.rand([offers.count, 50].min)
 				else Random.rand(offers.count)
 			end
-			@offer = offers.all.skip(n).limit(1)
+			@offer = offers.skip(n).limit(1)
 			#
 			#@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first
 			#@entry = Entry.skip(rand(Entry.count)).limit(1)
-			@advert = @offer.adverts.first
+			adverts = @offer.adverts.for_size(@size)
+			@advert = Random.rand(offers.count).skip(Random.rand(adverts.count)).limit(1)
 			@offer.inc(:shows, 1)
 		end
 	end

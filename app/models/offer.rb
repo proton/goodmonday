@@ -17,7 +17,7 @@ class Offer
 	field :is_adult, type: Boolean, default: false
 	field :is_doubtful, type: Boolean, default: false
 
-	scope :for_advert_size, ->(size) { any_in(:adverts_sizes => size).order_by(:epc, :desc) }
+	scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).order_by(:epc, :desc) }
 
 	#TODO: добавить возможность неавтопроверки (а через сайт рекламодателя)
 

@@ -7,6 +7,8 @@ class Advert
 
 	field :sizes, type: Array, default: []
 
+	scope :for_size, ->(size) { any_in(:sizes => [size]) }
+
 	def update_offer_adverts_sizes
 		self.offer.update_adverts_sizes
 	end
