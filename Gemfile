@@ -21,8 +21,10 @@ gem 'mongoid_slug'
 gem 'mongoid-eager-loading'
 
 gem 'simple_form'
-gem 'nested_form', :git => "git://github.com/fxposter/nested_form.git"
 gem 'twitter-bootstrap-rails'
+
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'mini_magick'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

@@ -27,12 +27,15 @@
 								= link_to my_offer_adverts_path(offer), :class => 'btn btn-small' do
 									%i.icon-picture
 									= 'Банеры'
-								= link_to my_offer_path(offer), :class => 'btn btn-small' do
+								= link_to my_offer_grounds_path(offer), :class => 'btn btn-small' do
+									%i.icon-road
+									= 'Площадки'
+								= link_to edit_my_offer_path(offer), :class => 'btn btn-small' do
 									%i.icon-cog
 									= 'Настройки'
-								= link_to edit_my_offer_path(offer), :class => 'btn btn-small' do
-									%i.icon-pencil
-									= 'Редактировать'
+								-#= link_to edit_my_offer_path(offer), :class => 'btn btn-small' do
+								-#	%i.icon-pencil
+								-#	= 'Редактировать'
 								= link_to my_offer_path(offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
 									%i.icon-trash.icon-white
 									= 'Удалить'

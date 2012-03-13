@@ -12,7 +12,8 @@ class My::OffersController < My::BaseController
 
 		respond_to do |format|
 			if @offer.save
-				format.html  { redirect_to(my_offer_path(@offer), :notice => 'Оффер успешно добавлен.') }
+				#format.html  { redirect_to(my_offer_path(@offer), :notice => 'Оффер успешно добавлен.') }
+				format.html  { redirect_to(my_offers_path, :notice => 'Оффер успешно добавлен.') }
 			else
 				format.html  { render :action => "new" }
 			end
@@ -24,7 +25,8 @@ class My::OffersController < My::BaseController
 
 	  respond_to do |format|
 	    if @offer.update_attributes(params[:offer])
-	      format.html  { redirect_to(my_offer_path(@offer), :notice => 'Оффер успешно обновлен.') }
+				#format.html  { redirect_to(my_offer_path(@offer), :notice => 'Оффер успешно обновлен.') }
+				format.html  { redirect_to(my_offers_path, :notice => 'Оффер успешно обновлен.') }
 	    else
 	      format.html  { render :action => "edit" }
 	    end

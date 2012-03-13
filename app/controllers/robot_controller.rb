@@ -6,25 +6,33 @@ class RobotController < ApplicationController
 	end
 
 	def advert
-		@size = params[:size].to_sym
+		@size = params[:size]
 		@ground = Ground.find(params[:ground_id])
 		if @ground
 			offers = @ground.accepted_offers.for_advert_size(@size)
-			n = case Random.rand(6)
-				when 0 then 0
-				when 1 then Random.rand([offers.count, 3].min)
-				when 2 then Random.rand([offers.count, 5].min)
-				when 3 then Random.rand([offers.count, 10].min)
-				when 4 then Random.rand([offers.count, 50].min)
-				else Random.rand(offers.count)
+			offers_count = offers.count
+			if offers_count>0
+				n = case Random.rand(6)
+					when 0 then 0
+					when 1 then Random.rand([offers_count, 3].min)
+					when 2 then Random.rand([offers_count, 5].min)
+					when 3 then Random.rand([offers_count, 10].min)
+					when 4 then Random.rand([offers_count, 50].min)
+					else Random.rand(offers_count)
+				end
+				@offer = offers.skip(n).limit(1)
+				#
+				#@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first
+				#@entry = Entry.skip(rand(Entry.count)).limit(1)
+				adverts = @offer.adverts.for_size(@size)
+				@advert = Random.rand(offers.count).skip(Random.rand(adverts.count)).limit(1)
+				@offer.inc(:shows, 1)
+				render :text => @advert.html_code(size)
+			else
+				render :text => Advert.html_code(size)
 			end
-			@offer = offers.skip(n).limit(1)
-			#
-			#@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first
-			#@entry = Entry.skip(rand(Entry.count)).limit(1)
-			adverts = @offer.adverts.for_size(@size)
-			@advert = Random.rand(offers.count).skip(Random.rand(adverts.count)).limit(1)
-			@offer.inc(:shows, 1)
+		else
+			render :text => Advert.html_code(size)
 		end
 	end
 
@@ -59,7 +67,6 @@ class RobotController < ApplicationController
 	end
 
 	def visit
-		#@response.headers['Last-Modified'] = Time.now.httpdate
 		offer = Offer.find(params[:offer_id])
 		if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
 			visitor_id = cookies[offer.id.to_s]
@@ -68,6 +75,9 @@ class RobotController < ApplicationController
 				visitor.page_visits.create(:ip => request.remote_ip, :page => request.referer)
 			end
 		end
+		response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+		response.headers["Pragma"] = "no-cache"
+		response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
 		redirect_to "/pixel.png", :status => 307
 	end
 

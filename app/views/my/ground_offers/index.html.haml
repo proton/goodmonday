@@ -1,0 +1,28 @@
+%section
+	.page-header
+		%h1= 'Цели'
+	.row
+		= render 'my/sidebar'
+		.span9
+			%table.table.table-bordered.table-striped
+				%thread
+					%tr
+						%th= 'Название'
+						%th= 'Тип'
+						%th= 'Статус'
+						%th= 'Действия'
+				%tbody
+					- @ground_offers.each do |ground|
+						%tr
+							%td= ground.ground.title
+							%td= ''
+							%td= t(ground.state)
+							%td
+								- unless ground.state==:accepted
+									= link_to my_offer_ground_accept(@offer, ground), :class => 'btn btn-success btn-small' do
+										%i.icon-ok
+										= 'Одобрить'
+								- unless ground.state==:denied
+									= link_to my_offer_ground_deny(@offer, ground), :class => 'btn btn-danger btn-small' do
+										%i.icon-remove
+										= 'Отказать'

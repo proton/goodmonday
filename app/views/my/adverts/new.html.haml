@@ -1,0 +1,18 @@
+%section
+	.page-header
+		%h1= 'Новое объявление'
+	.row
+		.span12
+			- unless @type
+				%h2= 'Выбор типа объявления'
+				= link_to new_my_offer_advert_path(@offer, :type => Banner.name), :class => 'btn btn-primary' do
+					%i.icon-picture.icon-white
+					= 'Банер'
+				= link_to new_my_offer_advert_path(@offer, :type => Banner.name), :class => 'btn btn-primary' do
+					%i.icon-picture.icon-white
+					= 'Банер'
+				= link_to new_my_offer_advert_path(@offer, :type => Banner.name), :class => 'btn btn-primary' do
+					%i.icon-picture.icon-white
+					= 'Банер'
+			- else
+				= render 'form'
