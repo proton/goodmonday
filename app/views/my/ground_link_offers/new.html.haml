@@ -1,0 +1,26 @@
+%section
+	.page-header
+		%h1= 'Офферы'
+	.row
+		= render 'my/sidebar'
+		.span9
+			%table.table.table-bordered.table-striped
+				%thread
+					%tr
+						%th= 'Название'
+						%th= 'Тематика'
+						%th= 'Показы/Выплаты'
+						%th= 'Действия'
+				%tbody
+					- @offers.each do |offer|
+						%tr
+							%td= offer.title
+							%td= offer.category.title
+							%td
+								= offer.shows
+								= ' / '
+								= number_to_currency offer.payments
+							%td
+								= link_to my_ground_links_path(@ground, :offer_id => offer.id), :method => :post, :class => 'btn btn-primary' do
+									%i.icon-plus-sign.icon-white
+									= 'Добавить'

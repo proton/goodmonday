@@ -1,4 +1,8 @@
 = simple_form_for([:my, @ground], :html => {:class => 'form-horizontal' }) do |f|
+	.control-group= f.input :title, :input_html => { :class => "span6" }
 	.control-group= f.input :url, :input_html => { :class => "span6" }
+	.control-group= f.input :type, :as => :select, :collection => Ground.get_type_values, :input_html => { :class => "span6" }
+	-#.control-group= f.association :category, :collection => Category.all
+	.control-group= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Cancel', my_grounds_path, :class => "btn btn-danger"

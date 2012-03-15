@@ -17,19 +17,10 @@ class GroundOffer
 	def update_offers_state
 		if @changed_attrs.has_key? :state
 			#TODO: переписать
-			puts @changed_attrs.inspect
+			# "state"=>[:pending, :accepted]
 			ground = self.ground
-			#
-			link_offer_exists = ground.accepted_rotator_offers_ids(self.offer_id)
-			link_offer_exists = ground.denied_rotator_offers_ids(self.offer_id) unless link_offer_exists
-			link_offer_exists = ground.pending_rotator_offers_ids(self.offer_id) unless link_offer_exists
-			ground.add_link_offer(self.offer) if link_offer_exists
-			#
-			rotator_offer = ground.accepted_rotator_offers_ids(self.offer_id)
-			rotator_offer = ground.denied_rotator_offers_ids(self.offer_id) unless rotator_offer
-			rotator_offer = ground.pending_rotator_offers_ids(self.offer_id) unless rotator_offer
-			ground.add_rotator_offer(self.offer) if rotator_offer
-			#
+			ground.add_link_offer(self.offer) if ground.remove_link_offer(self.offer)
+			ground.add_rotator_offer(self.offer) if ground.remove_rotator_offer(self.offer)
 			ground.save
 		end
 	end

@@ -12,6 +12,7 @@ Cpa::Application.routes.draw do
 	match 'robot/:ground_id/rotator' => 'robot#advert'
 	match 'robot/:ground_id/advert/:size' => 'robot#advert'
 	match 'robot/:ground_id/advert/:offer_id' => 'robot#advert'
+	match 'robot/:ground_id/goto/:offer_id' => 'robot#redirect'
 	match 'robot/:ground_id/goto/:offer_id/:advert_id' => 'robot#redirect'
 	match 'robot/:offer_id/visit' => 'robot#visit'
 	match 'robot/:offer_id/target/:target_id' => 'robot#target'
@@ -28,7 +29,10 @@ Cpa::Application.routes.draw do
 				get :deny
 			end
 		end
-		resources :grounds
+		resources :grounds do
+			resources :links, :controller => "ground_link_offers"
+			resources :adverts, :controller => "ground_advert_offers"
+		end
 	end
 
 	root :to => 'home#index'

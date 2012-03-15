@@ -4,11 +4,14 @@ class Ground
 
 	belongs_to :webmaster
 	#field :webmaster_id, type: Fields::Serializable::ForeignKeys::Object, default: -> {current_user.id}
+	belongs_to :category
 
 	field :title, type: String, default: ''
 	field :url, type: String, default: ''
 
-	symbolize :mode, :in => [:manual, :automatic], :default => :manual
+	symbolize :type, :in => [:website, :doorway, :socialnet], :default => :website
+
+	symbolize :rotator_mode, :in => [:manual, :automatic], :default => :manual
 
 	field :accepted_rotator_offers_ids, type: Array, default: []
 	field :denied_rotator_offers_ids, type: Array, default: []
@@ -17,8 +20,8 @@ class Ground
 	field :denied_link_offers_ids, type: Array, default: []
 	field :pending_link_offers_ids, type: Array, default: []
 
-	define_method(:rotator_offers_ids) { self.accepted_rotator_offers_ids+self.denied_rotator_offers_ids+self.pending_rotator_offers_ids }
-	define_method(:rotator_offers) { Offer.find(rotator_offers_ids) }
+	define_method(:advert_offers_ids) { self.accepted_rotator_offers_ids+self.denied_rotator_offers_ids+self.pending_rotator_offers_ids }
+	define_method(:advert_offers) { Offer.find(advert_offers_ids) }
 	define_method(:link_offers_ids) { self.accepted_link_offers_ids+self.denied_link_offers_ids+self.pending_link_offers_ids }
 	define_method(:link_offers) { Offer.find(link_offers_ids) }
 
@@ -27,6 +30,7 @@ class Ground
 		unless ground_offer
 			ground_offer = self.ground_offers.new
 			ground_offer.state=:accepted if offer.auto_accept_grounds
+			ground_offer.offer = offer
 			ground_offer.save
 		end
 		ground_offer
@@ -49,6 +53,18 @@ class Ground
 		self.save
 	end
 
+	def remove_link_offer(offer)
+		link_offer = self.accepted_link_offers_ids.delete(offer.id)
+		link_offer = self.denied_link_offers_ids.delete(offer.id) unless link_offer
+		link_offer = self.pending_link_offers_ids.delete(offer.id) unless link_offer
+		link_offer
+	end
+
+	def remove_link_offer_and_save(offer)
+		remove_link_offer(offer)
+		self.save
+	end
+
 	def add_rotator_offer(offer)
 		ground_offer = find_or_create_offer_permission(offer)
 		case ground_offer.state
@@ -63,6 +79,18 @@ class Ground
 
 	def add_rotator_offer_and_save(offer)
 		self.add_rotator_offer(offer)
+		self.save
+	end
+
+	def remove_rotator_offer(offer)
+		rotator_offer = self.accepted_rotator_offers_ids.delete(offer.id)
+		rotator_offer = self.denied_rotator_offers_ids.delete(offer.id) unless rotator_offer
+		rotator_offer = self.pending_rotator_offers_ids.delete(offer.id) unless rotator_offer
+		rotator_offer
+	end
+
+	def remove_rotator_offer_and_save(offer)
+		self.remove_rotator_offer(offer)
 		self.save
 	end
 

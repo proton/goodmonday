@@ -1,6 +1,6 @@
 %section
 	.page-header
-		%h1= 'Цели'
+		%h1= 'Площадки'
 	.row
 		= render 'my/sidebar'
 		.span9
@@ -9,20 +9,22 @@
 					%tr
 						%th= 'Название'
 						%th= 'Тип'
+						%th= 'Тематика'
 						%th= 'Статус'
 						%th= 'Действия'
 				%tbody
-					- @ground_offers.each do |ground|
+					- @ground_offers.each do |ground_offer|
 						%tr
-							%td= ground.ground.title
-							%td= ''
-							%td= t(ground.state)
+							%td= ground_offer.ground.title
+							%td= t(ground_offer.ground.type)
+							%td= ground_offer.ground.category.title
+							%td= t(ground_offer.state)
 							%td
-								- unless ground.state==:accepted
-									= link_to my_offer_ground_accept(@offer, ground), :class => 'btn btn-success btn-small' do
-										%i.icon-ok
+								- unless ground_offer.state==:accepted
+									= link_to my_offer_ground_accept_path(@offer, ground_offer), :class => 'btn btn-success btn-small' do
+										%i.icon-ok.icon-white
 										= 'Одобрить'
-								- unless ground.state==:denied
-									= link_to my_offer_ground_deny(@offer, ground), :class => 'btn btn-danger btn-small' do
-										%i.icon-remove
+								- unless ground_offer.state==:denied
+									= link_to my_offer_ground_deny_path(@offer, ground_offer), :class => 'btn btn-danger btn-small' do
+										%i.icon-remove.icon-white
 										= 'Отказать'

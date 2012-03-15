@@ -9,6 +9,7 @@ class Offer
 	#has_and_belongs_to_many :grounds
 	has_many :ground_offers
 	has_many :achievements
+	belongs_to :category
 
 	field :title, type: String
 	field :url, type: String, default: ''
