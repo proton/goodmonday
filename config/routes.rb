@@ -1,4 +1,5 @@
 Cpa::Application.routes.draw do
+  devise_for :operators
   devise_for :users, :path_names =>
 	{
 		:sign_in => 'login',
