@@ -35,6 +35,13 @@ Cpa::Application.routes.draw do
 			resources :adverts, :controller => "ground_advert_offers"
 		end
 	end
+	namespace :admin do
+		match '/' => 'base#index'
+		resources :moderations do
+			get :accept
+			get :deny
+		end
+	end
 
 	root :to => 'home#index'
 end

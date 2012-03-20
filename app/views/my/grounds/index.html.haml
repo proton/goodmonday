@@ -7,14 +7,18 @@
 			%table.table.table-bordered.table-striped
 				%thread
 					%tr
+						%th= 'Название'
 						%th= 'Сайт'
+						%th= 'Статус'
 						%th= 'Режим'
 						%th= 'Действия'
 				%tbody
 					- @grounds.each do |ground|
 						%tr
+							%td= ground.title
 							%td= ground.url
-							%td= ground.mode
+							%td= t(ground.moderated_state)
+							%td= ground.rotator_mode
 							%td
 								= link_to my_ground_path(ground), :class => 'btn btn-small' do
 									%i.icon-cog
