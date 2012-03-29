@@ -17,13 +17,15 @@
 						%thread
 							%tr
 								%th= 'Предпросмотр'
+								%th= 'Статус'
 								%th= 'Размер'
 								%th= 'Дополнительно'
 								%th= 'Действия'
 						%tbody
 							- @advert.banner_images.each do |banner_image|
-								%tr
+								%tr{:class => banner_image.is_accepted? ? '' : 'muted'}
 									%td= image_tag banner_image.image
+									%td= t(banner_image.moderated_state)
 									%td= banner_image.size
 									%td
 										= 'Создано автоматически' if banner_image.auto_generated

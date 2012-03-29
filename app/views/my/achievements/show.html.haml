@@ -1,0 +1,60 @@
+- offer = @achievement.offer
+- target = offer.targets.find(@achievement.target_id)
+- ground =  @achievement.ground
+- visitor =  @achievement.visitor
+- user_agent = AgentOrange::UserAgent.new(visitor.user_agent).device
+
+%section
+	.page-header
+		%h1= "Достижение"
+	.row
+		= render 'my/sidebar'
+		.span9
+			%h3= 'Основная информация'
+			%b= 'Оффер:'
+			= offer.title
+			%br
+			%b= 'Цель:'
+			= target.title
+			%br
+			%b= 'Площадка:'
+			= "#{ground.title} (#{ground.url})"
+			%br
+			%b= 'Дата взятия:'
+			= @achievement.created_at
+			%br
+			%b= 'Стоимость:'
+			- if @achievement.price
+				= number_to_currency @achievement.price
+			- else
+				= 'нет данных'
+			%br
+			%b= 'Статус:'
+			= t(@achievement.state)
+
+			%h3= 'Информация о посетителе'
+			%b= 'Браузер:'
+			= user_agent.engine.browser
+			%br
+			%b= 'Операционная система:'
+			= user_agent.operating_system
+			%br
+			%b= 'Страница взятия цели:'
+			= @achievement.page
+			%br
+			%b= 'IP-Адрес:'
+			= @achievement.ip
+
+			%h3= 'Статистика'
+			%table.table.table-bordered.table-striped
+				%thread
+					%tr
+						%th= 'Страница'
+						%th= 'IP-Адрес'
+						%th= 'Дата и время'
+				%tbody
+					- visitor.page_visits.each do |visit|
+						%tr
+							%td= visit.page
+							%td= visit.ip
+							%td= visit.created_at

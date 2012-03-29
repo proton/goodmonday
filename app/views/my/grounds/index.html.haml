@@ -14,7 +14,7 @@
 						%th= 'Действия'
 				%tbody
 					- @grounds.each do |ground|
-						%tr
+						%tr{:class => ground.is_accepted? ? '' : 'muted'}
 							%td= ground.title
 							%td= ground.url
 							%td= t(ground.moderated_state)

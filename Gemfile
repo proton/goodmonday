@@ -47,6 +47,8 @@ gem 'ru_propisju'
 
 gem 'crummy'
 
+gem 'agent_orange'
+
 gem 'rb-inotify' #for sass
 
 group :development, :test do

@@ -21,7 +21,7 @@ class My::GroundAdvertOffersController < My::BaseController
 	end
 
 	def new
-		@offers = Offer.not_in(_id: @ground.advert_offers_ids)
+		@offers = Offer.accepted.not_in(_id: @ground.advert_offers_ids)
 	end
 
 	def create

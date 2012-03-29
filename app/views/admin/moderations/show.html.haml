@@ -2,6 +2,8 @@
 	.page-header
 		%h1= "Проверка"
 	.row
+		-#= @moderation.moderated.inspect
+		- moderated_class = @moderation.moderated_type.constantize
 		.span12
 			%b= 'Дата: '
 			= @moderation.updated_at
@@ -25,10 +27,35 @@
 							%th= 'Утверждённое значение'
 					%tbody
 						- @moderation.changed_fields.keys.each do |key|
+							- changed_value = @moderation.changed_fields[key]
+							- accepted_value = @moderation.accepted_fields[key]
+							- type = :default
+							- if changed_value.class==BSON::ObjectId && key[-3..-1]=='_id'
+								- klass = key[0..-4].camelize.constantize
+								- type = :association
+							- elsif moderated_class::MODERATED_ATTRS_INFO && moderated_class::MODERATED_ATTRS_INFO[key]
+								- attr_info = moderated_class::MODERATED_ATTRS_INFO[key]
+								- type = attr_info[:type]
 							%tr
 								%td= key.to_s
-								%td= @moderation.changed_fields[key]
-								%td= @moderation.accepted_fields[key]
+								%td
+									- if changed_value
+										- case type
+											- when :association
+												= klass.find(changed_value).title
+											- when :carrierwave_image
+												= changed_value
+												%br
+												= image_tag @moderation.moderated_object.method(attr_info[:show_method]).call
+											- else
+												= changed_value
+								%td
+									- if accepted_value
+										- case type
+											- when :association
+												= klass.find(accepted_value).title
+											- else
+												= accepted_value
 
 				= link_to admin_moderation_accept_path(@moderation), :class => 'btn btn-success' do
 					%i.icon-ok.icon-white

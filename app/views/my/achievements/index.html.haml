@@ -1,0 +1,36 @@
+%section
+	.page-header
+		%h1= 'Достижения'
+	.row
+		= render 'my/sidebar'
+		.span9
+			%table.table.table-bordered.table-striped
+				%thread
+					%tr
+						%th= 'Оффер'
+						%th= 'Цель'
+						%th= 'Площадка'
+						%th= 'Стоимость'
+						%th= 'Состояние'
+						%th= 'Дата'
+						%th= 'Действия'
+				%tbody
+					- @achievements.each do |achievement|
+						- offer = achievement.offer
+						- target = offer.targets.find(achievement.target_id)
+						- ground = achievement.ground
+						%tr{:class => achievement.is_accepted? ? '' : 'muted'}
+							%td= offer.title
+							%td= target.title
+							%td= "#{ground.title} (#{ground.url})"
+							%td
+								- if achievement.price
+									= number_to_currency achievement.price
+								- else
+									= 'н/д'
+							%td= t(achievement.state)
+							%td= achievement.created_at
+							%td
+								= link_to my_achievement_path(achievement), :class => 'btn btn-small' do
+									%i.icon-cog
+									= 'Открыть'

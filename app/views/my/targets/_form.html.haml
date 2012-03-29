@@ -2,5 +2,7 @@
 	.control-group= f.input :title, :input_html => { :class => "span6" }
 	.control-group= f.input :prc_price, :input_html => { :class => "span6" }
 	.control-group= f.input :fixed_price, :input_html => { :class => "span6" }
+	.control-group= f.input :confirm_mode, :required => true, :as => :select, :collection => [:auto, :manual], :input_html => { :class => "span6" }
+	.control-group= f.input :confirm_url, :input_html => { :class => "span6" }
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Cancel', my_offer_targets_path, :class => "btn btn-danger"

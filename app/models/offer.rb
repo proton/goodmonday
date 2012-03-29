@@ -7,7 +7,7 @@ class Offer
 	embeds_many :adverts #TODO: подумать над автообъявлениями (к примеру на основе яндекс.маркета)
 	field :adverts_sizes, type: Array, default: []
 	#has_and_belongs_to_many :grounds
-	has_many :ground_offers
+	has_many :ground_offers, dependent: :delete
 	has_many :achievements
 	belongs_to :category
 
@@ -25,10 +25,11 @@ class Offer
 
 	scope :for_advert_size, ->(size) { a(:adverts_sizes => [size]).order_by(:epc, :desc) }
 
-	#TODO: добавить возможность неавтопроверки (а через сайт рекламодателя)
-
 	def update_adverts_sizes
 		self.adverts_sizes = self.adverts.collect{|a| a.sizes}.flatten.compact
 		self.save
 	end
+
+	MODERATED_ATTRS = [:title, :url, :category_id]
+	include IsModerated
 end

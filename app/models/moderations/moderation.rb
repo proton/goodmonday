@@ -14,22 +14,31 @@ class Moderation
 	field :moderated_type, type: String, default: -> { self.moderated.class.to_s }
 	field :changed_fields, type: Hash, default: {}
 	field :accepted_fields, type: Hash, default: {}
+	field :moderated_path, type: String
 
 	def accept
-		self.state = :accepted
-		self.moderated.moderated_state = self.state
+		state = :accepted
+		self.state = state
+		self.moderation_state_changes.build({:state => state, :reason => :checked, :operator => current_operator})
 		self.accepted_fields.merge! self.changed_fields
 		self.changed_fields.clear
-		self.moderation_state_changes.build({:state => self.state, :reason => :checked})
-		self.moderated.save
 		self.save
+		moderated_object.moderated_state.update_attribute(:moderated_state, state)
 	end
 
 	def deny
-		self.state = :denied
-		self.moderation_state_changes.build({:state => self.state, :reason => :checked})
-		self.moderated.moderated_state = self.state
-		self.moderated.save
+		state = :denied
+		self.state = state
+		self.moderation_state_changes.build({:state => state, :reason => :checked, :operator => current_operator})
 		self.save
+		moderated_object.moderated_state.update_attribute(:moderated_state, state)
+	end
+
+	def moderated_object
+		if self.moderated_path
+			eval(self.moderated_path)
+		else
+			moderated
+		end
 	end
 end

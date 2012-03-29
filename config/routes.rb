@@ -8,7 +8,7 @@ Cpa::Application.routes.draw do
 		:confirmation => 'verification',
 		:unlock => 'unblock',
 		:registration => 'register'
-	}
+	}, :controllers => { :registrations => "my/registrations" }
 
 	match 'robot/:ground_id/rotator' => 'robot#advert'
 	match 'robot/:ground_id/advert/:size' => 'robot#advert'
@@ -17,6 +17,7 @@ Cpa::Application.routes.draw do
 	match 'robot/:ground_id/goto/:offer_id/:advert_id' => 'robot#redirect'
 	match 'robot/:offer_id/visit' => 'robot#visit'
 	match 'robot/:offer_id/target/:target_id' => 'robot#target'
+	match 'robot/:offer_id/target/:target_id/:order_id' => 'robot#target'
 
 	namespace :my do
 		match '/' => 'base#index'
@@ -34,6 +35,7 @@ Cpa::Application.routes.draw do
 			resources :links, :controller => "ground_link_offers"
 			resources :adverts, :controller => "ground_advert_offers"
 		end
+		resources :achievements
 	end
 	namespace :admin do
 		match '/' => 'base#index'

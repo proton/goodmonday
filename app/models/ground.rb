@@ -54,9 +54,10 @@ class Ground
 	end
 
 	def remove_link_offer(offer)
-		link_offer = self.accepted_link_offers_ids.delete(offer.id)
-		link_offer = self.denied_link_offers_ids.delete(offer.id) unless link_offer
-		link_offer = self.pending_link_offers_ids.delete(offer.id) unless link_offer
+		offer_id = (offer.class==Offer)? offer.id : offer
+		link_offer = self.accepted_link_offers_ids.delete(offer_id)
+		link_offer = self.denied_link_offers_ids.delete(offer_id) unless link_offer
+		link_offer = self.pending_link_offers_ids.delete(offer_id) unless link_offer
 		link_offer
 	end
 
@@ -83,9 +84,10 @@ class Ground
 	end
 
 	def remove_rotator_offer(offer)
-		rotator_offer = self.accepted_rotator_offers_ids.delete(offer.id)
-		rotator_offer = self.denied_rotator_offers_ids.delete(offer.id) unless rotator_offer
-		rotator_offer = self.pending_rotator_offers_ids.delete(offer.id) unless rotator_offer
+		offer_id = (offer.class==Offer)? offer.id : offer
+		rotator_offer = self.accepted_rotator_offers_ids.delete(offer_id)
+		rotator_offer = self.denied_rotator_offers_ids.delete(offer_id) unless rotator_offer
+		rotator_offer = self.pending_rotator_offers_ids.delete(offer_id) unless rotator_offer
 		rotator_offer
 	end
 
@@ -96,7 +98,7 @@ class Ground
 
 	# Offer.any_in(_id: ['4f4cfb35852488182000004b','4f508b3e8524887254000061','4f4a4c2385248837ff000004'])
 
-	has_many :ground_offers
+	has_many :ground_offers, dependent: :delete
 
 	#if automatic:
 	field :block_adult, type: Boolean, default: true
@@ -104,14 +106,14 @@ class Ground
 
 	has_many :achievements
 
-	#def accepted_offers
-	#	case self.mode
-	#		when :manual
-	#			return self.offers
-	#		when :automatic
-	#			return Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful)
-	#	end
-	#end
+	def accepted_offers
+		case self.mode
+			when :manual
+				return self.offers.accepted
+			when :automatic
+				return Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful).accepted
+		end
+	end
 
 	#validates :url, :uniqueness => true
 

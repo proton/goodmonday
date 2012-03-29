@@ -8,9 +8,10 @@
 				.inputs
 					= f.input :_type, :required => true, :as => :select, :collection => ['Webmaster', 'Advertiser']
 					= f.input :email, :required => true, :autofocus => true
-					= f.input :email, :required => true, :autofocus => true
 					= f.input :password, :required => true
 					= f.input :password_confirmation, :required => true
+					- if @affiliator_id
+						= f.input :affiliator_id, :as => :hidden, :input_html => { :value => @affiliator_id }
 				.actions
 					= f.button :submit, "Зарегистрироваться"
 			= render "links"

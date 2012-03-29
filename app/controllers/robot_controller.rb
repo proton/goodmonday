@@ -43,22 +43,26 @@ class RobotController < ApplicationController
 			if ground
 				offer = Offer.find(params[:offer_id])
 				if offer
-					advert = offer.adverts.find(params[:advert_id])
-					if advert
-						url = advert.url
-						visitor = Visitor.new
-						visitor.ground = ground
-						visitor.offer = offer
+					visitor = Visitor.new
+					visitor.ground = ground
+					visitor.offer = offer
+					visitor.initial_ip = ip
+					visitor.initial_page = request.referer
+					visitor.user_agent = request.user_agent
+
+					if params[:advert_id] && !params[:advert_id].empty?
+						advert = offer.adverts.find(params[:advert_id])
 						visitor.advert_id = advert.id
-						visitor.initial_ip = ip
-						visitor.initial_page = request.referer
-						visitor.user_agent = request.user_agent
-						if visitor.save
-							cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
-							#:path - The path for which this cookie applies. Defaults to the root of the application.
-							#:domain - The domain for which this cookie applies.
-							redirect_to url
-						end
+						url = advert.url
+					else
+						url = offer.url
+					end
+
+					if visitor.save
+						cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
+						#:path - The path for which this cookie applies. Defaults to the root of the application.
+						#:domain - The domain for which this cookie applies.
+						redirect_to url
 					end
 				end
 			end
@@ -103,6 +107,13 @@ class RobotController < ApplicationController
 								achievement.target_id = target_id
 								achievement.ip = ip
 								achievement.page = request.referer
+								if params[:order_id] && !params[:order_id].empty?
+									achievement.order_id = params[:order_id]
+								end
+								if target.confirm_mode == :auto
+									achievement.price = target.fixed_price
+									achievement.state = :accepted
+								end
 								achievement.save
 							end
 						end

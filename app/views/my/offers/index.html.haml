@@ -8,13 +8,15 @@
 				%thread
 					%tr
 						%th= 'Название'
+						%th= 'Статус'
 						-#%th= 'Режим'
 						%th= 'Показы/Выплаты'
 						%th= 'Действия'
 				%tbody
 					- @offers.each do |offer|
-						%tr
+						%tr{:class => offer.is_accepted? ? '' : 'muted'}
 							%td= offer.title
+							%td= t(offer.moderated_state)
 							-#%td= offer.mode
 							%td
 								= offer.shows

@@ -4,6 +4,7 @@ class GroundOffer
 
 	before_update{ @changed_attrs = changes.clone }
 	after_update :update_offers_state
+	after_destroy :destroy_offers_in_ground
 
 	belongs_to :ground
 	belongs_to :offer
@@ -24,4 +25,13 @@ class GroundOffer
 			ground.save
 		end
 	end
+
+	def destroy_offers_in_ground
+		ground = self.ground
+		if ground
+			ground.remove_rotator_offer self.offer_id
+			ground.remove_link_offer self.offer_id
+		end
+	end
+
 end

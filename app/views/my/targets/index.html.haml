@@ -8,12 +8,16 @@
 				%thread
 					%tr
 						%th= 'Название'
+						%th= 'Статус'
+						%th= 'Способ подтверждения'
 						%th= 'Стоимость'
 						%th= 'Действия'
 				%tbody
 					- @targets.each do |target|
-						%tr
+						%tr{:class => target.is_accepted? ? '' : 'muted'}
 							%td= target.title
+							%td= t(target.moderated_state)
+							%td= t(target.confirm_mode)
 							%td
 								- if target.prc_price>0
 									= "#{target.prc_price} %"
