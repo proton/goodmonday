@@ -1,4 +1,4 @@
-namespace :targets do
+namespace :achievements do
 	task :confirm => :environment do
 		require 'hpricot'
 	 	require 'open-uri'
@@ -26,10 +26,10 @@ namespace :targets do
 
 					if [1,3].include? status
 						if status==1
-							achievement.status = :accepted
+							achievement.state = :accepted
 							achievement.price = target.fixed_price + target.prc_price*price/100
 						elsif status==3
-							achievement.status = :denied
+							achievement.state = :denied
 						end
 						achievement.save
 					end
