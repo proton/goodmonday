@@ -26,19 +26,13 @@ class My::GroundLinkOffersController < My::BaseController
 
 	def create
 		@offer = Offer.find(params[:offer_id])
-
-		respond_to do |format|
-			if @ground.add_link_offer_and_save(@offer)
-				format.html  { redirect_to(my_ground_links_path(@ground), :notice => 'Оффер добавлен.') }
-			else
-				format.html  { redirect_to my_ground_links_path(@ground) }
-			end
-		end
+		flash[:notice] = 'Оффер добавлен.' if @ground.add_link_offer_and_save(@offer)
+		redirect_to my_ground_links_path(@ground)
 	end
 
 	def destroy
 		@offer = Offer.find(params[:id])
-		@ground.remove_link_offer_and_save(@offer)
+		flash[:notice] = 'Оффер удалён.' if @ground.remove_link_offer_and_save(@offer)
 		redirect_to my_ground_links_path(@ground)
  	end
 

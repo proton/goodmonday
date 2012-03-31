@@ -1,6 +1,7 @@
 # coding: utf-8
 
 class My::BaseController < ApplicationController
+	respond_to :html
 	inherit_resources
 	before_filter :authenticate_user!
 

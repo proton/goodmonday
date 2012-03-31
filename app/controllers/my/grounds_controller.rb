@@ -9,26 +9,14 @@ class My::GroundsController < My::BaseController
 	def create
 		@ground = Ground.new(params[:ground])
 		@ground.webmaster = current_user
-
-		respond_to do |format|
-			if @ground.save
-				format.html  { redirect_to(my_ground_path(@ground), :notice => 'Площадка успешно добавлена.') }
-			else
-				format.html  { render :action => "new" }
-			end
-		end
+		flash[:notice] = 'Площадка успешно добавлена.' if @ground.save
+		respond_with(@ground, :location => my_grounds_path)
 	end
 
 	def update
 		@ground = Ground.find(params[:id])
-
-	  respond_to do |format|
-	    if @ground.update_attributes(params[:ground])
-	      format.html  { redirect_to(my_ground_path(@ground), :notice => 'Площадка успешно обновлена.') }
-	    else
-	      format.html  { render :action => "edit" }
-	    end
-	  end
+		flash[:notice] = 'Площадка успешно обновлена.' if @ground.update_attributes(params[:ground])
+		respond_with(@ground, :location => my_grounds_path)
 	end
 
 	def new

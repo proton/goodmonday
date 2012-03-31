@@ -21,14 +21,8 @@ class My::AdvertsController < My::BaseController
 	def create
 		@type = params[:type]
 		@advert = @offer.adverts.build(params[@type.underscore], @type.constantize)
-
-		respond_to do |format|
-			if @advert.save
-				format.html  { redirect_to(my_offer_advert_path(@offer, @advert), :notice => 'Объявление успешно добавлено.') }
-			else
-				format.html  { render :action => "new", :type=> @type }
-			end
-		end
+		flash[:notice] = 'Объявление добавлено.' if @advert.save
+		respond_with(@advert, :location => my_offer_advert_path(@offer, @advert))
 	end
 	
 end

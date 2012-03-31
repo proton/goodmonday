@@ -16,13 +16,14 @@ class My::GroundOffersController < My::BaseController
 		@ground_offer = @offer.ground_offers.find(params[:ground_id])
 		@ground_offer.state = :accepted
 		@ground_offer.save
+		flash[:notice] = 'Площадка одобрена.' if @ground_offer.save
 		redirect_to my_offer_grounds_path(@offer)
 	end
 
 	def deny
 		@ground_offer = @offer.ground_offers.find(params[:ground_id])
 		@ground_offer.state = :denied
-		@ground_offer.save
+		flash[:notice] = 'Площадка отклонена.' if @ground_offer.save
 		redirect_to my_offer_grounds_path(@offer)
 	end
 
