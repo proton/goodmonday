@@ -1,37 +1,51 @@
 # coding: utf-8
 
 class My::TargetsController < My::BaseController
-	inherit_resources
-	belongs_to :offer
+	before_filter :find_nested_objects
+	before_filter :and_nested_crumbs
+	before_filter :find_object, :only => [:show, :update, :edit, :destroy]
+	before_filter :and_crumbs, :only => [:show, :edit]
 
 	def index
-		@offer = current_user.offers.find(params[:offer_id])
 		@targets = @offer.targets
+		add_crumb "Цели"
 	end
 
-	#def create
-	#	@offer = Offer.new(params[:offer])
-	#	@offer.advertiser = current_user
-	#
-	#	respond_to do |format|
-	#		if @offer.save
-	#			format.html  { redirect_to(my_offer_path(@offer), :notice => 'Оффер успешно добавлен.') }
-	#		else
-	#			format.html  { render :action => "new" }
-	#		end
-	#	end
-	#end
-	#
-	#def update
-	#	@offer = Offer.find(params[:id])
-	#
-	#  respond_to do |format|
-	#    if @offer.update_attributes(params[:offer])
-	#      format.html  { redirect_to(my_offer_path(@offer), :notice => 'Оффер успешно обновлен.') }
-	#    else
-	#      format.html  { render :action => "edit" }
-	#    end
-	#  end
-	#end
+	def create
+		@target = @offer.targets.new(params[:target])
+		flash[:notice] = 'Цель добавлена.' if @target.save
+		respond_with(@target, :location => my_offer_targets_path(@offer))
+	end
+
+	def update
+		flash[:notice] = 'Цель обновлена.' if @target.update_attributes(params[:target])
+		respond_with(@target, :location => my_offer_targets_path(@offer))
+	end
+
+	def new
+		@target = @offer.targets.new
+		add_crumb "Цели", my_offer_targets_path(@offer)
+		add_crumb "Новая цель"
+	end
+
+	protected
+
+	def find_nested_objects
+		@offer = current_user.offers.find(params[:offer_id])
+	end
+
+	def and_nested_crumbs
+		add_crumb "Рекламные кампании", my_offers_path
+		add_crumb "Рекламная кампания «#{@offer.title}»", my_offer_path(@offer)
+	end
+
+	def find_object
+		@target = @offer.targets.find(params[:id])
+	end
+
+	def and_crumbs
+		add_crumb "Цели", my_offer_targets_path(@offer)
+		add_crumb "Цель «#{@target.title}»"
+	end
 	
 end

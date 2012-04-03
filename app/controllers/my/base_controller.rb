@@ -2,8 +2,9 @@
 
 class My::BaseController < ApplicationController
 	respond_to :html
-	inherit_resources
 	before_filter :authenticate_user!
+
+	add_crumb 'Кабинет', '/my'
 
 	def index
 		case current_user.class

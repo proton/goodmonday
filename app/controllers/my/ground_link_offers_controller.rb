@@ -1,8 +1,8 @@
 # coding: utf-8
 
 class My::GroundLinkOffersController < My::BaseController
-	inherit_resources
-	before_filter :find_ground
+	before_filter :find_nested_objects
+	before_filter :and_nested_crumbs
 
 	def find_ground
 		@ground = current_user.grounds.find(params[:ground_id])
@@ -13,14 +13,18 @@ class My::GroundLinkOffersController < My::BaseController
 		case @state
 			when :accepted
 				@offers = Offer.find(@ground.accepted_link_offers_ids)
+				add_crumb 'Одобренные офферы'
 			when :denied
 				@offers = Offer.find(@ground.denied_link_offers_ids)
+				add_crumb 'Отвергнутые офферы'
 			when :pending
 				@offers = Offer.find(@ground.pending_link_offers_ids)
+				add_crumb 'Ожидающие одобрения офферы'
 		end
 	end
 
 	def new
+		add_crumb 'Новый оффер'
 		@offers = Offer.accepted.not_in(_id: @ground.link_offers_ids)
 	end
 
@@ -35,5 +39,16 @@ class My::GroundLinkOffersController < My::BaseController
 		flash[:notice] = 'Оффер удалён.' if @ground.remove_link_offer_and_save(@offer)
 		redirect_to my_ground_links_path(@ground)
  	end
+
+	protected
+
+	def find_nested_objects
+		@ground = current_user.grounds.find(params[:ground_id])
+	end
+
+	def and_nested_crumbs
+		add_crumb "Рекламные площадки", my_grounds_path
+		add_crumb "Площадка «#{@ground.title}»", my_ground_path(@ground)
+	end
 
 end

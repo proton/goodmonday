@@ -10,7 +10,7 @@
 	= link_to 'Cancel', my_offer_targets_path, :class => "btn btn-danger"
 
 :javascript
-  $(document).ready(function() {
+	$(document).ready(function() {
 		$('#target_confirm_mode').change(function () {
 			var confirm_mode = $(this).val();
 			var auto_mode = (confirm_mode=='auto')

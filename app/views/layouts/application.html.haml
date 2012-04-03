@@ -45,6 +45,7 @@
 				.alert.alert-alert= flash[:warning]
 			- if flash[:error]
 				.alert.alert-error= flash[:error]
+			= render_crumbs :separator => '/'
 			.content= yield
 
 			%footer.footer

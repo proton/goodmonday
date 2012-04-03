@@ -16,22 +16,22 @@ class Moderation
 	field :accepted_fields, type: Hash, default: {}
 	field :moderated_path, type: String
 
-	def accept
+	def accept(current_operator)
 		state = :accepted
 		self.state = state
 		self.moderation_state_changes.build({:state => state, :reason => :checked, :operator => current_operator})
 		self.accepted_fields.merge! self.changed_fields
 		self.changed_fields.clear
 		self.save
-		moderated_object.moderated_state.update_attribute(:moderated_state, state)
+		moderated_object.update_attribute(:moderated_state, state)
 	end
 
-	def deny
+	def deny(current_operator)
 		state = :denied
 		self.state = state
 		self.moderation_state_changes.build({:state => state, :reason => :checked, :operator => current_operator})
 		self.save
-		moderated_object.moderated_state.update_attribute(:moderated_state, state)
+		moderated_object.update_attribute(:moderated_state, state)
 	end
 
 	def moderated_object

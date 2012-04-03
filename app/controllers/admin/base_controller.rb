@@ -2,8 +2,9 @@
 
 class Admin::BaseController < ApplicationController
 	respond_to :html
-	inherit_resources
 	before_filter :authenticate_operator!
+
+	add_crumb 'Панель адмнинистрирования', '/admin'
 
 	def index
 		#case current_user.class
