@@ -7,9 +7,9 @@ class BannerImage
 	symbolize :size, :in => ADVERTS_SIZES
 
 	field :auto_generated, type: Boolean, default: false
-	mount_uploader :image, BannerImageUploader, mount_on: :image_filename
+	mount_uploader :image, BannerImageUploader
 
-	MODERATED_ATTRS = [:image_filename]
-	MODERATED_ATTRS_INFO = {'image_filename' => {:type => :carrierwave_image, :show_method => 'image'} }
+	MODERATED_ATTRS = [:image]
+	MODERATED_ATTRS_INFO = {'image' => {:type => :carrierwave_image} }
 	include IsModerated
 end

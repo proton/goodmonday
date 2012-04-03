@@ -20,7 +20,7 @@
 			- if @moderation.state==:pending
 				%h2= 'Изменения'
 				%table.table.table-bordered.table-striped
-					%thread
+					%thead
 						%tr
 							%th= 'Поле'
 							%th= 'Значение'
@@ -46,7 +46,8 @@
 											- when :carrierwave_image
 												= changed_value
 												%br
-												= image_tag @moderation.moderated_object.method(attr_info[:show_method]).call
+												- show_method = attr_info[:show_method] ? attr_info[:show_method] : key
+												= image_tag @moderation.moderated_object.method(show_method).call
 											- else
 												= changed_value
 								%td
@@ -68,7 +69,7 @@
 		.span6
 			%h3= 'Последние изменения'
 			%table.table.table-bordered.table-striped
-				%thread
+				%thead
 					%tr
 						%th= 'Дата'
 						%th= 'Поля'
@@ -80,7 +81,7 @@
 		.span6
 			%h3= 'Последние проверки'
 			%table.table.table-bordered.table-striped
-				%thread
+				%thead
 					%tr
 						%th= 'Дата'
 						%th= 'Статус'
