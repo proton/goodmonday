@@ -37,12 +37,15 @@ class RobotController < ApplicationController
 	end
 
 	def redirect
+		ground_id = params[:ground_id]
+		offer_id = params[:offer_id]
+
 		ip = request.remote_ip
 		if BlackIp.exclude(ip)
-			ground = Ground.find(params[:ground_id])
+			ground = Ground.find(ground_id)
 			if ground
-				offer = Offer.find(params[:offer_id])
-				if offer
+				offer = Offer.find(offer_id)
+				if offer && ground.find_offer_permission(offer_id).state==:accepted
 					visitor = Visitor.new
 					visitor.ground = ground
 					visitor.offer = offer

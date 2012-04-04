@@ -14,4 +14,10 @@ class My::BaseController < ApplicationController
 				@grounds = current_user.grounds
 		end
 	end
+
+	protected
+
+	def forbid
+		render :status => :forbidden, :text => "Forbidden access"
+	end
 end

@@ -8,7 +8,7 @@ class My::AchievementsController < My::BaseController
 	end
 
 	def show
-		@achievement = Achievement.find(params[:id])
+		@achievement = current_user.achievements.find(params[:id])
 		add_crumb "Достижение"
 	end
 

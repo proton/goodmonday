@@ -25,8 +25,12 @@ class Ground
 	define_method(:link_offers_ids) { self.accepted_link_offers_ids+self.denied_link_offers_ids+self.pending_link_offers_ids }
 	define_method(:link_offers) { Offer.find(link_offers_ids) }
 
+	def find_offer_permission(offer_id)
+		self.ground_offers.where(:offer_id => offer_id).first
+	end
+
 	def find_or_create_offer_permission(offer)
-		ground_offer = self.ground_offers.where(:offer_id => offer.id).first
+		ground_offer = find_offer_permission offer.id
 		unless ground_offer
 			ground_offer = self.ground_offers.new
 			ground_offer.state=:accepted if offer.auto_accept_grounds
@@ -96,8 +100,6 @@ class Ground
 		self.save
 	end
 
-	# Offer.any_in(_id: ['4f4cfb35852488182000004b','4f508b3e8524887254000061','4f4a4c2385248837ff000004'])
-
 	has_many :ground_offers, dependent: :delete
 
 	#if automatic:
@@ -107,12 +109,13 @@ class Ground
 	has_many :achievements
 
 	def accepted_offers
-		case self.mode
+		offers = case self.mode
 			when :manual
-				return self.offers.accepted
+				return Offer.any_in(_id: self.accepted_link_offers_ids)
 			when :automatic
-				return Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful).accepted
-		end
+				return Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful)
+			end
+		offers.accepted
 	end
 
 	#validates :url, :uniqueness => true

@@ -42,7 +42,7 @@ class My::GroundsController < My::BaseController
 	protected
 
 	def find_object
-		@ground = Ground.find(params[:id])
+		@ground = current_user.grounds.find(params[:id])
 	end
 
 	def and_crumbs

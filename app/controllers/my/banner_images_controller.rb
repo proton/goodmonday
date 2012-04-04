@@ -1,7 +1,6 @@
 # coding: utf-8
 
 class My::BannerImagesController < My::BaseController
-	inherit_resources
 	before_filter :find_advert
 
 	def find_advert

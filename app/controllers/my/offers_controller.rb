@@ -2,6 +2,7 @@
 
 class My::OffersController < My::BaseController
 	before_filter :find_object, :only => [:show, :update, :edit, :destroy]
+	before_filter :authorize, :only => [:show, :update, :edit, :destroy]
 	before_filter :and_crumbs, :only => [:show, :edit]
 
 	def index
@@ -31,6 +32,10 @@ class My::OffersController < My::BaseController
 
 	def find_object
 		@offer = Offer.find(params[:id])
+	end
+
+	def authorize
+		forbid unless @offer.advertiser==current_user
 	end
 
 	def and_crumbs
