@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/gravityfree/crummy.git
-  revision: d79ef71f4742d7bf2da56f3804df0bba637ee214
+  remote: git://github.com/proton/crummy.git
+  revision: 201b630449cbf136119e934849882343ec2ce33a
   specs:
     crummy (1.5.0)
 
@@ -94,7 +94,7 @@ GEM
       has_scope (~> 0.5.0)
       responders (~> 0.6)
     journey (1.0.3)
-    jquery-rails (2.0.1)
+    jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
     json (1.6.6)
@@ -171,7 +171,7 @@ GEM
       rspec-expectations (~> 2.9.0)
       rspec-mocks (~> 2.9.0)
     rspec-core (2.9.0)
-    rspec-expectations (2.9.0)
+    rspec-expectations (2.9.1)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.9.0)
     rspec-rails (2.9.0)

@@ -45,7 +45,7 @@ gem 'devise'
 gem 'russian'
 gem 'ru_propisju'
 
-gem 'crummy', :git => 'git://github.com/gravityfree/crummy.git' #waiting for fixing html_list format
+gem 'crummy', :git => 'git://github.com/proton/crummy.git' #waiting for fixing html_list format
 
 gem 'agent_orange'
 
