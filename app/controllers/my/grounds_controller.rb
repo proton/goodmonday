@@ -2,11 +2,23 @@
 
 class My::GroundsController < My::BaseController
 	before_filter :find_object, :only => [:show, :update, :edit, :destroy]
-	before_filter :and_crumbs, :only => [:show, :edit]
+	before_filter :and_crumbs
 
 	def index
 		@grounds = current_user.grounds
-		add_crumb "Рекламные площадки"
+	end
+
+	def show
+		add_crumb "Рекламная площадка «#{@ground.title}»"
+	end
+
+	def edit
+		add_crumb "Рекламная площадка «#{@ground.title}»"
+	end
+
+	def new
+		@ground = Ground.new
+		add_crumb "Новая рекламная площадка"
 	end
 
 	def create
@@ -27,12 +39,6 @@ class My::GroundsController < My::BaseController
 		respond_with(@ground, :location => my_grounds_path)
 	end
 
-	def new
-		@ground = Ground.new
-		add_crumb "Рекламные площадки", my_grounds_path
-		add_crumb "Новая рекламная площадка"
-	end
-
 	protected
 
 	def find_object
@@ -41,7 +47,6 @@ class My::GroundsController < My::BaseController
 
 	def and_crumbs
 		add_crumb "Рекламные площадки", my_grounds_path
-		add_crumb "Рекламная площадка «#{@ground.title}»"
 	end
 
 end

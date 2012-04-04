@@ -1,5 +1,5 @@
 Crummy.configure do |config|
 	config.format = :html_list
 	config.ul_class = 'breadcrumb'
-	config.active_li_class = 'active'
+	config.last_class = 'active'
 end

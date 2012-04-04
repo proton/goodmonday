@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/proton/crummy.git
-  revision: 201b630449cbf136119e934849882343ec2ce33a
+  revision: 2cf9de3ce70f6b1442c69de3614568f2aa9d21a7
   specs:
     crummy (1.5.0)
 

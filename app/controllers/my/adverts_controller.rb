@@ -8,7 +8,6 @@ class My::AdvertsController < My::BaseController
 
 	def index
 		@adverts = @offer.adverts
-		add_crumb "Объявления"
 	end
 
 	def create
@@ -26,7 +25,6 @@ class My::AdvertsController < My::BaseController
 	def new
 		@type = params[:type].constantize if params[:type]
 		@advert = @offer.adverts.build({}, @type)
-		add_crumb "Объявления", my_offer_adverts_path(@offer)
 		add_crumb "Новое объявление"
 	end
 
@@ -39,6 +37,7 @@ class My::AdvertsController < My::BaseController
 	def and_nested_crumbs
 		add_crumb "Рекламные кампании", my_offers_path
 		add_crumb "Рекламная кампания «#{@offer.title}»", my_offer_path(@offer)
+		add_crumb "Объявления", my_offer_adverts_path(@offer)
 	end
 
 	def find_object
@@ -46,7 +45,6 @@ class My::AdvertsController < My::BaseController
 	end
 
 	def and_crumbs
-		add_crumb "Объявления", my_offer_adverts_path(@offer)
 		add_crumb "Объявление"
 	end
 	
