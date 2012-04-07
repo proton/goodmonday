@@ -1,46 +1,40 @@
-%section
-	.page-header
-		%h1= 'Офферы'
-	.row
-		= render 'my/sidebar'
-		.span9
-			%table.table.table-bordered.table-striped
-				%thead
-					%tr
-						%th= 'Название'
-						%th= 'Статус'
-						-#%th= 'Режим'
-						%th= 'Показы/Выплаты'
-						%th= 'Действия'
-				%tbody
-					- @offers.each do |offer|
-						%tr{:class => offer.is_accepted? ? '' : 'muted'}
-							%td= offer.title
-							%td= t(offer.moderated_state)
-							-#%td= offer.mode
-							%td
-								= offer.shows
-								= ' / '
-								= number_to_currency offer.payments
-							%td
-								= link_to my_offer_targets_path(offer), :class => 'btn btn-small' do
-									%i.icon-screenshot
-									= 'Цели'
-								= link_to my_offer_adverts_path(offer), :class => 'btn btn-small' do
-									%i.icon-picture
-									= 'Банеры'
-								= link_to my_offer_grounds_path(offer), :class => 'btn btn-small' do
-									%i.icon-road
-									= 'Площадки'
-								= link_to edit_my_offer_path(offer), :class => 'btn btn-small' do
-									%i.icon-cog
-									= 'Настройки'
-								-#= link_to edit_my_offer_path(offer), :class => 'btn btn-small' do
-								-#	%i.icon-pencil
-								-#	= 'Редактировать'
-								= link_to my_offer_path(offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
-									%i.icon-trash.icon-white
-									= 'Удалить'
-			= link_to new_my_offer_path, :class => 'btn btn-primary' do
-				%i.icon-plus-sign.icon-white
-				= 'Добавить'
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Название'
+			%th= 'Статус'
+			-#%th= 'Режим'
+			%th= 'Показы/Выплаты'
+			%th= 'Действия'
+	%tbody
+		- @offers.each do |offer|
+			%tr{:class => offer.is_accepted? ? '' : 'muted'}
+				%td= offer.title
+				%td= t(offer.moderated_state)
+				-#%td= offer.mode
+				%td
+					= offer.shows
+					= ' / '
+					= number_to_currency offer.payments
+				%td
+					= link_to my_offer_targets_path(offer), :class => 'btn btn-small' do
+						%i.icon-screenshot
+						= 'Цели'
+					= link_to my_offer_adverts_path(offer), :class => 'btn btn-small' do
+						%i.icon-picture
+						= 'Банеры'
+					= link_to my_offer_grounds_path(offer), :class => 'btn btn-small' do
+						%i.icon-road
+						= 'Площадки'
+					= link_to edit_my_offer_path(offer), :class => 'btn btn-small' do
+						%i.icon-cog
+						= 'Настройки'
+					-#= link_to edit_my_offer_path(offer), :class => 'btn btn-small' do
+					-#	%i.icon-pencil
+					-#	= 'Редактировать'
+					= link_to my_offer_path(offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						%i.icon-trash.icon-white
+						= 'Удалить'
+= link_to new_my_offer_path, :class => 'btn btn-primary' do
+	%i.icon-plus-sign.icon-white
+	= 'Добавить'

@@ -3,6 +3,7 @@
 class My::BaseController < ApplicationController
 	respond_to :html
 	before_filter :authenticate_user!
+	layout 'my'
 
 	add_crumb 'Кабинет', '/my'
 

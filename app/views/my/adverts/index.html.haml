@@ -1,36 +1,30 @@
-%section
-	.page-header
-		%h1= 'Объявления'
-	.row
-		= render 'my/sidebar'
-		.span9
-			%table.table.table-bordered.table-striped
-				%thead
-					%tr
-						%th= 'Предпросмотр'
-						%th= 'Статус'
-						%th= 'Тип'
-						%th= 'Размеры'
-						%th= 'Дополнительно'
-						%th= 'Действия'
-				%tbody
-					- @adverts.each do |advert|
-						%tr{:class => advert.is_accepted? ? '' : 'muted'}
-							%td= image_tag "http://placehold.it/200x100"
-							%td= t(advert.moderated_state)
-							%td= t(advert._type)
-							%td= advert.sizes.to_sentence
-							%td
-								- case advert.class
-									- when Banner
-										= "URL: #{advert.url}"
-							%td
-								= link_to my_offer_advert_path(@offer, advert), :class => 'btn btn-small' do
-									%i.icon-pencil
-									= 'Редактировать'
-								= link_to my_offer_advert_path(@offer, advert), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
-									%i.icon-trash.icon-white
-									= 'Удалить'
-			= link_to new_my_offer_advert_path(@offer), :class => 'btn btn-primary' do
-				%i.icon-plus-sign.icon-white
-				= 'Добавить'
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Предпросмотр'
+			%th= 'Статус'
+			%th= 'Тип'
+			%th= 'Размеры'
+			%th= 'Дополнительно'
+			%th= 'Действия'
+	%tbody
+		- @adverts.each do |advert|
+			%tr{:class => advert.is_accepted? ? '' : 'muted'}
+				%td= image_tag "http://placehold.it/200x100"
+				%td= t(advert.moderated_state)
+				%td= t(advert._type)
+				%td= advert.sizes.to_sentence
+				%td
+					- case advert.class
+						- when Banner
+							= "URL: #{advert.url}"
+				%td
+					= link_to my_offer_advert_path(@offer, advert), :class => 'btn btn-small' do
+						%i.icon-pencil
+						= 'Редактировать'
+					= link_to my_offer_advert_path(@offer, advert), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						%i.icon-trash.icon-white
+						= 'Удалить'
+= link_to new_my_offer_advert_path(@offer), :class => 'btn btn-primary' do
+	%i.icon-plus-sign.icon-white
+	= 'Добавить'
