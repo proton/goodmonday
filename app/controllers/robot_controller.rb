@@ -41,7 +41,7 @@ class RobotController < ApplicationController
 		offer_id = params[:offer_id]
 
 		ip = request.remote_ip
-		if BlackIp.exclude(ip)
+		if BlackIp.exclude(ip) && cheack_for_suspicions(request)
 			ground = Ground.find(ground_id)
 			if ground
 				offer = Offer.find(offer_id)
@@ -90,7 +90,7 @@ class RobotController < ApplicationController
 
 	def target
 		ip = request.remote_ip
-		if BlackIp.exclude(ip)
+		if BlackIp.exclude(ip) && cheack_for_suspicions(request)
 			offer = Offer.find(params[:offer_id])
 			if offer
 				if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
@@ -125,6 +125,16 @@ class RobotController < ApplicationController
 			end
 		end
 		redirect_to "/pixel.png"
+	end
+
+	protected
+
+	def cheack_for_suspicions(request)
+		reason = nil
+		reason = "#{reason}Пустой referer. " if request.referer.empty?
+		reason = "#{reason}Пустой user_agent. " if request.user_agent.empty?
+		Suspicion.create(:ip => request.remote_ip, :reason_text => reason) unless reason.nil?
+		reason.nil?
 	end
 
 end

@@ -14,6 +14,7 @@ class Achievement
 
 	field :page, type: String
 	field :ip, type: String
+	index :ip
 
 	field :price, type: Integer
 

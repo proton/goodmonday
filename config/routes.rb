@@ -43,6 +43,10 @@ Cpa::Application.routes.draw do
 			get :accept
 			get :deny
 		end
+		resources :suspicions do
+			get :block
+			get :forgive
+		end
 	end
 
 	root :to => 'home#index'

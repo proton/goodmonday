@@ -1,0 +1,25 @@
+%section
+	.page-header
+		%h1= 'Подозрительные действия'
+	.row
+		.span9
+			%table.table.table-bordered.table-striped
+				%thead
+					%tr
+						%th= 'Причина'
+						%th= 'IP-Адрес'
+						%th= 'Дата'
+						%th= 'Действия'
+				%tbody
+					- @suspicions.each do |suspicion|
+						%tr
+							%td= suspicion.reason_text
+							%td= suspicion.ip
+							%td= suspicion.created_at
+							%td
+								= link_to admin_suspicion_block_path(moderation), :class => 'btn btn-small' do
+									%i.icon-ban-circle
+										= 'Заблокировать'
+								= link_to admin_suspicion_forgive_path(moderation), :class => 'btn btn-small' do
+									%i.icon-remove-circle
+										= 'Скрыть'
