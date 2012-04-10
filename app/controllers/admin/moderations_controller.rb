@@ -14,7 +14,7 @@ class Admin::ModerationsController < Admin::BaseController
 	end
 
 	def accept
-		@moderation.accept(current_operator)
+		@moderation.accept(current_operator, params[:moderated_edit])
 		redirect_to admin_moderation_path(@moderation)
 	end
 

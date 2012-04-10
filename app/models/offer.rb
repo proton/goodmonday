@@ -31,5 +31,6 @@ class Offer
 	end
 
 	MODERATED_ATTRS = [:title, :url, :category_id]
+	MODERATED_EDIT_FIELDS = [:is_adult, :is_doubtful]
 	include IsModerated
 end

@@ -8,6 +8,7 @@ class ModerationStateChange
 	field :message, type: String
 	field :created_at, type: DateTime, default: -> { DateTime.now }
 	symbolize :reason, :in => [:created, :updated, :checked]
+	field :edit_fields, type: Hash
 
 	belongs_to :operator
 end

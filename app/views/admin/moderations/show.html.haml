@@ -1,3 +1,4 @@
+- moderated_edit_fields_exists = (defined? moderated_class::MODERATED_EDIT_FIELDS && !moderated_class::MODERATED_EDIT_FIELDS.empty?)
 %section
 	.page-header
 		%h1= "Проверка"
@@ -33,7 +34,7 @@
 							- if changed_value.class==BSON::ObjectId && key[-3..-1]=='_id'
 								- klass = key[0..-4].camelize.constantize
 								- type = :association
-							- elsif moderated_class::MODERATED_ATTRS_INFO && moderated_class::MODERATED_ATTRS_INFO[key]
+							- elsif moderated_class.respond_to?(:MODERATED_ATTRS_INFO) && moderated_class::MODERATED_ATTRS_INFO[key]
 								- attr_info = moderated_class::MODERATED_ATTRS_INFO[key]
 								- type = attr_info[:type]
 							%tr
@@ -58,12 +59,25 @@
 											- else
 												= accepted_value
 
-				= link_to admin_moderation_accept_path(@moderation), :class => 'btn btn-success' do
-					%i.icon-ok.icon-white
-					= 'Одобрить'
-				= link_to admin_moderation_deny_path(@moderation), :class => 'btn btn-danger' do
-					%i.icon-remove.icon-white
-					= 'Отказать'
+				= form_tag(admin_moderation_accept_path(@moderation), :method => :get) do
+					- if moderated_edit_fields_exists
+						%h4= 'Дополнительные настройки:'
+						- moderated_class::MODERATED_EDIT_FIELDS.each do |key|
+							%p
+								= key
+								- options = moderated_class.fields[key.to_s].options
+								- field_name = "moderated_edit[#{key.to_s}]"
+								- case options[:type].to_s
+									- when 'Boolean'
+										= check_box_tag field_name, 1, options[:default]
+									- else
+										= ''
+					= button_tag :class => 'btn btn-success' do
+						%i.icon-ok.icon-white
+						= 'Одобрить'
+					= link_to admin_moderation_deny_path(@moderation), :class => 'btn btn-danger' do
+						%i.icon-remove.icon-white
+						= 'Отказать'
 				%hr
 	.row
 		.span6
@@ -86,33 +100,12 @@
 						%th= 'Дата'
 						%th= 'Статус'
 						%th= 'Проверяющий'
+						- if moderated_edit_fields_exists
+							%th= 'Установленные значения'
 				%tbody
 					- @moderation.moderation_state_changes.each do |change|
 						%tr
 							%td= change.created_at
 							%td= change.state
 							%td= change.operator_id
-			-#.subnav
-			-#	%ul.nav.nav-pills
-			-#		%li.active= link_to 'Home', my_ground_path(@ground)
-			-#		%li.dropdown
-			-#			= link_to '#', :class => 'dropdown-toggle' do
-			-#				= 'Links'
-			-#				%b.caret
-			-#			%ul.dropdown-menu
-			-#				%li= link_to 'Accepted', my_ground_links_path(@ground, :state => :accepted)
-			-#				%li= link_to 'Denied', my_ground_links_path(@ground, :state => :denied)
-			-#				%li= link_to 'Pending', my_ground_links_path(@ground, :state => :pending)
-			-#				%li.divider
-			-#				%li= link_to 'Добавить', new_my_ground_link_path(@ground)
-			-#		%li.dropdown
-			-#			= link_to '#', :class => 'dropdown-toggle' do
-			-#				= 'Rotator'
-			-#				%b.caret
-			-#			%ul.dropdown-menu
-			-#				%li= link_to 'Accepted', my_ground_adverts_path(@ground, :state => :accepted)
-			-#				%li= link_to 'Denied', my_ground_adverts_path(@ground, :state => :denied)
-			-#				%li= link_to 'Pending', my_ground_adverts_path(@ground, :state => :pending)
-			-#				%li.divider
-			-#				%li= link_to 'Добавить', new_my_ground_advert_path(@ground)
-			-#= ' // Настройки'
+							%td= change.edit_fields
