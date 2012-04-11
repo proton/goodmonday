@@ -10,7 +10,11 @@
 	%tbody
 		- @adverts.each do |advert|
 			%tr{:class => advert.is_accepted? ? '' : 'muted'}
-				%td= image_tag "http://placehold.it/200x100"
+				%td
+					- unless advert.banner_images.empty?
+						%ul.thumbnails
+							%li.span3
+								.thumbnail= image_tag advert.banner_images.first.image
 				%td= t(advert.moderated_state)
 				%td= t(advert._type)
 				%td= advert.sizes.to_sentence

@@ -18,7 +18,11 @@
 			%tbody
 				- @advert.banner_images.each do |banner_image|
 					%tr{:class => banner_image.is_accepted? ? '' : 'muted'}
-						%td= image_tag banner_image.image
+						%td
+							%ul.thumbnails
+								%li.span3
+									.thumbnail= image_tag banner_image.image
+						-#%td= banner_image.inspect
 						%td= t(banner_image.moderated_state)
 						%td= banner_image.size
 						%td
@@ -27,7 +31,11 @@
 							= link_to my_offer_advert_banner_image_path(@offer, @advert, banner_image), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
 								%i.icon-trash.icon-white
 								= 'Удалить'
+		%h3= 'Новое изображение'
+		%p
+			= 'Загрузите изображение одного из следующих размеров: '
+			= ADVERTS_SIZES.to_sentence
 		= simple_form_for(@advert.banner_images.new, :url => my_offer_advert_banner_images_path(@offer, @advert), :html => {:class => 'form-inline' }) do |f|
-			= f.input :size, :as => :select, :collection => ADVERTS_SIZES, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
+			-#= f.input :size, :as => :select, :collection => ADVERTS_SIZES, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
 			= f.input :image, :as => :file, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
 			= f.button :submit, :class => 'btn-primary'

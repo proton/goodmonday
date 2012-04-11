@@ -10,8 +10,18 @@ class My::BannerImagesController < My::BaseController
 
 	def create
 		@banner_image = @advert.banner_images.build(params[:banner_image])
-		flash[:notice] = 'Изображение добавлено.' if @banner_image.save
+		#if @banner_image.valid?
+		#	flash[:notice] = 'valid'
+		#else
+		#	flash[:error] = 'invalid'
+		#end
+		if @banner_image.save
+			flash[:notice] = 'Изображение добавлено.'
+		else
+			flash[:error] = @banner_image.errors.messages[:size] ? 'Неверный размер изображения' : @banner_image.errors.full_messages
+		end
 		redirect_to my_offer_advert_path(@offer, @advert)
+		#respond_with(@banner_image, :location => my_offer_advert_path(@offer, @advert))
 	end
 
 	def destroy
