@@ -1,6 +1,6 @@
 # coding: utf-8
 
-class Admin::ModerationsController < Admin::BaseController
+class My::ModerationsController < My::BaseOperatorController
 	before_filter :find_moderation, :only => [:show, :accept, :deny, :destroy]
 
 	def index

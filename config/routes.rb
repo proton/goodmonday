@@ -1,5 +1,4 @@
 Cpa::Application.routes.draw do
-  devise_for :operators
   devise_for :users, :path_names =>
 	{
 		:sign_in => 'login',
@@ -21,6 +20,7 @@ Cpa::Application.routes.draw do
 
 	namespace :my do
 		match '/' => 'base#index'
+		#advertiser
 		resources :offers do
 			resources :targets
 			resources :adverts do
@@ -31,14 +31,14 @@ Cpa::Application.routes.draw do
 				get :deny
 			end
 		end
+		#webmaster
 		resources :grounds do
 			resources :links, :controller => "ground_link_offers"
 			resources :adverts, :controller => "ground_advert_offers"
 		end
+		#advertiser & webmaster
 		resources :achievements
-	end
-	namespace :admin do
-		match '/' => 'base#index'
+		#operator
 		resources :moderations do
 			get :accept
 			get :deny

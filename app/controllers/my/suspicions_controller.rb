@@ -1,6 +1,6 @@
 # coding: utf-8
 
-class Admin::SuspicionsController < Admin::BaseController
+class My::SuspicionsController < My::BaseOperatorController
 
 	def index
 		add_crumb "Подозрительные действия"

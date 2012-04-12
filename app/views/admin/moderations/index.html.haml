@@ -17,6 +17,6 @@
 							%td= moderation.reason
 							%td= moderation.updated_at
 							%td
-								= link_to admin_moderation_path(moderation), :class => 'btn btn-small' do
+								= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
 									%i.icon-cog
 									= 'Открыть'

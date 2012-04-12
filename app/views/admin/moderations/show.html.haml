@@ -59,7 +59,7 @@
 											- else
 												= accepted_value
 
-				= form_tag(admin_moderation_accept_path(@moderation), :method => :get) do
+				= form_tag(my_moderation_accept_path(@moderation), :method => :get) do
 					- if moderated_edit_fields_exists
 						%h4= 'Дополнительные настройки:'
 						- moderated_class::MODERATED_EDIT_FIELDS.each do |key|
@@ -75,7 +75,7 @@
 					= button_tag :class => 'btn btn-success' do
 						%i.icon-ok.icon-white
 						= 'Одобрить'
-					= link_to admin_moderation_deny_path(@moderation), :class => 'btn btn-danger' do
+					= link_to my_moderation_deny_path(@moderation), :class => 'btn btn-danger' do
 						%i.icon-remove.icon-white
 						= 'Отказать'
 				%hr
