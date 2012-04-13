@@ -1,0 +1,17 @@
+%h2.title= @discussion.subject
+- @discussion.messages.each do |message|
+	%b= message.user.email
+	%blockquote
+		%p= message.text
+		%i= message.created_at
+- if @discussion.state==:open
+	= form_tag my_discussion_message_path(@discussion) do
+		= text_area_tag :text, '', :class => "span6 text"
+		= button_tag :class => 'btn btn-primary' do
+			%i.icon-pencil.icon-white
+			= 'Добавить'
+	= link_to my_discussion_close_path(@discussion), :method => :put , :class => 'btn btn-danger' do
+		%i.icon-remove-sign.icon-white
+		= 'Закрыть обсуждение'
+- else
+	%b= 'Закрыто'

@@ -1,0 +1,23 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= '№'
+			%th= 'Тема'
+			%th= 'Статус'
+			%th= 'Ответы'
+			%th= 'Действия'
+	%tbody
+		- @discussions.each do |discussion|
+			%tr
+				%td= discussion.num
+				%td= discussion.subject
+				%td= t(discussion.state)
+				%td= discussion.messages.size
+				%td
+					= link_to my_discussion_path(discussion), :class => 'btn btn-small' do
+						%i.icon-cog
+						= 'Открыть'
+- unless @is_operator
+	= link_to new_my_discussion_path, :class => 'btn btn-primary' do
+		%i.icon-plus-sign.icon-white
+		= 'Задать вопрос'

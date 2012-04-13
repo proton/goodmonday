@@ -6,12 +6,13 @@
 			%li
 				- case current_user.class
 					- when Advertiser
-						= link_to 'Offers', my_offers_path
-						= link_to 'Achievements', my_achievements_path
+						= link_to 'Рекламные кампании', my_offers_path
+						= link_to 'Достижения', my_achievements_path
 					- when Webmaster
-						= link_to 'Grounds', my_grounds_path
-						= link_to 'Achievements', my_achievements_path
+						= link_to 'Рекламные площадки', my_grounds_path
+						= link_to 'Достижения', my_achievements_path
 					- when Operator
 						= link_to 'Модерации', my_moderations_path
 						= link_to 'Подозрителные действия', my_suspicions_path
+				= link_to 'Поддержка', my_discussions_path
 			= yield :sidebar_etc

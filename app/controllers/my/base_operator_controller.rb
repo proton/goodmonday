@@ -7,6 +7,6 @@ class My::BaseOperatorController < My::BaseController
 	protected
 
 	def authenticate_operator
-		redirect_to my_path unless current_user.class==Operator
+		redirect_to my_path unless @is_operator
 	end
 end

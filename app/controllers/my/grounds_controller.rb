@@ -39,7 +39,7 @@ class My::GroundsController < My::BaseController
 		respond_with(@ground, :location => my_grounds_path)
 	end
 
-	protected
+	private
 
 	def find_object
 		@ground = current_user.grounds.find(params[:id])

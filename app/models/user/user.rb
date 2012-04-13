@@ -47,4 +47,6 @@ class User
 	#		self.affiliator_id = cookies[:referral]
 	#	end
 	#end
+
+	has_many :discussions
 end

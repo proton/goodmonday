@@ -134,9 +134,9 @@ GEM
     mongoid-eager-loading (0.3.1)
     mongoid_activity (0.0.2)
       mongoid (>= 2.0.0.beta)
-    mongoid_auto_increment (0.0.8)
-      bson_ext
-      mongoid
+    mongoid_auto_inc (0.1.0)
+      activesupport (>= 3.0.0)
+      mongoid (>= 2.0.0.rc.6)
     mongoid_denormalize (0.3.0)
       mongoid (>= 2.1.9)
     mongoid_slug (0.10.0)
@@ -267,7 +267,7 @@ DEPENDENCIES
   mongoid
   mongoid-eager-loading
   mongoid_activity
-  mongoid_auto_increment
+  mongoid_auto_inc
   mongoid_denormalize
   mongoid_slug
   rails (= 3.2.3)

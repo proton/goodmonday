@@ -14,7 +14,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'compass'
 
-gem 'mongoid_auto_increment'
+gem 'mongoid_auto_inc'
 gem 'mongoid_activity'
 gem 'mongoid_denormalize'
 gem 'mongoid_slug'

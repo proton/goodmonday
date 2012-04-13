@@ -47,6 +47,11 @@ Cpa::Application.routes.draw do
 			get :block
 			get :forgive
 		end
+		#all
+		resources :discussions do
+			post :message
+			put :close
+		end
 	end
 
 	root :to => 'home#index'
