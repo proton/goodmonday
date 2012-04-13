@@ -16,15 +16,7 @@
 			var auto_mode = (confirm_mode=='auto')
 			var form = $(this).closest("form");
 			var manual_mode_fields = form.find('.manual_mode_fields');
-			if(auto_mode)
-			{
-				manual_mode_fields.hide();
-				manual_mode_fields.find('input').prop('disabled', auto_mode);
-			}
-			else
-			{
-				manual_mode_fields.show();
-				manual_mode_fields.find('input').prop('disabled', auto_mode);
-			}
+			manual_mode_fields.toggle(!auto_mode);
+			manual_mode_fields.find('input').prop('disabled', auto_mode);
 		});
 	});
