@@ -30,7 +30,7 @@ class Offer
 		self.save
 	end
 
-	MODERATED_ATTRS = [:title, :url, :category_id]
+	MODERATED_ATTRS = %w[title url category_id]
 	MODERATED_EDIT_FIELDS = [:is_adult, :is_doubtful]
 	include IsModerated
 end

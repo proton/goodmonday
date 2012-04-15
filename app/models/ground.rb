@@ -124,7 +124,7 @@ class Ground
 
 	#validates :url, :uniqueness => true
 
-	MODERATED_ATTRS = [:title, :url, :type, :category_id]
+	MODERATED_ATTRS = %w[title url type category_id]
 	include IsModerated
 
 end

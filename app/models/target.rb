@@ -11,6 +11,6 @@ class Target
 	field :confirm_url, type: String
 	#TODO: должно быть 2 цены (вебмастера и рекламодателя)
 
-	MODERATED_ATTRS = [:title, :fixed_price, :prc_price]
+	MODERATED_ATTRS = %w[title fixed_price prc_price]
 	include IsModerated
 end

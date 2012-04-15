@@ -25,6 +25,7 @@ module IsModerated
 	end
 
 	def set_moderation
+		return if @changed_attrs.has_key? 'moderated_state'
 		moderated_fields = @changed_attrs.keys & self.class::MODERATED_ATTRS
 		change_moderation moderated_fields, :updated
 	end
@@ -41,7 +42,7 @@ module IsModerated
 		end
 		moderation.reason = reason
 		moderation.state = state
-		write_attribute(:moderation_state, state)
+		write_attribute(:moderated_state, state)
 		moderation.moderation_state_changes.build({:state => state, :reason => reason})
 		moderation_field_change = moderation.moderation_field_changes.build
 		moderated_fields.each do |f|

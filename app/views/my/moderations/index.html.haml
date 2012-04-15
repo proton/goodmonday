@@ -8,6 +8,7 @@
 					%tr
 						%th= 'Тип'
 						%th= 'Причина'
+						%th= 'Статус'
 						%th= 'Дата'
 						%th= 'Действия'
 				%tbody
@@ -15,6 +16,7 @@
 						%tr
 							%td= moderation.moderated_type
 							%td= moderation.reason
+							%td= t(moderation.state)
 							%td= moderation.updated_at
 							%td
 								= link_to my_moderation_path(moderation), :class => 'btn btn-small' do

@@ -9,18 +9,18 @@ class My::ModerationsController < My::BaseOperatorController
 	end
 
 	def show
-		add_crumb "Модерации", admin_moderations_path
+		add_crumb "Модерации", my_moderations_path
 		add_crumb "Модерация объекта #{@moderation.moderated_type}"
 	end
 
 	def accept
-		@moderation.accept(current_operator, params[:moderated_edit])
-		redirect_to admin_moderation_path(@moderation)
+		@moderation.accept(current_user, params[:moderated_edit])
+		redirect_to my_moderation_path(@moderation)
 	end
 
 	def deny
-		@moderation.deny(current_operator)
-		redirect_to admin_moderation_path(@moderation)
+		@moderation.deny(current_user)
+		redirect_to my_moderation_path(@moderation)
 	end
 
 	protected

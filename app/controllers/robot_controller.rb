@@ -49,7 +49,6 @@ class RobotController < ApplicationController
 					offers = ground.accepted_offers.for_advert_size(size)
 					offers_count = offers.count
 				end
-				puts "#{size}: #{offers_count}/#{count}"
 				if offers_count>=count
 					max_count = offers_count-count+1
 					n = case Random.rand(6)
