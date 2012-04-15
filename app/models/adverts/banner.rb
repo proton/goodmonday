@@ -7,7 +7,7 @@ class Banner < Advert
 	include IsModerated
 
 	def update_sizes
-		self.sizes = self.banner_images.collect{|a| a.size}.flatten.compact
+		self.sizes = self.banner_images.accepted.collect{|a| a.size}.flatten.compact
 		self.save
 	end
 

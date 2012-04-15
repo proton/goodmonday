@@ -26,7 +26,7 @@ class Offer
 	scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).order_by(:epc, :desc) }
 
 	def update_adverts_sizes
-		self.adverts_sizes = self.adverts.collect{|a| a.sizes}.flatten.compact
+		self.adverts_sizes = self.adverts.accepted.collect{|a| a.sizes}.flatten.compact
 		self.save
 	end
 
