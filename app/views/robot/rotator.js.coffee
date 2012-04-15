@@ -11,34 +11,53 @@ if document.getElementsByClassName is `undefined`
       i++
     retnode
 
-gm_createRequestObject = ->
-  if typeof XMLHttpRequest is "undefined"
-    XMLHttpRequest = ->
-      try
-        return new ActiveXObject("Msxml2.XMLHTTP.6.0")
-      try
-        return new ActiveXObject("Msxml2.XMLHTTP.3.0")
-      try
-        return new ActiveXObject("Msxml2.XMLHTTP")
-      try
-        return new ActiveXObject("Microsoft.XMLHTTP")
-      throw new Error("This browser does not support XMLHttpRequest.")
+getXmlHttp = ->
+  xmlhttp = undefined
+  try
+    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP")
+  catch e
+    try
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+    catch E
+      xmlhttp = false
+  xmlhttp = new XMLHttpRequest()  if not xmlhttp and typeof XMLHttpRequest isnt "undefined"
+  xmlhttp
 
+h = {}
+eh = {}
 elems = document.getElementsByClassName("goodmonday_adv")
-for elem in elems
-  size = 'w100h100'
-  sizes = elem.className.match(/size_w\d+h\d+/g)
-  if sizes?
-    if sizes.length>0
-      size = sizes[0].substring(5)
+if elems.length > 0
+  for elem in elems
+    size = '100x100'
+    sizes = elem.className.match(/size_\d+x\d+/g)
+    if sizes?
+      if sizes.length>0
+        size = sizes[0].substring(5)
+    if h.hasOwnProperty(size)
+      ++h[size]
+      eh[size].push elem
+    else
+      h[size] = 1
+      eh[size] = [elem]
 
+  size_params = ''
+  for k of h
+    size_params += "sizes[#{k}]=#{encodeURIComponent(h[k])}&"
+
+  url =  "http://188.255.106.235:3000/robot/<%= @ground.id %>/advert.json?#{size_params}rn=#{Math.random()}"
   xmlhttp = getXmlHttp()
-  xmlhttp.open "GET", "http://188.255.106.235:3000/robot/<%= @ground.id %>/advert/#{size}?rn=#{Math.random()}", true
+  xmlhttp.open "GET", url, true
   xmlhttp.onreadystatechange = ->
     if xmlhttp.readyState is 4
       if xmlhttp.status is 200
-#        alert xmlhttp.responseText
-        elem.innerHTML = xmlhttp.responseText
+        banners = eval("(#{xmlhttp.responseText})")
+        for k of eh
+          size_banners = banners[k]
+          size_elems = eh[k]
+          len = size_elems.length
+          i = 0
+          while i < len
+            size_elems[i].innerHTML = size_banners[i]
+            i++
 
   xmlhttp.send null
-#  elem.innerHTML = "<a href='http://188.255.106.235:3000/robot/<%= @ground.id %>/goto/<%= @offer.id %>/<%= @advert.id %>'>Текст!!!</a>"

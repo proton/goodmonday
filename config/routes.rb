@@ -9,8 +9,8 @@ Cpa::Application.routes.draw do
 		:registration => 'register'
 	}, :controllers => { :registrations => "my/registrations" }
 
-	match 'robot/:ground_id/rotator' => 'robot#advert'
-	match 'robot/:ground_id/advert/:size' => 'robot#advert'
+	match 'robot/:ground_id/rotator' => 'robot#rotator'
+	match 'robot/:ground_id/advert' => 'robot#advert'
 	match 'robot/:ground_id/advert/:offer_id' => 'robot#advert'
 	match 'robot/:ground_id/goto/:offer_id' => 'robot#redirect'
 	match 'robot/:ground_id/goto/:offer_id/:advert_id' => 'robot#redirect'

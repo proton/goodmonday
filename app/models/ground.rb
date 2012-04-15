@@ -115,7 +115,7 @@ class Ground
 	def accepted_offers
 		offers = case self.mode
 			when :manual
-				return Offer.any_in(_id: self.accepted_link_offers_ids)
+				return Offer.any_in(_id: self.accepted_rotator_offers_ids)
 			when :automatic
 				return Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful)
 			end

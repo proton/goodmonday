@@ -26,13 +26,13 @@ class My::GroundAdvertOffersController < My::BaseController
 
 	def create
 		@offer = Offer.find(params[:offer_id])
-		flash[:notice] = 'Оффер добавлен.' if @ground.add_advert_offer_and_save(@offer)
+		flash[:notice] = 'Оффер добавлен.' if @ground.add_rotator_offer_and_save(@offer)
 		redirect_to my_ground_adverts_path(@ground)
 	end
 
 	def destroy
 		@offer = Offer.find(params[:id])
-		flash[:notice] = 'Оффер удалён.' if @ground.remove_advert_offer_and_save(@offer)
+		flash[:notice] = 'Оффер удалён.' if @ground.remove_rotator_offer_and_save(@offer)
 		redirect_to my_ground_adverts_path(@ground)
  	end
 

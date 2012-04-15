@@ -1,4 +1,7 @@
+# coding: utf-8
+
 class RobotController < ApplicationController
+	after_filter :set_access_control_headers, :only => [:advert]
 
 	def rotator
 		@ground = Ground.find(params[:ground_id])
@@ -6,33 +9,93 @@ class RobotController < ApplicationController
 	end
 
 	def advert
-		@size = params[:size]
-		@ground = Ground.find(params[:ground_id])
-		if @ground
-			offers = @ground.accepted_offers.for_advert_size(@size)
-			offers_count = offers.count
-			if offers_count>0
-				n = case Random.rand(6)
-					when 0 then 0
-					when 1 then Random.rand([offers_count, 3].min)
-					when 2 then Random.rand([offers_count, 5].min)
-					when 3 then Random.rand([offers_count, 10].min)
-					when 4 then Random.rand([offers_count, 50].min)
-					else Random.rand(offers_count)
-				end
-				@offer = offers.skip(n).limit(1)
-				#
-				#@offer = (params[:offer_id])? Offer.find(params[:offer_id]) : @ground.accepted_offers.first
-				#@entry = Entry.skip(rand(Entry.count)).limit(1)
-				adverts = @offer.adverts.for_size(@size)
-				@advert = Random.rand(offers.count).skip(Random.rand(adverts.count)).limit(1)
-				@offer.inc(:shows, 1)
-				render :text => @advert.html_code(size)
-			else
-				render :text => Advert.html_code(size)
-			end
+		sizes = params[:sizes]
+		ground = Ground.find(params[:ground_id])
+		if sizes.empty? || !ground
+			render :json => nil
 		else
-			render :text => Advert.html_code(size)
+			#offers = ground.accepted_offers.for_advert_size(@size)
+			#offers_count = offers.count
+			#if offers_count>0
+			#	n = case Random.rand(6)
+			#		when 0 then 0
+			#		when 1 then Random.rand([offers_count, 3].min)
+			#		when 2 then Random.rand([offers_count, 5].min)
+			#		when 3 then Random.rand([offers_count, 10].min)
+			#		when 4 then Random.rand([offers_count, 50].min)
+			#		else Random.rand(offers_count)
+			#	end
+			#	offer = offers.skip(n).limit(1)
+			#	#
+			#	#offer = (params[:offer_id])? Offer.find(params[:offer_id]) : ground.accepted_offers.first
+			#	#entry = Entry.skip(rand(Entry.count)).limit(1)
+			#	adverts = offer.adverts.for_size(size)
+			#	advert = Random.rand(offers.count).skip(Random.rand(adverts.count)).limit(1)
+			#	offer.inc(:shows, 1)
+			#	render :text => @advert.html_code(size)
+			#else
+			#	render :text => Advert.html_code(size)
+			#	end
+			#"<img src='http://placehold.it/#{size}' />"
+
+			used_offers = []
+			banners = {}
+			#
+			sizes.each_pair do |size,count_str|
+				count = count_str.to_i
+				offers = ground.accepted_offers.for_advert_size(size).not_in(_id: used_offers)
+				offers_count = offers.count
+				if offers_count<count
+					offers = ground.accepted_offers.for_advert_size(size)
+					offers_count = offers.count
+				end
+				puts "#{size}: #{offers_count}/#{count}"
+				if offers_count>=count
+					max_count = offers_count-count+1
+					n = case Random.rand(6)
+						when 0 then 0
+						when 1 then Random.rand([max_count, 3].min)
+						when 2 then Random.rand([max_count, 5].min)
+						when 3 then Random.rand([max_count, 10].min)
+						when 4 then Random.rand([max_count, 50].min)
+						else Random.rand(max_count)
+					end
+					offers = offers.skip(n).limit(count)
+					banners[size] = []
+					offers.each do |offer|
+						adverts = offer.adverts.for_size(size)
+						advert = adverts.skip(Random.rand(adverts.count)).limit(1).first
+						banners[size] << advert.html_code(size)
+						used_offers << offer.id
+					end
+				elsif offers_count>0
+					banners[size] = []
+					count.times do
+						n = case Random.rand(6)
+							when 0 then 0
+							when 1 then Random.rand([offers_count, 3].min)
+							when 2 then Random.rand([offers_count, 5].min)
+							when 3 then Random.rand([offers_count, 10].min)
+							when 4 then Random.rand([offers_count, 50].min)
+							else Random.rand(offers_count)
+						end
+						offer = offers.skip(n).limit(1).first
+						adverts = offer.adverts.for_size(size)
+						advert = adverts.skip(Random.rand(adverts.count)).limit(1).first
+						banners[size] << advert.html_code(size)
+						used_offers << offer.id
+					end
+				else
+					banners[size] = Array.new(count.to_i, "<img src='http://placehold.it/#{size}' />")
+				end
+
+			end
+			#
+			#sizes.each_pair do |size,count|
+			#	banners[size] = Array.new(count.to_i, "<img src='http://placehold.it/#{size}' />")
+			#end
+			#
+			render :json => banners.to_json
 		end
 	end
 
@@ -135,6 +198,11 @@ class RobotController < ApplicationController
 		reason = "#{reason}Пустой user_agent. " if request.user_agent.empty?
 		Suspicion.create(:ip => request.remote_ip, :reason_text => reason) unless reason.nil?
 		reason.nil?
+	end
+
+	def set_access_control_headers
+		headers['Access-Control-Allow-Origin'] = '*'
+		headers['Access-Control-Request-Method'] = '*'
 	end
 
 end

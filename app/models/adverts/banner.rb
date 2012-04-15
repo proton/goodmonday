@@ -5,4 +5,14 @@ class Banner < Advert
 
 	MODERATED_ATTRS = [:url]
 	include IsModerated
+
+	def update_sizes
+		self.sizes = self.banner_images.collect{|a| a.size}.flatten.compact
+		self.save
+	end
+
+	def html_code(size)
+		banner_image = banner_images.where(:size => size.to_sym).first
+		"<img src='#{banner_image.image}' />"
+	end
 end
