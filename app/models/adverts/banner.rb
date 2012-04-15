@@ -13,6 +13,6 @@ class Banner < Advert
 
 	def html_code(size)
 		banner_image = banner_images.where(:size => size.to_sym).first
-		"<img src='#{banner_image.image}' />"
+		"<a href='#{self.url}'><img src='#{banner_image.image}' /></a>"
 	end
 end

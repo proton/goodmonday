@@ -1,0 +1,1 @@
+weith = Math.random()*Math.random()

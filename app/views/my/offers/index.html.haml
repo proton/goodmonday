@@ -17,6 +17,9 @@
 					= ' / '
 					= number_to_currency offer.payments
 				%td
+					= link_to my_offer_path(offer), :class => 'btn btn-small' do
+						%i.icon-edit
+						= 'Код'
 					= link_to my_offer_targets_path(offer), :class => 'btn btn-small' do
 						%i.icon-screenshot
 						= 'Цели'

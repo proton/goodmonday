@@ -45,11 +45,12 @@
 				.alert.alert-alert= flash[:warning]
 			- if flash[:error]
 				.alert.alert-error= flash[:error]
-			= render_crumbs :separator => '/'
 			.content
 				%section
 					.page-header
 						%h1= crumbs.last.first
+					.row
+						.span12= render_crumbs :separator => '/'
 					.row
 						= render 'my/sidebar'
 						.span9= yield

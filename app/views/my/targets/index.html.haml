@@ -21,8 +21,11 @@
 						= number_to_currency target.fixed_price
 				%td
 					= link_to my_offer_target_path(@offer, target), :class => 'btn btn-small' do
-						%i.icon-signal
-						= 'Статистика'
+						%i.icon-edit
+						= 'Код'
+					-#= link_to my_offer_target_path(@offer, target), :class => 'btn btn-small' do
+					-#	%i.icon-signal
+					-#	= 'Статистика'
 					= link_to edit_my_offer_target_path(@offer, target), :class => 'btn btn-small' do
 						%i.icon-pencil
 						= 'Редактировать'

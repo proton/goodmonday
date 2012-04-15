@@ -1,1 +1,6 @@
-= ' // Настройки'
+%p= 'Пожалуйста, установите данный код на все страницы сайта. Это не обязательно, но позволит давать более чистый трафик, а также отображать больше информации о посетителях.'
+%pre.prettyprint.linenums
+	:escaped
+		<script language='javascript'>
+		document.write("<"+"script language='javascript' src='http://r.goodmonday.ru/#{@offer.id}/visit.js?n="+Math.random()+"'></"+"script>")
+		</script>

@@ -85,7 +85,7 @@ class RobotController < ApplicationController
 						used_offers << offer.id
 					end
 				else
-					banners[size] = Array.new(count.to_i, "<img src='http://placehold.it/#{size}' />")
+					banners[size] = Array.new(count.to_i, Advert.html_code(size))
 				end
 
 			end
@@ -144,10 +144,9 @@ class RobotController < ApplicationController
 				visitor.page_visits.create(:ip => request.remote_ip, :page => request.referer)
 			end
 		end
-		response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
-		response.headers["Pragma"] = "no-cache"
-		response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
-		redirect_to "/pixel.png", :status => 307
+		#response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+		#response.headers["Pragma"] = "no-cache"
+		#response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
 	end
 
 	def target

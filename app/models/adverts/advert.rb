@@ -15,7 +15,7 @@ class Advert
 	end
 
 	def self.html_code(size)
-		"<img src='http://placehold.it/#{size}' />"
+		"<a href='http://goodmonday.ru'><img src='http://placehold.it/#{size}' /></a>"
 	end
 
 	def html_code(size)
