@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require bootstrap
+ *= require chosen
  *= require_tree ../../../vendor/assets/stylesheets
  *= require_tree .
 */

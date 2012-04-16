@@ -25,13 +25,13 @@ class My::GroundsController < My::BaseController
 		@ground = Ground.new(params[:ground])
 		@ground.webmaster = current_user
 		flash[:notice] = 'Площадка добавлена.' if @ground.save
-		respond_with(@ground, :location => my_grounds_path)
+		respond_with(@ground, :location => my_ground_path(@ground))
 	end
 
 	def update
 		@ground = Ground.find(params[:id])
 		flash[:notice] = 'Площадка обновлена.' if @ground.update_attributes(params[:ground])
-		respond_with(@ground, :location => my_grounds_path)
+		respond_with(@ground, :location => my_ground_path(@ground))
 	end
 
 	def destroy

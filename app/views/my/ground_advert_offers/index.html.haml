@@ -47,10 +47,11 @@
 					= ' / '
 					= number_to_currency offer.payments
 				%td
-					= link_to my_ground_advert_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
-						%i.icon-trash.icon-white
-						= 'Удалить'
-- if @ground.is_accepted?
+					- if @ground.rotator_mode==:manual
+						= link_to my_ground_advert_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+							%i.icon-trash.icon-white
+							= 'Удалить'
+- if @ground.is_accepted? && @ground.rotator_mode==:manual
 	= link_to new_my_ground_advert_path(@ground), :class => 'btn btn-primary' do
 		%i.icon-plus-sign.icon-white
 		= 'Добавить'

@@ -51,14 +51,8 @@ class RobotController < ApplicationController
 				end
 				if offers_count>=count
 					max_count = offers_count-count+1
-					n = case Random.rand(6)
-						when 0 then 0
-						when 1 then Random.rand([max_count, 3].min)
-						when 2 then Random.rand([max_count, 5].min)
-						when 3 then Random.rand([max_count, 10].min)
-						when 4 then Random.rand([max_count, 50].min)
-						else Random.rand(max_count)
-					end
+
+					n = (Math.log(Random.rand, 0.95)).floor % max_count
 					offers = offers.skip(n).limit(count)
 					banners[size] = []
 					offers.each do |offer|
@@ -70,14 +64,7 @@ class RobotController < ApplicationController
 				elsif offers_count>0
 					banners[size] = []
 					count.times do
-						n = case Random.rand(6)
-							when 0 then 0
-							when 1 then Random.rand([offers_count, 3].min)
-							when 2 then Random.rand([offers_count, 5].min)
-							when 3 then Random.rand([offers_count, 10].min)
-							when 4 then Random.rand([offers_count, 50].min)
-							else Random.rand(offers_count)
-						end
+						n = (Math.log(Random.rand, 0.95)).floor % offers_count
 						offer = offers.skip(n).limit(1).first
 						adverts = offer.adverts.for_size(size)
 						advert = adverts.skip(Random.rand(adverts.count)).limit(1).first

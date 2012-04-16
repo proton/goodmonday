@@ -1,4 +1,5 @@
-jQuery ->
+$ ->
+  #bootstrap
   $(".alert-message").alert()
   $(".tabs").button()
   $(".carousel").carousel()
@@ -11,3 +12,5 @@ jQuery ->
   $(".tooltip").tooltip()
   $(".typeahead").typeahead()
   $("a[rel=tooltip]").tooltip()
+  #chosen
+  $(".chosen").chosen()

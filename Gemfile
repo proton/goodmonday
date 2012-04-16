@@ -39,12 +39,12 @@ end
 
 gem 'jquery-rails'
 
-gem 'inherited_resources'
-
 gem 'devise'
 
 gem 'russian'
 gem 'ru_propisju'
+
+gem 'chosen-rails'
 
 gem 'crummy', :git => 'git://github.com/proton/crummy.git' #waiting for fixing html_list format
 

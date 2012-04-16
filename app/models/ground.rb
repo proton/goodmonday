@@ -2,6 +2,8 @@ class Ground
   include Mongoid::Document
 	include Mongoid::Symbolize
 
+	before_create :build_ground_rotator_config
+
 	belongs_to :webmaster
 	#field :webmaster_id, type: Fields::Serializable::ForeignKeys::Object, default: -> {current_user.id}
 	belongs_to :category
@@ -11,7 +13,9 @@ class Ground
 
 	symbolize :type, :in => [:website, :doorway, :socialnet], :default => :website
 
-	symbolize :rotator_mode, :in => [:manual, :automatic], :default => :manual
+	symbolize :rotator_mode, :in => [:manual, :auto], :default => :manual
+	embeds_one :ground_rotator_config
+	accepts_nested_attributes_for :ground_rotator_config
 
 	field :accepted_rotator_offers_ids, type: Array, default: []
 	field :denied_rotator_offers_ids, type: Array, default: []
@@ -104,11 +108,14 @@ class Ground
 		self.save
 	end
 
-	has_many :ground_offers, dependent: :delete
+	def remove_all_rotator_offers
+		self.accepted_rotator_offers_ids.clear
+		self.denied_rotator_offers_ids.clear
+		self.pending_rotator_offers_ids.clear
+	end
 
-	#if automatic:
-	field :block_adult, type: Boolean, default: true
-	field :block_doubtful, type: Boolean, default: true
+
+	has_many :ground_offers, dependent: :delete
 
 	has_many :achievements
 
