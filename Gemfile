@@ -21,7 +21,7 @@ gem 'mongoid_slug'
 gem 'mongoid-eager-loading'
 
 gem 'simple_form'
-gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass'
 
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'mini_magick'

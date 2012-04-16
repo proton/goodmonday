@@ -12,8 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
-//= require twitter/bootstrap/bootstrap-dropdown
+//= require bootstrap
 //= require chosen-jquery
 //= require_tree ../../../vendor/assets/javascripts
 //= require_tree .
