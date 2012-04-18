@@ -13,4 +13,5 @@ $ ->
   $(".typeahead").typeahead()
   $("a[rel=tooltip]").tooltip()
   #chosen
-  $(".chosen").chosen()
+  $("select").chosen()
+#  $(".chosen").chosen()

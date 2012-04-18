@@ -27,10 +27,10 @@
 - auto_mode = (@ground.rotator_mode==:auto)
 %h3= 'Настройки подбора банеров:'
 = simple_form_for([:my, @ground], :html => {:class => 'form-horizontal' }) do |f|
-	.control-group= f.input :rotator_mode, :required => true, :as => :select, :collection => Ground.get_rotator_mode_values, :input_html => { :class => "span6 chosen" }
+	.control-group= f.input :rotator_mode, :required => true, :as => :select, :collection => Ground.get_rotator_mode_values, :input_html => { :class => "span6" }
 	= f.fields_for @ground.ground_rotator_config do |cf|
 		.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
-			.control-group= cf.input :categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6 chosen"}
+			.control-group= cf.input :categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6"}
 			.control-group= cf.input :block_adult, :as => :boolean, :input_html => { :class => "span6" }
 			.control-group= cf.input :block_doubtful, :as => :boolean, :input_html => { :class => "span6" }
 	= f.button :submit, :class => 'btn-primary'
