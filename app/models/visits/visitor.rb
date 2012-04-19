@@ -5,6 +5,7 @@ class Visitor
 	belongs_to :ground
 	belongs_to :offer
 	has_many :achievements
+	has_many :suspicions
 
 	field :advert_id, type: BSON::ObjectId
 

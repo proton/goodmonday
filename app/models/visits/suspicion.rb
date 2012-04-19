@@ -5,7 +5,7 @@ class Suspicion
 
 	symbolize :state, :in => [:pending, :accepted, :denied], :default => :pending, :scopes => true
 
-	has_one :visitor
+	belongs_to :visitor
 
 	field :ip, type: String
 	field :reason_text, type: String
