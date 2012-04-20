@@ -13,13 +13,13 @@ class My::OffersController < My::BaseController
 	def create
 		@offer = Offer.new(params[:offer])
 		@offer.advertiser = current_user
-		flash[:notice] = 'Оффер успешно добавлен.' if @offer.save
-		respond_with(@offer, :location => my_offers_path)
+		flash[:notice] = 'Оффер добавлен.' if @offer.save
+		respond_with(@offer, :location => my_offer_path(@offer))
 	end
 
 	def update
-		flash[:notice] = 'Оффер успешно обновлен.' if @offer.update_attributes(params[:offer])
-		respond_with(@offer, :location => my_offers_path)
+		flash[:notice] = 'Оффер обновлен.' if @offer.update_attributes(params[:offer])
+		respond_with(@offer, :location => my_offer_path(@offer))
 	end
 
 	def new
