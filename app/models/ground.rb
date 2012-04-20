@@ -37,7 +37,7 @@ class Ground
 		ground_offer = find_offer_permission offer.id
 		unless ground_offer
 			ground_offer = self.ground_offers.new
-			ground_offer.state=:accepted if offer.auto_accept_grounds
+			ground_offer.state=:accepted if offer.auto_accept_grounds && offer.excepted_categories.exclude?(self.category_id)
 			ground_offer.offer = offer
 			ground_offer.save
 		end

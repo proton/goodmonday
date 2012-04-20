@@ -22,6 +22,15 @@ class Offer
 	field :is_doubtful, type: Boolean, default: false
 
 	field :auto_accept_grounds, type: Boolean, default: true
+	field :excepted_categories_ids, type: Array, default: []
+
+	def excepted_categories
+		self.excepted_categories_ids
+	end
+
+	def excepted_categories= (ids)
+		self.excepted_categories_ids = ids.reject(&:blank?)
+	end
 
 	scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).order_by(:epc, :desc) }
 
