@@ -38,6 +38,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'gon'
 
 gem 'devise'
 

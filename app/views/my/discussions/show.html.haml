@@ -1,9 +1,5 @@
 %h2.title= @discussion.subject
-- @discussion.messages.each do |message|
-	%b= message.user.email
-	%blockquote
-		%p= message.text
-		%i= message.created_at
+.messages= render :partial => 'my/discussions/message', :collection => @discussion.messages
 - if @discussion.state==:open
 	= form_tag my_discussion_message_path(@discussion) do
 		= text_area_tag :text, '', :class => "span6 text"
@@ -15,3 +11,19 @@
 		= 'Закрыть обсуждение'
 - else
 	%b= 'Закрыто'
+
+:javascript
+	$(document).ready(function() {
+		var reload_posts;
+		reload_messages = function() {
+			$.ajax(gon.url, {
+				type: 'GET',
+				data: {
+					last: gon.discussion_last
+				},
+				dataType: 'script'
+			});
+			return window.setTimeout(reload_messages, 5000);
+		};
+		return window.setTimeout(reload_messages, 3000);
+	});
