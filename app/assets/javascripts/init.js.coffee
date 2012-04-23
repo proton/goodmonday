@@ -7,11 +7,10 @@ $ ->
   $(".dropdown-toggle").dropdown()
   $(".modal").modal()
   $("a[rel=popover]").popover()
-  $(".navbar").scrollspy()
+#  $(".navbar").scrollspy() #fail with tabs
   $(".tab").tab "show"
   $(".tooltip").tooltip()
   $(".typeahead").typeahead()
   $("a[rel=tooltip]").tooltip()
   #chosen
   $("select").chosen()
-#  $(".chosen").chosen()
