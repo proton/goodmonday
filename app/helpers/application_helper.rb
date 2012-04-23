@@ -1,5 +1,5 @@
 module ApplicationHelper
-	def label(state)
+	def state_label(state)
 		klass = case state
 			when :accepted
 				'label-success'

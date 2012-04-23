@@ -12,7 +12,7 @@
 				%td= ground_offer.ground.title
 				%td= t(ground_offer.ground.type)
 				%td= ground_offer.ground.category.title
-				%td= label(ground_offer.state)
+				%td= state_label(ground_offer.state)
 				%td
 					- unless ground_offer.state==:accepted
 						= link_to my_offer_ground_accept_path(@offer, ground_offer), :class => 'btn btn-success btn-small' do

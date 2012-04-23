@@ -10,7 +10,7 @@
 		- @targets.each do |target|
 			%tr{:class => target.is_accepted? ? '' : 'muted'}
 				%td= target.title
-				%td= label(target.moderated_state)
+				%td= state_label(target.moderated_state)
 				%td= t(target.confirm_mode)
 				%td
 					- if target.prc_price>0

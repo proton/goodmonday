@@ -10,7 +10,7 @@
 		- @offers.each do |offer|
 			%tr{:class => offer.is_accepted? ? '' : 'muted'}
 				%td= offer.title
-				%td= label(offer.moderated_state)
+				%td= state_label(offer.moderated_state)
 				-#%td= offer.mode
 				%td
 					= offer.shows

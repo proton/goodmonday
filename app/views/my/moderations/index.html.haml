@@ -1,24 +1,82 @@
-%section
-	.page-header
-		%h1= 'Объекты для проверки'
-	.row
-		.span9
-			%table.table.table-bordered.table-striped
-				%thead
+.page-header
+	%h1= 'Объекты для проверки'
+%ul.nav.nav-tabs
+	%li.active
+		%a{"data-toggle" => "tab", :href => "#pending"}= 'Ожидающие'
+	%li
+		%a{"data-toggle" => "tab", :href => "#accepted"}= 'Одобренные'
+	%li
+		%a{"data-toggle" => "tab", :href => "#denied"}= 'Отклонённые'
+.tab-content
+	#pending.tab-pane.fade.active.in
+		.page-header
+			%h2
+				= 'Ожидающие'
+				%small= "(#{@moderations_pending.size})"
+		%table.table.table-bordered.table-striped
+			%thead
+				%tr
+					%th= 'Тип'
+					%th= 'Причина'
+					%th= 'Статус'
+					%th= 'Дата'
+					%th= 'Действия'
+			%tbody
+				- @moderations_pending.each do |moderation|
 					%tr
-						%th= 'Тип'
-						%th= 'Причина'
-						%th= 'Статус'
-						%th= 'Дата'
-						%th= 'Действия'
-				%tbody
-					- @moderations.each do |moderation|
-						%tr
-							%td= moderation.moderated_type
-							%td= moderation.reason
-							%td= label moderation.state
-							%td= moderation.updated_at
-							%td
-								= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
-									%i.icon-cog
-									= 'Открыть'
+						%td= moderation.moderated_type
+						%td= moderation.reason
+						%td= state_label moderation.state
+						%td= moderation.updated_at
+						%td
+							= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
+								%i.icon-cog
+								= 'Открыть'
+	#accepted.tab-pane.fade
+		.page-header
+			%h2
+				= 'Одобренные'
+				%small= "(#{@moderations_accepted.size})"
+		%table.table.table-bordered.table-striped
+			%thead
+				%tr
+					%th= 'Тип'
+					%th= 'Причина'
+					%th= 'Статус'
+					%th= 'Дата'
+					%th= 'Действия'
+			%tbody
+				- @moderations_accepted.each do |moderation|
+					%tr
+						%td= moderation.moderated_type
+						%td= moderation.reason
+						%td= state_label moderation.state
+						%td= moderation.updated_at
+						%td
+							= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
+								%i.icon-cog
+								= 'Открыть'
+	#denied.tab-pane.fade
+		.page-header
+			%h2
+				= 'Отклонённые'
+				%small= "(#{@moderations_denied.size})"
+		%table.table.table-bordered.table-striped
+			%thead
+				%tr
+					%th= 'Тип'
+					%th= 'Причина'
+					%th= 'Статус'
+					%th= 'Дата'
+					%th= 'Действия'
+			%tbody
+				- @moderations_denied.each do |moderation|
+					%tr
+						%td= moderation.moderated_type
+						%td= moderation.reason
+						%td= state_label moderation.state
+						%td= moderation.updated_at
+						%td
+							= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
+								%i.icon-cog
+								= 'Открыть'

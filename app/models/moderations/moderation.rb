@@ -9,7 +9,7 @@ class Moderation
 	embeds_many :moderation_field_changes
 	embeds_many :moderation_state_changes
 
-	symbolize :state, :in => [:accepted, :denied, :pending], :default => :pending
+	symbolize :state, :in => [:accepted, :denied, :pending], :scopes => true, :default => :pending
 	symbolize :reason, :in => [:created, :updated], :default => :created
 	field :moderated_type, type: String, default: -> { self.moderated.class.to_s }
 	field :changed_fields, type: Hash, default: {}

@@ -22,7 +22,7 @@
 							%ul.thumbnails
 								%li.span3
 									.thumbnail= image_tag banner_image.image
-						%td= label banner_image.moderated_state
+						%td= state_label banner_image.moderated_state
 						%td= banner_image.size
 						%td
 							= 'Создано автоматически' if banner_image.auto_generated

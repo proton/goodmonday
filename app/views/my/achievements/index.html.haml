@@ -22,7 +22,7 @@
 						= number_to_currency achievement.price
 					- else
 						= 'н/д'
-				%td= label achievement.state
+				%td= state_label achievement.state
 				%td= achievement.created_at
 				%td
 					= link_to my_achievement_path(achievement), :class => 'btn btn-small' do
