@@ -3,7 +3,7 @@ class Discussion
 	include Mongoid::Timestamps
 	include Mongoid::Symbolize
 
-	symbolize :state, :in => [:open, :closed], :scopes => true, :default => :open
+	symbolize :state, :in => [:open, :closed], :default => :open
 
 	auto_increment :num
 
