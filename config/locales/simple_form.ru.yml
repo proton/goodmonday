@@ -12,13 +12,10 @@ ru:
       default_message: "Обнаружены следующие ошибки:"
     # Labels and hints examples
     labels:
+      defaults:
+       email: 'Электронная почта'
        password: 'Пароль'
-#       user:
-#         new:
-#           email: 'E-mail para efetuar o sign in.'
-#         edit:
-#           email: 'E-mail.'
-#    hints:
-#       username: 'User name to sign in.'
-#       password: 'No special characters, please.'
-
+      user:
+       remember_me: 'Запомнить'
+       password_confirmation: 'Подтверждение пароля'
+       current_password: 'Текущий пароль'

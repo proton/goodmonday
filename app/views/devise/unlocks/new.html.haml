@@ -1,8 +1,8 @@
-%h2 Resend unlock instructions
+%h2= 'Выслать инструкции по разблокировке учётной записи'
 = simple_form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f|
   = f.error_notification
   .inputs
     = f.input :email, :required => true
   .actions
-    = f.button :submit, "Resend unlock instructions"
+    = f.button :submit, "Выслать инструкции"
 = render "links"
