@@ -14,12 +14,12 @@ class My::AdvertsController < My::BaseController
 		@type = params[:type]
 		@advert = @offer.adverts.build(params[@type.underscore], @type.constantize)
 		flash[:notice] = 'Объявление добавлено.' if @advert.save
-		respond_with(@advert, :location => my_offer_advert_path(@offer, @advert))
+		respond_with(@advert, :location => offer_advert_path(@offer, @advert))
 	end
 
 	def update
 		flash[:notice] = 'Объявление обновлено.' if @advert.update_attributes(params[:advert])
-		respond_with(@advert, :location => my_offer_adverts_path(@offer))
+		respond_with(@advert, :location => offer_adverts_path(@offer))
 	end
 
 	def new
@@ -35,9 +35,9 @@ class My::AdvertsController < My::BaseController
 	end
 
 	def and_nested_crumbs
-		add_crumb "Рекламные кампании", my_offers_path
-		add_crumb "Рекламная кампания «#{@offer.title}»", my_offer_path(@offer)
-		add_crumb "Объявления", my_offer_adverts_path(@offer)
+		add_crumb "Рекламные кампании", offers_path
+		add_crumb "Рекламная кампания «#{@offer.title}»", offer_path(@offer)
+		add_crumb "Объявления", offer_adverts_path(@offer)
 	end
 
 	def find_object

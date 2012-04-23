@@ -8,29 +8,29 @@
 			= 'Ожидающие одобрения офферы'
 .subnav
 	%ul.nav.nav-pills
-		%li= link_to 'Home', my_ground_path(@ground)
+		%li= link_to 'Home', ground_path(@ground)
 		%li.dropdown
 			= link_to '#', :class => 'dropdown-toggle' do
 				= 'Links'
 				%b.caret
 			%ul.dropdown-menu
-				%li= link_to 'Accepted', my_ground_adverts_path(@ground, :state => :accepted)
-				%li= link_to 'Denied', my_ground_adverts_path(@ground, :state => :denied)
-				%li= link_to 'Pending', my_ground_adverts_path(@ground, :state => :pending)
+				%li= link_to 'Accepted', ground_adverts_path(@ground, :state => :accepted)
+				%li= link_to 'Denied', ground_adverts_path(@ground, :state => :denied)
+				%li= link_to 'Pending', ground_adverts_path(@ground, :state => :pending)
 				- if @ground.is_accepted?
 					%li.divider
-					%li= link_to 'Добавить', new_my_ground_advert_path(@ground)
+					%li= link_to 'Добавить', new_ground_advert_path(@ground)
 		%li.dropdown.active
 			= link_to '#', :class => 'dropdown-toggle' do
 				= 'Rotator'
 				%b.caret
 			%ul.dropdown-menu
-				%li= link_to 'Accepted', my_ground_adverts_path(@ground, :state => :accepted)
-				%li= link_to 'Denied', my_ground_adverts_path(@ground, :state => :denied)
-				%li= link_to 'Pending', my_ground_adverts_path(@ground, :state => :pending)
+				%li= link_to 'Accepted', ground_adverts_path(@ground, :state => :accepted)
+				%li= link_to 'Denied', ground_adverts_path(@ground, :state => :denied)
+				%li= link_to 'Pending', ground_adverts_path(@ground, :state => :pending)
 				- if @ground.is_accepted?
 					%li.divider
-					%li= link_to 'Добавить', new_my_ground_advert_path(@ground)
+					%li= link_to 'Добавить', new_ground_advert_path(@ground)
 %table.table.table-bordered.table-striped
 	%thead
 		%tr
@@ -48,10 +48,10 @@
 					= number_to_currency offer.payments
 				%td
 					- if @ground.rotator_mode==:manual
-						= link_to my_ground_advert_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						= link_to ground_advert_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
 							%i.icon-trash.icon-white
 							= 'Удалить'
 - if @ground.is_accepted? && @ground.rotator_mode==:manual
-	= link_to new_my_ground_advert_path(@ground), :class => 'btn btn-primary' do
+	= link_to new_ground_advert_path(@ground), :class => 'btn btn-primary' do
 		%i.icon-plus-sign.icon-white
 		= 'Добавить'

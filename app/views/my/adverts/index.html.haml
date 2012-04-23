@@ -23,12 +23,12 @@
 						- when Banner
 							= "URL: #{advert.url}"
 				%td
-					= link_to my_offer_advert_path(@offer, advert), :class => 'btn btn-small' do
+					= link_to offer_advert_path(@offer, advert), :class => 'btn btn-small' do
 						%i.icon-pencil
 						= 'Редактировать'
-					= link_to my_offer_advert_path(@offer, advert), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+					= link_to offer_advert_path(@offer, advert), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
 						%i.icon-trash.icon-white
 						= 'Удалить'
-= link_to new_my_offer_advert_path(@offer), :class => 'btn btn-primary' do
+= link_to new_offer_advert_path(@offer), :class => 'btn btn-primary' do
 	%i.icon-plus-sign.icon-white
 	= 'Добавить'

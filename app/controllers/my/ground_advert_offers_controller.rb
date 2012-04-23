@@ -27,13 +27,13 @@ class My::GroundAdvertOffersController < My::BaseController
 	def create
 		@offer = Offer.find(params[:offer_id])
 		flash[:notice] = 'Оффер добавлен.' if @ground.add_rotator_offer_and_save(@offer)
-		redirect_to my_ground_adverts_path(@ground)
+		redirect_to ground_adverts_path(@ground)
 	end
 
 	def destroy
 		@offer = Offer.find(params[:id])
 		flash[:notice] = 'Оффер удалён.' if @ground.remove_rotator_offer_and_save(@offer)
-		redirect_to my_ground_adverts_path(@ground)
+		redirect_to ground_adverts_path(@ground)
  	end
 
 	protected
@@ -43,8 +43,8 @@ class My::GroundAdvertOffersController < My::BaseController
 	end
 
 	def and_nested_crumbs
-		add_crumb "Рекламные площадки", my_grounds_path
-		add_crumb "Площадка «#{@ground.title}»", my_ground_path(@ground)
+		add_crumb "Рекламные площадки", grounds_path
+		add_crumb "Площадка «#{@ground.title}»", ground_path(@ground)
 	end
 
 end

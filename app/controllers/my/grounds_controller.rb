@@ -25,18 +25,18 @@ class My::GroundsController < My::BaseController
 		@ground = Ground.new(params[:ground])
 		@ground.webmaster = current_user
 		flash[:notice] = 'Площадка добавлена.' if @ground.save
-		respond_with(@ground, :location => my_ground_path(@ground))
+		respond_with(@ground, :location => ground_path(@ground))
 	end
 
 	def update
 		@ground = Ground.find(params[:id])
 		flash[:notice] = 'Площадка обновлена.' if @ground.update_attributes(params[:ground])
-		respond_with(@ground, :location => my_ground_path(@ground))
+		respond_with(@ground, :location => ground_path(@ground))
 	end
 
 	def destroy
 		flash[:notice] = 'Площадка удалена.' if @ground.destroy
-		respond_with(@ground, :location => my_grounds_path)
+		respond_with(@ground, :location => grounds_path)
 	end
 
 	private
@@ -46,7 +46,7 @@ class My::GroundsController < My::BaseController
 	end
 
 	def and_crumbs
-		add_crumb "Рекламные площадки", my_grounds_path
+		add_crumb "Рекламные площадки", grounds_path
 	end
 
 end

@@ -18,40 +18,50 @@ Cpa::Application.routes.draw do
 	match 'robot/:offer_id/target/:target_id' => 'robot#target'
 	match 'robot/:offer_id/target/:target_id/:order_id' => 'robot#target'
 
-	namespace :my do
-		match '/' => 'base#index'
-		#advertiser
-		resources :offers do
-			resources :targets
-			resources :adverts do
-				resources :banner_images
+	constraints :subdomain => "my" do
+	  scope :module => "my" do
+			match '/' => 'base#index'
+			#advertiser
+			resources :offers do
+				resources :targets
+				resources :adverts do
+					resources :banner_images
+				end
+				resources :grounds, :controller => "ground_offers" do
+					get :accept
+					get :deny
+				end
 			end
-			resources :grounds, :controller => "ground_offers" do
+			#webmaster
+			resources :grounds do
+				resources :links, :controller => "ground_link_offers"
+				resources :adverts, :controller => "ground_advert_offers"
+			end
+			#advertiser & webmaster
+			resources :achievements
+			resources :discussions do
+				post :message
+				put :close
+			end
+	  end
+	end
+
+	constraints :subdomain => "admin" do
+	  scope :module => "admin" do
+			match '/' => 'base#index'
+			resources :moderations do
 				get :accept
 				get :deny
 			end
-		end
-		#webmaster
-		resources :grounds do
-			resources :links, :controller => "ground_link_offers"
-			resources :adverts, :controller => "ground_advert_offers"
-		end
-		#advertiser & webmaster
-		resources :achievements
-		#operator
-		resources :moderations do
-			get :accept
-			get :deny
-		end
-		resources :suspicions do
-			get :block
-			get :forgive
-		end
-		#all
-		resources :discussions do
-			post :message
-			put :close
-		end
+			resources :suspicions do
+				get :block
+				get :forgive
+			end
+			resources :discussions do
+				post :message
+				put :close
+			end
+	  end
 	end
 
 	match "user_root", :to => "my::base#index"

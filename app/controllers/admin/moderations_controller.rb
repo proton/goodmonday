@@ -1,6 +1,6 @@
 # coding: utf-8
 
-class My::ModerationsController < My::BaseOperatorController
+class Admin::ModerationsController < Admin::BaseController
 	before_filter :find_moderation, :only => [:show, :accept, :deny, :destroy]
 
 	def index
@@ -12,18 +12,18 @@ class My::ModerationsController < My::BaseOperatorController
 	end
 
 	def show
-		add_crumb "Модерации", my_moderations_path
+		add_crumb "Модерации", moderations_path
 		add_crumb "Модерация объекта #{@moderation.moderated_type}"
 	end
 
 	def accept
 		@moderation.accept(current_user, params[:moderated_edit])
-		redirect_to my_moderation_path(@moderation)
+		redirect_to moderation_path(@moderation)
 	end
 
 	def deny
 		@moderation.deny(current_user)
-		redirect_to my_moderation_path(@moderation)
+		redirect_to moderation_path(@moderation)
 	end
 
 	protected

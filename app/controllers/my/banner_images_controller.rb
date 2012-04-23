@@ -20,14 +20,14 @@ class My::BannerImagesController < My::BaseController
 		else
 			flash[:error] = @banner_image.errors.messages[:size] ? 'Неверный размер изображения' : @banner_image.errors.full_messages
 		end
-		redirect_to my_offer_advert_path(@offer, @advert)
-		#respond_with(@banner_image, :location => my_offer_advert_path(@offer, @advert))
+		redirect_to offer_advert_path(@offer, @advert)
+		#respond_with(@banner_image, :location => offer_advert_path(@offer, @advert))
 	end
 
 	def destroy
 		@banner_image = @advert.banner_images.find(params[:id])
 		flash[:notice] = 'Изображение удалено.' if @banner_image.destroy
-		redirect_to my_offer_advert_path(@offer, @advert)
+		redirect_to offer_advert_path(@offer, @advert)
  end
 	
 end

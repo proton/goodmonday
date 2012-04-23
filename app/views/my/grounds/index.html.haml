@@ -14,15 +14,15 @@
 				%td= state_label(ground.moderated_state)
 				%td= ground.rotator_mode
 				%td
-					= link_to my_ground_path(ground), :class => 'btn btn-small' do
+					= link_to ground_path(ground), :class => 'btn btn-small' do
 						%i.icon-cog
 						= 'Настройки'
-					= link_to edit_my_ground_path(ground), :class => 'btn btn-small' do
+					= link_to edit_ground_path(ground), :class => 'btn btn-small' do
 						%i.icon-pencil
 						= 'Редактировать'
-					= link_to my_ground_path(ground), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+					= link_to ground_path(ground), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
 						%i.icon-trash.icon-white
 						= 'Удалить'
-= link_to new_my_ground_path, :class => 'btn btn-primary' do
+= link_to new_ground_path, :class => 'btn btn-primary' do
 	%i.icon-plus-sign.icon-white
 	= 'Добавить'

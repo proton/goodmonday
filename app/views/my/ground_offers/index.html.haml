@@ -15,10 +15,10 @@
 				%td= state_label(ground_offer.state)
 				%td
 					- unless ground_offer.state==:accepted
-						= link_to my_offer_ground_accept_path(@offer, ground_offer), :class => 'btn btn-success btn-small' do
+						= link_to offer_ground_accept_path(@offer, ground_offer), :class => 'btn btn-success btn-small' do
 							%i.icon-ok.icon-white
 							= 'Одобрить'
 					- unless ground_offer.state==:denied
-						= link_to my_offer_ground_deny_path(@offer, ground_offer), :class => 'btn btn-danger btn-small' do
+						= link_to offer_ground_deny_path(@offer, ground_offer), :class => 'btn btn-danger btn-small' do
 							%i.icon-remove.icon-white
 							= 'Отказать'

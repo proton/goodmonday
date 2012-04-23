@@ -15,6 +15,6 @@
 					= ' / '
 					= number_to_currency offer.payments
 				%td
-					= link_to my_ground_links_path(@ground, :offer_id => offer.id), :method => :post, :class => 'btn btn-primary' do
+					= link_to ground_links_path(@ground, :offer_id => offer.id), :method => :post, :class => 'btn btn-primary' do
 						%i.icon-plus-sign.icon-white
 						= 'Добавить'

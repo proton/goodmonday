@@ -1,0 +1,11 @@
+<% if @messages.count>0 %>
+<% @messages.each do |message| %>
+var message_block = $("<%= escape_javascript(render :partial => 'my/discussions/message', :locals => { :message => message }) %>");
+$('.messages').append(message_block);
+message_block.effect("highlight", {}, 2000);
+<% end %>
+gon.discussion_last = "<%= @messages.last.created_at.strftime('%Y-%m-%dT%H:%M:%S') %>";
+title = document.title
+document.title = title+' [<% @messages.count %>]';
+document.title = title
+<% end %>

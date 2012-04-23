@@ -14,17 +14,17 @@ class My::OffersController < My::BaseController
 		@offer = Offer.new(params[:offer])
 		@offer.advertiser = current_user
 		flash[:notice] = 'Оффер добавлен.' if @offer.save
-		respond_with(@offer, :location => my_offer_path(@offer))
+		respond_with(@offer, :location => offer_path(@offer))
 	end
 
 	def update
 		flash[:notice] = 'Оффер обновлен.' if @offer.update_attributes(params[:offer])
-		respond_with(@offer, :location => my_offer_path(@offer))
+		respond_with(@offer, :location => offer_path(@offer))
 	end
 
 	def new
 		@offer = Offer.new
-		add_crumb "Рекламные кампании", my_offers_path
+		add_crumb "Рекламные кампании", offers_path
 		add_crumb "Новая рекламная кампания"
 	end
 
@@ -39,7 +39,7 @@ class My::OffersController < My::BaseController
 	end
 
 	def and_crumbs
-		add_crumb "Рекламные кампании", my_offers_path
+		add_crumb "Рекламные кампании", offers_path
 		add_crumb "Рекламная кампания «#{@offer.title}»"
 	end
 end

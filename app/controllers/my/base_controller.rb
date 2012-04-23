@@ -6,16 +6,16 @@ class My::BaseController < ApplicationController
 	before_filter :get_user_status
 	layout 'my'
 
-	add_crumb 'Кабинет'
+	add_crumb 'Кабинет', '/'
 
 	def index
 		case current_user.class
 			when Advertiser
-				redirect_to my_offers_path
+				redirect_to offers_url(:subdomain => :my)
 			when Webmaster
-				redirect_to my_grounds_path
+				redirect_to grounds_url(:subdomain => :my)
 			when Operator
-				redirect_to my_moderations_path
+				redirect_to moderations_url(:subdomain => :admin)
 		end
 	end
 

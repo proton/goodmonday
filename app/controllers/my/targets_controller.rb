@@ -14,17 +14,17 @@ class My::TargetsController < My::BaseController
 	def create
 		@target = @offer.targets.new(params[:target])
 		flash[:notice] = 'Цель добавлена.' if @target.save
-		respond_with(@target, :location => my_offer_targets_path(@offer))
+		respond_with(@target, :location => offer_targets_path(@offer))
 	end
 
 	def update
 		flash[:notice] = 'Цель обновлена.' if @target.update_attributes(params[:target])
-		respond_with(@target, :location => my_offer_targets_path(@offer))
+		respond_with(@target, :location => offer_targets_path(@offer))
 	end
 
 	def new
 		@target = @offer.targets.new
-		add_crumb "Цели", my_offer_targets_path(@offer)
+		add_crumb "Цели", offer_targets_path(@offer)
 		add_crumb "Новая цель"
 	end
 
@@ -35,8 +35,8 @@ class My::TargetsController < My::BaseController
 	end
 
 	def and_nested_crumbs
-		add_crumb "Рекламные кампании", my_offers_path
-		add_crumb "Рекламная кампания «#{@offer.title}»", my_offer_path(@offer)
+		add_crumb "Рекламные кампании", offers_path
+		add_crumb "Рекламная кампания «#{@offer.title}»", offer_path(@offer)
 	end
 
 	def find_object
@@ -44,7 +44,7 @@ class My::TargetsController < My::BaseController
 	end
 
 	def and_crumbs
-		add_crumb "Цели", my_offer_targets_path(@offer)
+		add_crumb "Цели", offer_targets_path(@offer)
 		add_crumb "Цель «#{@target.title}»"
 	end
 	

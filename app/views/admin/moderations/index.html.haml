@@ -29,7 +29,7 @@
 						%td= state_label moderation.state
 						%td= moderation.updated_at
 						%td
-							= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
+							= link_to moderation_path(moderation), :class => 'btn btn-small' do
 								%i.icon-cog
 								= 'Открыть'
 	#accepted.tab-pane.fade
@@ -53,7 +53,7 @@
 						%td= state_label moderation.state
 						%td= moderation.updated_at
 						%td
-							= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
+							= link_to moderation_path(moderation), :class => 'btn btn-small' do
 								%i.icon-cog
 								= 'Открыть'
 	#denied.tab-pane.fade
@@ -77,6 +77,6 @@
 						%td= state_label moderation.state
 						%td= moderation.updated_at
 						%td
-							= link_to my_moderation_path(moderation), :class => 'btn btn-small' do
+							= link_to moderation_path(moderation), :class => 'btn btn-small' do
 								%i.icon-cog
 								= 'Открыть'

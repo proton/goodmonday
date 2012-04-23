@@ -1,7 +1,7 @@
 module ApplicationHelper
 	def state_label(state)
 		klass = case state
-			when :accepted
+			when :accepted, :open
 				'label-success'
 			when :denied, :closed
 				'label-important'

@@ -13,7 +13,7 @@ class My::AchievementsController < My::BaseController
 	end
 
 	def and_crumbs
-		add_crumb "Достижения целей", my_achievements_path
+		add_crumb "Достижения целей", achievements_path
 	end
 
 end

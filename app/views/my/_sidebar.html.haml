@@ -2,17 +2,16 @@
 	.well.sidebar-nav
 		%ul.nav.nav-list
 			%li.nav-header= 'Кабинет'
-			-#%li= link_to 'Кабинет', my_path
 			%li
 				- case current_user.class
 					- when Advertiser
-						= link_to 'Рекламные кампании', my_offers_path
-						= link_to 'Достижения', my_achievements_path
+						= link_to 'Рекламные кампании', offers_path
+						= link_to 'Достижения', achievements_path
 					- when Webmaster
-						= link_to 'Рекламные площадки', my_grounds_path
-						= link_to 'Достижения', my_achievements_path
+						= link_to 'Рекламные площадки', grounds_path
+						= link_to 'Достижения', achievements_path
 					- when Operator
-						= link_to 'Модерации', my_moderations_path
-						= link_to 'Подозрителные действия', my_suspicions_path
-				= link_to 'Поддержка', my_discussions_path
+						= link_to 'Модерации', moderations_path
+						= link_to 'Подозрителные действия', suspicions_path
+				= link_to 'Поддержка', discussions_path
 			= yield :sidebar_etc

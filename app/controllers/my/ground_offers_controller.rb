@@ -15,14 +15,14 @@ class My::GroundOffersController < My::BaseController
 		@ground_offer.state = :accepted
 		@ground_offer.save
 		flash[:notice] = 'Площадка одобрена.' if @ground_offer.save
-		redirect_to my_offer_grounds_path(@offer)
+		redirect_to offer_grounds_path(@offer)
 	end
 
 	def deny
 		@ground_offer = @offer.ground_offers.find(params[:ground_id])
 		@ground_offer.state = :denied
 		flash[:notice] = 'Площадка отклонена.' if @ground_offer.save
-		redirect_to my_offer_grounds_path(@offer)
+		redirect_to offer_grounds_path(@offer)
 	end
 
 	protected
@@ -32,8 +32,8 @@ class My::GroundOffersController < My::BaseController
 	end
 
 	def and_nested_crumbs
-		add_crumb "Рекламные кампании", my_offers_path
-		add_crumb "Рекламная кампания «#{@offer.title}»", my_offer_path(@offer)
+		add_crumb "Рекламные кампании", offers_path
+		add_crumb "Рекламная кампания «#{@offer.title}»", offer_path(@offer)
 	end
 
 	def find_object

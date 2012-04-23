@@ -1,10 +1,10 @@
 # coding: utf-8
 
-class My::DiscussionsController < My::BaseController
+class Admin::DiscussionsController < Admin::BaseController
 	before_filter :and_crumbs
 
 	def index
-		discussions = current_user.discussions
+		discussions = Discussion.all
 		@discussions_open = discussions.where(state: :open)
 		@discussions_closed = discussions.where(state: :closed)
 	end

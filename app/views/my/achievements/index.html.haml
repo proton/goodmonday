@@ -25,6 +25,6 @@
 				%td= state_label achievement.state
 				%td= achievement.created_at
 				%td
-					= link_to my_achievement_path(achievement), :class => 'btn btn-small' do
+					= link_to achievement_path(achievement), :class => 'btn btn-small' do
 						%i.icon-cog
 						= 'Открыть'
