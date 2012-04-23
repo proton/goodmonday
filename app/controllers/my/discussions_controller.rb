@@ -5,7 +5,7 @@ class My::DiscussionsController < My::BaseController
 
 	def index
 		if current_user.class==Operator
-			@discussions = Discussion.open
+			@discussions = Discussion.where(state: :open)
 		else
 			@discussions = current_user.discussions
 		end

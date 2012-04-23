@@ -11,7 +11,7 @@
 			%tr{:class => ground.is_accepted? ? '' : 'muted'}
 				%td= ground.title
 				%td= ground.url
-				%td= t(ground.moderated_state)
+				%td= label(ground.moderated_state)
 				%td= ground.rotator_mode
 				%td
 					= link_to my_ground_path(ground), :class => 'btn btn-small' do

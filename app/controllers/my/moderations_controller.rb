@@ -4,7 +4,7 @@ class My::ModerationsController < My::BaseOperatorController
 	before_filter :find_moderation, :only => [:show, :accept, :deny, :destroy]
 
 	def index
-		@moderations = Moderation.order_by(:created_at, :desc)
+		@moderations = Moderation.order_by(:updated_at, :desc)
 		add_crumb "Модерации"
 	end
 

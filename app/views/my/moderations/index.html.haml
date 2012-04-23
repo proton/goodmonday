@@ -16,7 +16,7 @@
 						%tr
 							%td= moderation.moderated_type
 							%td= moderation.reason
-							%td= t(moderation.state)
+							%td= label moderation.state
 							%td= moderation.updated_at
 							%td
 								= link_to my_moderation_path(moderation), :class => 'btn btn-small' do

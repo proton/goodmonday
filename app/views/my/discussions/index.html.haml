@@ -11,7 +11,7 @@
 			%tr
 				%td= discussion.num
 				%td= discussion.subject
-				%td= t(discussion.state)
+				%td= label(discussion.state)
 				%td= discussion.messages.size
 				%td
 					= link_to my_discussion_path(discussion), :class => 'btn btn-small' do
