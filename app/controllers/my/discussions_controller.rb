@@ -5,10 +5,12 @@ class My::DiscussionsController < My::BaseController
 
 	def index
 		if current_user.class==Operator
-			@discussions = Discussion.where(state: :open)
+			discussions = Discussion.all
 		else
-			@discussions = current_user.discussions
+			discussions = current_user.discussions
 		end
+		@discussions_open = discussions.where(state: :open)
+		@discussions_closed = discussions.where(state: :closed)
 	end
 
 	def show

@@ -1,22 +1,57 @@
-%table.table.table-bordered.table-striped
-	%thead
-		%tr
-			%th= '№'
-			%th= 'Тема'
-			%th= 'Статус'
-			%th= 'Ответы'
-			%th= 'Действия'
-	%tbody
-		- @discussions.each do |discussion|
-			%tr
-				%td= discussion.num
-				%td= discussion.subject
-				%td= label(discussion.state)
-				%td= discussion.messages.size
-				%td
-					= link_to my_discussion_path(discussion), :class => 'btn btn-small' do
-						%i.icon-cog
-						= 'Открыть'
+%ul.nav.nav-tabs
+	%li.active
+		%a{"data-toggle" => "tab", :href => "#open"}= 'Открытые'
+	%li
+		%a{"data-toggle" => "tab", :href => "#closed"}= 'Закрытые'
+.tab-content
+	#open.tab-pane.fade.active.in
+		.page-header
+			%h2
+				= 'Открытые'
+				%small= "(#{@discussions_open.size})"
+		%table.table.table-bordered.table-striped
+			%thead
+				%tr
+					%th= '№'
+					%th= 'Тема'
+					%th= 'Статус'
+					%th= 'Ответы'
+					%th= 'Действия'
+			%tbody
+				- @discussions_open.each do |discussion|
+					%tr
+						%td= discussion.num
+						%td= discussion.subject
+						%td= label(discussion.state)
+						%td= discussion.messages.size
+						%td
+							= link_to my_discussion_path(discussion), :class => 'btn btn-small' do
+								%i.icon-cog
+								= 'Открыть'
+	#closed.tab-pane.fade
+		.page-header
+			%h2
+				= 'Закрытые'
+				%small= "(#{@discussions_closed.size})"
+		%table.table.table-bordered.table-striped
+			%thead
+				%tr
+					%th= '№'
+					%th= 'Тема'
+					%th= 'Статус'
+					%th= 'Ответы'
+					%th= 'Действия'
+			%tbody
+				- @discussions_closed.each do |discussion|
+					%tr
+						%td= discussion.num
+						%td= discussion.subject
+						%td= label(discussion.state)
+						%td= discussion.messages.size
+						%td
+							= link_to my_discussion_path(discussion), :class => 'btn btn-small' do
+								%i.icon-cog
+								= 'Открыть'
 - unless @is_operator
 	= link_to new_my_discussion_path, :class => 'btn btn-primary' do
 		%i.icon-plus-sign.icon-white
