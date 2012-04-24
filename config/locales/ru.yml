@@ -9,3 +9,14 @@ ru:
       accepted: 'Одобрено'
       denied: 'Отклонено'
       pending: 'Ожидание'
+  mongoid:
+    symbolizes:
+      ground:
+        type:
+          website: 'Веб-сайт'
+          doorway: 'Дорвей'
+          socialnet: 'Социальная сеть'
+        rotator_mode:
+          manual: 'Ручной отбор'
+          auto: 'Автоматический отбор'
+

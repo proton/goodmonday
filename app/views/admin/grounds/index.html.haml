@@ -1,0 +1,28 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Название'
+			%th= 'Сайт'
+			%th= 'Статус'
+			%th= 'Режим'
+			%th= 'Действия'
+	%tbody
+		- @grounds.each do |ground|
+			%tr{:class => ground.is_accepted? ? '' : 'muted'}
+				%td= ground.title
+				%td= ground.url
+				%td= state_label(ground.moderated_state)
+				%td= ground.rotator_mode
+				%td
+					= link_to user_ground_path(@user, ground), :class => 'btn btn-small' do
+						%i.icon-cog
+						= 'Настройки'
+					= link_to edit_user_ground_path(@user, ground), :class => 'btn btn-small' do
+						%i.icon-pencil
+						= 'Редактировать'
+					= link_to user_ground_path(@user, ground), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						%i.icon-trash.icon-white
+						= 'Удалить'
+= link_to new_user_ground_path(@user), :class => 'btn btn-primary' do
+	%i.icon-plus-sign.icon-white
+	= 'Добавить'

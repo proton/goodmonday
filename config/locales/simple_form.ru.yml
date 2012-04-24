@@ -19,3 +19,13 @@ ru:
        remember_me: 'Запомнить'
        password_confirmation: 'Подтверждение пароля'
        current_password: 'Текущий пароль'
+      ground:
+        rotator_mode: 'Режим ротатора'
+        ground_rotator_config:
+          categories: 'Категории'
+          block_adult: 'Блокировать объявления "для взослых"'
+          block_doubtful: 'Блокировать сомнительные объявления'
+    hints:
+      ground:
+        ground_rotator_config:
+          categories: 'Если список категорий пуст, то будут отображаться объявления всех категорий'
