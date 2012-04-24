@@ -7,7 +7,7 @@
 		.control-group= f.input :prc_price, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
 	.control-group= f.input :fixed_price, :required => true, :as => :decimal, :input_html => { :class => "span6" }
 	= f.button :submit, :class => 'btn-primary'
-	= link_to 'Cancel', offer_targets_path, :class => "btn btn-danger"
+	= link_to 'Отмена', offer_targets_path, :class => "btn btn-danger"
 
 :javascript
 	$(document).ready(function() {

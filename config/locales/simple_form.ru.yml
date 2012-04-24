@@ -25,6 +25,12 @@ ru:
           categories: 'Категории'
           block_adult: 'Блокировать объявления "для взослых"'
           block_doubtful: 'Блокировать сомнительные объявления'
+      offer:
+        title: 'Название'
+        url: 'Ссылка'
+        category: 'Категория'
+        auto_accept_grounds: 'Автоматически принимать площадки'
+        excepted_categories: 'Отклонять площадки следующих категорий'
     hints:
       ground:
         ground_rotator_config:

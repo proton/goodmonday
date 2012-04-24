@@ -5,4 +5,4 @@
 	-#.control-group= f.association :category, :collection => Category.all
 	.control-group= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
 	= f.button :submit, :class => 'btn-primary'
-	= link_to 'Cancel', grounds_path, :class => "btn btn-danger"
+	= link_to 'Отмена', grounds_path, :class => "btn btn-danger"
