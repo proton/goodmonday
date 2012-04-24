@@ -31,6 +31,12 @@ ru:
         category: 'Категория'
         auto_accept_grounds: 'Автоматически принимать площадки'
         excepted_categories: 'Отклонять площадки следующих категорий'
+      target:
+        title: 'Название'
+        confirm_mode: 'Режим подтверждения'
+        confirm_url: 'Url для подтверждения'
+        fixed_price: 'Стоимость (руб.)'
+        prc_price: 'Стоимость (процент от продажи)'
     hints:
       ground:
         ground_rotator_config:

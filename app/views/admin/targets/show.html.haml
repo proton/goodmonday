@@ -1,0 +1,11 @@
+%p= 'Пожалуйста, добавьте отображение данного кода при достижении цели.'
+- if @target.confirm_mode==:auto
+	%pre.prettyprint.linenums
+		= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}'>"
+- else
+	%pre.prettyprint.linenums
+		= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}/order_id'>"
+	%p
+		= "Где"
+		%code= 'order_id'
+		= "- номер заказа, который будет опрашивать наша система."

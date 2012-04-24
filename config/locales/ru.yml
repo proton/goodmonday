@@ -2,6 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ru:
+  auto: 'Автоматический'
+  manual: 'Ручной'
   common:
     state:
       open: 'Открыто'
@@ -19,4 +21,8 @@ ru:
         rotator_mode:
           manual: 'Ручной отбор'
           auto: 'Автоматический отбор'
+      target:
+        confirm_mode:
+          auto: 'Автоматический'
+          manual: 'Ручной'
 
