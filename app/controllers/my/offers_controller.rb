@@ -11,8 +11,7 @@ class My::OffersController < My::BaseController
 	end
 
 	def create
-		@offer = Offer.new(params[:offer])
-		@offer.advertiser = current_user
+		@offer = current_user.offers.new(params[:offer])
 		flash[:notice] = 'Оффер добавлен.' if @offer.save
 		respond_with(@offer, :location => offer_path(@offer))
 	end
@@ -22,8 +21,13 @@ class My::OffersController < My::BaseController
 		respond_with(@offer, :location => offer_path(@offer))
 	end
 
+	def destroy
+		flash[:notice] = 'Рекламная кампания удалена.' if @offer.destroy
+		respond_with(@offer, :location => offers_path)
+	end
+
 	def new
-		@offer = Offer.new
+		@offer = current_user.offers.new
 		add_crumb "Рекламные кампании", offers_path
 		add_crumb "Новая рекламная кампания"
 	end
@@ -31,7 +35,7 @@ class My::OffersController < My::BaseController
 	protected
 
 	def find_object
-		@offer = Offer.find(params[:id])
+		@offer = current_user.offers.find(params[:id])
 	end
 
 	def authorize
