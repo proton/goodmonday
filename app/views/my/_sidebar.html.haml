@@ -1,17 +1,17 @@
 .span3
-	.well.sidebar-nav
+	.well{:style => "padding: 8px 0;"}
 		%ul.nav.nav-list
 			%li.nav-header= 'Кабинет'
-			%li
-				- case current_user.class
-					- when Advertiser
-						= link_to 'Рекламные кампании', offers_path
-						= link_to 'Достижения', achievements_path
-					- when Webmaster
-						= link_to 'Рекламные площадки', grounds_path
-						= link_to 'Достижения', achievements_path
-					- when Operator
-						= link_to 'Модерации', moderations_path
-						= link_to 'Подозрителные действия', suspicions_path
-				= link_to 'Поддержка', discussions_path
+			- case current_user.class
+				- when Advertiser
+					= add_sidebar_link 'Рекламные кампании', offers_path, :inbox
+					= add_sidebar_link 'Достижения целей', achievements_path, :gift
+				- when Webmaster
+					= add_sidebar_link 'Рекламные площадки', grounds_path, :road
+					= add_sidebar_link 'Достижения целей', achievements_path, :gift
+				- when Operator
+					= add_sidebar_link 'Модерации', moderations_path, 'eye-open'
+					= add_sidebar_link 'Подозрителные действия', suspicions_path, :fire
+					= add_sidebar_link 'Пользователи', users_path, :user
+			= add_sidebar_link 'Поддержка', discussions_path, :comment
 			= yield :sidebar_etc

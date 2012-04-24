@@ -8,4 +8,11 @@ module ApplicationHelper
 		end
 		"<span class='label #{klass}'>#{t(("common.state."+state.to_s).to_sym)}</span>".html_safe
 	end
+
+	def add_sidebar_link(text, url, icon = nil)
+		active = (url==request.path)
+		icon_raw = ''
+		icon_raw = "<i class='icon-#{icon.to_s}#{active ? ' icon-white' : ''}'></i> " if icon
+		"<li#{active ? " class='active'": ''}><a href='#{url}'>#{icon_raw}#{text}</a></li>".html_safe
+	end
 end

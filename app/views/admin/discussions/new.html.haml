@@ -1,4 +1,4 @@
-= simple_form_for([:my, @discussion], :html => {:class => 'form-horizontal' }) do |f|
+= simple_form_for(@discussion, :html => {:class => 'form-horizontal' }) do |f|
 	.control-group= f.input :subject, :input_html => { :class => "span6" }
 	= f.simple_fields_for :messages do |mf|
 		.control-group= mf.input :text, :as => :text, :input_html => { :class => "input-xlarge span6" }

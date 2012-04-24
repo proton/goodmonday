@@ -1,0 +1,8 @@
+- path = @user.new? ? users_path : user_path(@user)
+= simple_form_for(@user, :as => :user, :url => path, :html => {:class => 'form-horizontal' }) do |f|
+	= f.input :_type, :required => true, :as => :select, :collection => ['Webmaster', 'Advertiser'] if @user.new?
+	= f.input :email, :required => true, :autofocus => true
+	= f.input :password, :required => true
+	= f.input :password_confirmation, :required => true
+	= f.button :submit, :class => 'btn-primary'
+	= link_to 'Cancel', users_path, :class => "btn btn-danger"

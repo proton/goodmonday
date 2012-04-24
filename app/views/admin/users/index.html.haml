@@ -1,0 +1,33 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'E-mail'
+			%th= 'Тип'
+			%th= 'Его'
+			%th= 'Действия'
+	%tbody
+		- @users.each do |user|
+			%tr
+				%td= user.email
+				%td
+					%span.label= user.class
+				%td
+					- case user.class
+						- when Advertiser
+							= link_to user_offers_path(user), :class => 'btn btn-small' do
+								%i.icon-inbox
+								= 'Офферы'
+						- when Webmaster
+							= link_to user_grounds_path(user), :class => 'btn btn-small' do
+								%i.icon-road
+								= 'Площадки'
+				%td
+					= link_to edit_user_path(user), :class => 'btn btn-small' do
+						%i.icon-pencil
+						= 'Редактировать'
+					= link_to user_path(user), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						%i.icon-trash.icon-white
+						= 'Удалить'
+= link_to new_user_path, :class => 'btn btn-primary' do
+	%i.icon-plus-sign.icon-white
+	= 'Добавить'

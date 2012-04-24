@@ -1,0 +1,43 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Название'
+			%th= 'Статус'
+			%th= 'Владелец'
+			-#%th= 'Показы/Выплаты'
+			%th= 'Действия'
+	%tbody
+		- @offers.each do |offer|
+			%tr{:class => offer.is_accepted? ? '' : 'muted'}
+				%td= offer.title
+				%td= state_label(offer.moderated_state)
+				%td= offer.advertiser.email
+				-#%td
+				-#	= offer.shows
+				-#	= ' / '
+				-#	= number_to_currency offer.payments
+				%td
+					= link_to offer_path(offer), :class => 'btn btn-small' do
+						%i.icon-edit
+						= 'Код'
+					= link_to offer_targets_path(offer), :class => 'btn btn-small' do
+						%i.icon-screenshot
+						= 'Цели'
+					= link_to offer_adverts_path(offer), :class => 'btn btn-small' do
+						%i.icon-picture
+						= 'Банеры'
+					= link_to offer_grounds_path(offer), :class => 'btn btn-small' do
+						%i.icon-road
+						= 'Площадки'
+					= link_to edit_offer_path(offer), :class => 'btn btn-small' do
+						%i.icon-cog
+						= 'Настройки'
+					-#= link_to edit_offer_path(offer), :class => 'btn btn-small' do
+					-#	%i.icon-pencil
+					-#	= 'Редактировать'
+					= link_to offer_path(offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						%i.icon-trash.icon-white
+						= 'Удалить'
+= link_to new_offer_path, :class => 'btn btn-primary' do
+	%i.icon-plus-sign.icon-white
+	= 'Добавить'

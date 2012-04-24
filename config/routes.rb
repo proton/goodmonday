@@ -61,6 +61,19 @@ Cpa::Application.routes.draw do
 				post :message
 				put :close
 			end
+			resources :users do
+				resources :offers do
+					resources :targets
+					resources :adverts do
+						resources :banner_images
+					end
+					resources :grounds, :controller => "ground_offers" do
+						get :accept
+						get :deny
+					end
+				end
+				resources :grounds
+			end
 	  end
 	end
 
