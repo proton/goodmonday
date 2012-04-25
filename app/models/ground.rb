@@ -62,10 +62,11 @@ class Ground
 	end
 
 	def remove_link_offer(offer)
-		offer_id = (offer.class==Offer)? offer.id : offer
+		offer_id = (offer.is_a? Offer) ? offer.id : offer
 		link_offer = self.accepted_link_offers_ids.delete(offer_id)
 		if link_offer
-			UserMailer.registration_confirmation(self.webmaster, link_offer_removing).deliver
+			offer = Offer.find(offer_id) unless (offer.is_a? Offer)
+			UserMailer.link_offer_removing(self.webmaster, offer).deliver
 		else
 			link_offer = self.denied_link_offers_ids.delete(offer_id)
 			link_offer = self.pending_link_offers_ids.delete(offer_id) unless link_offer
