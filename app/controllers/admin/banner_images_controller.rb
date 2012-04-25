@@ -1,12 +1,7 @@
 # coding: utf-8
 
-class My::BannerImagesController < My::BaseController
+class Admin::BannerImagesController < Admin::BaseController
 	before_filter :find_advert
-
-	def find_advert
-		@offer = current_user.offers.find(params[:offer_id])
-		@advert = @offer.adverts.find(params[:advert_id])
-	end
 
 	def create
 		@banner_image = @advert.banner_images.build(params[:banner_image])
@@ -20,14 +15,21 @@ class My::BannerImagesController < My::BaseController
 		else
 			flash[:error] = @banner_image.errors.messages[:size] ? 'Неверный размер изображения' : @banner_image.errors.full_messages
 		end
-		redirect_to offer_advert_path(@offer, @advert)
-		#respond_with(@banner_image, :location => offer_advert_path(@offer, @advert))
+		redirect_to user_offer_advert_path(@user, @offer, @advert)
 	end
 
 	def destroy
 		@banner_image = @advert.banner_images.find(params[:id])
 		flash[:notice] = 'Изображение удалено.' if @banner_image.destroy
-		redirect_to offer_advert_path(@offer, @advert)
- end
+		redirect_to user_offer_advert_path(@user, @offer, @advert)
+	end
+
+	private
+
+	def find_advert
+		@user = User.find(params[:user_id])
+		@offer = @user.offers.find(params[:offer_id])
+		@advert = @offer.adverts.find(params[:advert_id])
+	end
 	
 end

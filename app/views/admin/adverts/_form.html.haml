@@ -1,0 +1,12 @@
+= simple_form_for(@advert, :url => user_offer_adverts_path(@user, @offer, :type => @type), :html => {:class => 'form-horizontal' }) do |f|
+	-#.control-group= f.input :title, :input_html => { :class => "span6" }
+	-#.control-group= f.input :prc_price, :input_html => { :class => "span6" }
+	-#.control-group= f.input :fixed_price, :input_html => { :class => "span6" }
+	-#= f.input :_type, :as => :hidden, :input_html => { :value => type.capitalize }
+	- case @type
+		- when Banner
+			.control-group= f.input :url, :input_html => { :class => "span6" }, :placeholder => 'http://'
+			-#%p= "Пожалуйста, загрузите изображение одного из следующих размеров: #{ADVERTS_SIZES.to_sentence}:"
+			-#.control-group= f.input :url, :input_html => { :class => "span6" }
+	= f.button :submit, :class => 'btn-primary'
+	= link_to 'Отмена', offer_adverts_path, :class => "btn btn-danger"

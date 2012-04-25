@@ -37,6 +37,8 @@ ru:
         confirm_url: 'Url для подтверждения'
         fixed_price: 'Стоимость (руб.)'
         prc_price: 'Стоимость (процент от продажи)'
+      banner:
+        url: 'Ссылка'
     hints:
       ground:
         ground_rotator_config:

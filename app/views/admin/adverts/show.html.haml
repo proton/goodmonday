@@ -1,0 +1,40 @@
+- case @advert.class
+	- when Banner
+		%p
+			%b= 'URL: '
+			= @advert.url
+%hr
+- case @advert.class
+	- when Banner
+		%h2= 'Изображения'
+		%table.table.table-bordered.table-striped
+			%thead
+				%tr
+					%th= 'Предпросмотр'
+					%th= 'Статус'
+					%th= 'Размер'
+					%th= 'Дополнительно'
+					%th= 'Действия'
+			%tbody
+				- @advert.banner_images.each do |banner_image|
+					%tr{:class => banner_image.is_accepted? ? '' : 'muted'}
+						%td
+							%ul.thumbnails
+								%li.span3
+									.thumbnail= image_tag banner_image.image
+						%td= state_label banner_image.moderated_state
+						%td= banner_image.size
+						%td
+							= 'Создано автоматически' if banner_image.auto_generated
+						%td
+							= link_to offer_advert_banner_image_path(@offer, @advert, banner_image), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+								%i.icon-trash.icon-white
+								= 'Удалить'
+		%h3= 'Новое изображение'
+		%p
+			= 'Загрузите изображение одного из следующих размеров: '
+			= ADVERTS_SIZES.to_sentence
+		= simple_form_for(@advert.banner_images.new, :url => user_offer_advert_banner_images_path(@user, @offer, @advert), :html => {:class => 'form-inline' }) do |f|
+			-#= f.input :size, :as => :select, :collection => ADVERTS_SIZES, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
+			= f.input :image, :as => :file, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
+			= f.button :submit, :class => 'btn-primary'

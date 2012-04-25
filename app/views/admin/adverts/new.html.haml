@@ -1,0 +1,13 @@
+- unless @type
+	%h2= 'Выбор типа объявления'
+	= link_to new_user_offer_advert_path(@user, @offer, :type => Banner.name), :class => 'btn btn-primary' do
+		%i.icon-picture.icon-white
+		= 'Банер'
+	= link_to new_user_offer_advert_path(@user, @offer, :type => Banner.name), :class => 'btn btn-primary' do
+		%i.icon-picture.icon-white
+		= 'Банер'
+	= link_to new_user_offer_advert_path(@user, @offer, :type => Banner.name), :class => 'btn btn-primary' do
+		%i.icon-picture.icon-white
+		= 'Банер'
+- else
+	= render 'form'

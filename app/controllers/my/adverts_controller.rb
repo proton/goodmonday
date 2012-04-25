@@ -3,7 +3,7 @@
 class My::AdvertsController < My::BaseController
 	before_filter :find_nested_objects
 	before_filter :and_nested_crumbs
-	before_filter :find_object, :only => [:show, :update, :edit]
+	before_filter :find_object, :only => [:show, :update, :edit, :destroy]
 	before_filter :and_crumbs, :only => [:show, :edit]
 
 	def index
@@ -19,6 +19,11 @@ class My::AdvertsController < My::BaseController
 
 	def update
 		flash[:notice] = 'Объявление обновлено.' if @advert.update_attributes(params[:advert])
+		respond_with(@advert, :location => offer_adverts_path(@offer))
+	end
+
+	def destroy
+		flash[:notice] = 'Объявление удалено.' if @advert.destroy
 		respond_with(@advert, :location => offer_adverts_path(@offer))
 	end
 
