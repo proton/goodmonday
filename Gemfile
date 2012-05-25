@@ -12,7 +12,6 @@ gem 'symbolize', :require => 'symbolize/mongoid'
 
 gem 'haml'
 gem 'haml-rails'
-gem 'compass'
 
 gem 'mongoid_auto_inc'
 gem 'mongoid_activity'
@@ -30,6 +29,7 @@ gem "fog", "~> 1.3.1"
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'compass-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 	gem 'execjs'

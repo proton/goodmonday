@@ -4,51 +4,99 @@
 		%meta{:charset => "utf-8"}/
 		%title= content_for?(:title) ? yield(:title) : "GoodMonday"
 		= csrf_meta_tags
-		/ Le HTML5 shim, for IE6-8 support of HTML elements
-		/[if lt IE 9]
-			= javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
-		/ Le styles
-		= stylesheet_link_tag    "application"
-		:css
-			body {
-				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-			}
-		/ Le fav and touch icons
-		%link{:href => "/favicon.ico", :rel => "shortcut icon"}/
-		%link{:href => "images/apple-touch-icon.png", :rel => "apple-touch-icon"}/
-		%link{:href => "images/apple-touch-icon-72x72.png", :rel => "apple-touch-icon", :sizes => "72x72"}/
-		%link{:href => "images/apple-touch-icon-114x114.png", :rel => "apple-touch-icon", :sizes => "114x114"}/
-
+		= stylesheet_link_tag "application"
+		%link{:href => "/favicon.ico", :rel => "shortcut icon"}
 
 	%body
-		.navbar.navbar-fixed-top
-			.navbar-inner
-				.container
-					%a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-						%span.i-bar
-						%span.i-bar
-						%span.i-bar
-					%a.brand{:href => "/"}GoodMonday
-					.container.nav-collapse
-						%ul.nav
-							- if user_signed_in?
-								%li= link_to "Кабинет", root_url(:subdomain => (current_user.class==Operator)? :admin : :my)
-								%li= link_to "Выход", destroy_user_session_path, :method => :delete
-							- else
-								%li= link_to "Вход", new_user_session_path
-								%li= link_to "Регистрация", new_user_registration_path
-
-		.container
-			- if flash[:notice]
-				.alert.alert-info= flash[:notice]
-			- if flash[:warning]
-				.alert.alert-alert= flash[:warning]
-			- if flash[:error]
-				.alert.alert-error= flash[:error]
-			= render_crumbs :separator => '/'
-			.content= yield
-
-			%footer.footer
-				%hr
-				%p &copy; goodmonday.ru 2012
+		#container
+			#header
+				#top_menu
+					%ul
+						%li.active= link_to 'Главная', '/'
+						%li= 'о компании'
+						%li= 'контакты'
+						%li= 'новости'
+						%li= 'список офферов'
+				#heading
+					= image_tag 'home/logo.png', :class => 'logo'
+					.phone_block
+						%span
+							(495)
+							%i 123 45 67
+					.auth_block
+						- if user_signed_in?
+							= link_to "Кабинет", root_url(:subdomain => (current_user.class==Operator)? :admin : :my), :class => "btn"
+							= link_to "Выход", destroy_user_session_path, :method => :delete, :class => "btn"
+						- else
+							= simple_form_for(:user, :url => user_session_path) do |f|
+								.inputs
+									= f.input :email, :required => false, :autofocus => true, :placeholder => 'Электронная почта', :label => false
+									= f.input :password, :required => false, :placeholder => 'Пароль', :label => false
+									-#= f.input :remember_me, :as => :boolean, :input_html => { :value => '1' }
+								.actions
+									= link_to 'регистрация', new_user_registration_path, :class => "btn"
+									= f.button :submit, "войти", :class => "btn-primary"
+				%hr.top_hr
+			.container
+				- if flash[:notice]
+					.alert.alert-info= flash[:notice]
+				- if flash[:warning]
+					.alert.alert-alert= flash[:warning]
+				- if flash[:error]
+					.alert.alert-error= flash[:error]
+			#middle= yield
+			#footer
+				#footing
+					.cell
+						%h5 Рекламодателям
+						%br
+						Новости
+						%br
+						Каталог программ
+						%br
+						Правила
+						%br
+						FAQ
+						%br
+						Подключиться сейчас
+					.cell_c
+						.logo
+							%b good
+							%i monday
+						&copy; 2012 Все права защищены
+						%br
+						%br
+						%br
+						%h5 Следите за новостями
+						%br
+						.social_links
+							= image_tag 'home/social/facebook.png'
+							= image_tag 'home/social/twitter.png', {:style => 'margin-bottom: -5px'}
+							= image_tag 'home/social/youtube.png'
+							= image_tag 'home/social/skype.png'
+							= image_tag 'home/social/rss.png'
+							= image_tag 'home/social/tel.png'
+					.cell
+						%h5 Вебмастерам
+						%br
+						Новости
+						%br
+						Каталог программ
+						%br
+						Правила
+						%br
+						FAQ
+						%br
+						Подключиться сейчас
+				#bottom_menu
+					%ul
+						%li.active= link_to 'Главная', '/'
+						%li= ':'
+						%li= 'О компании'
+						%li= ':'
+						%li= 'Контакты'
+						%li= ':'
+						%li= 'Новости'
+						%li= ':'
+						%li= 'Список офферов'
 		= javascript_include_tag "application"

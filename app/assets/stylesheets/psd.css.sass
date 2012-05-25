@@ -1,0 +1,279 @@
+$font_sans: Verdana, Geneva, sans-serif
+$font_serif: Georgia, serif
+
+@import compass
+
+body
+  //width: 1280px
+  font: 12px $font_sans
+
+//h1
+//h2
+h3
+  text-transform: uppercase
+  font: bold 16px $font_serif
+  color: #516B82
+h4
+  text-transform: uppercase
+  font: 16px $font_serif
+  color: #486075
+h5
+  text-transform: uppercase
+  font-size: 12px
+h6
+  font-size: 12px
+  font-weight: bold
+
+.formated
+  b
+    font-weight: bold
+  p
+    display: block
+    margin: 8px
+  ul
+    display: block
+    margin: 8px
+    list-style-type: disc
+    li
+      list-style-type: disc
+      list-style-position: inside
+.cell
+  display: inline-block
+  //height: 100%
+
+.plate
+  width: 350px
+  height: 31px
+  +single-box-shadow(rgba(160,160,160,0.75), 0, 1px, 3px)
+  @include border-radius(9px)
+  text-align: center
+  vertical-align: middle
+  padding-top: 11px
+  background-repeat: no-repeat
+  background-position: left center
+  h3
+    color: white
+  &.blue
+    //background: image-url('home/plate_icon.png') no-repeat
+    +background-image(image-url('home/plate_icon.png'), linear-gradient(#1BA7F9, #0A7FDD))
+    //padding-left: 10px
+    //+background-image(linear-gradient(#1BA7F9, #0A7FDD))
+  &.orange
+    +background-image(image-url('home/plate_icon.png'), linear-gradient(#FF6600, #FF3000))
+
+.btn2
+  width: 380px
+  height: 20px
+  padding: 10px 25px 10px 25px
+  //margin-top: 30px
+  +background-image(linear-gradient(#93A9B6, #748F9E))
+  +single-box-shadow(rgba(160,160,160,0.75), 0, 1px, 3px)
+  @include border-radius(9px)
+  text-decoration: none
+  color: white
+  font: bold 14px $font_sans
+
+#container
+  margin-left: auto
+  margin-right: auto
+  margin: 0 auto
+  width: 1280px
+  //text-align: center
+
+#header
+  height: 164px
+  a
+    text-decoration: inherit
+    color: inherit
+  #top_menu
+    height: 50px
+    background: image-url('home/top_menu_bg.png') repeat-x
+    li
+      background: image-url('home/top_menu_del.png') no-repeat
+      display: inline-block
+      padding: 0 75px 0 75px
+      margin-top: 16px
+      //width: 211px
+      text-align: center
+      font-size: 16px
+      font-weight: bold
+      color: #D7D9DD
+      &.active
+        color: #FCD002
+      &:first-child
+        background: none
+
+  #heading
+    height: 114px
+    background: image-url('home/heading_bg.png') no-repeat
+    position: relative
+
+    .logo
+      position: absolute
+      left: 47px
+      top: 44px
+
+    .phone_block
+      position: absolute
+      left: 540px
+      top: 38px
+      background: image-url('home/phone.png') no-repeat
+      font: italic 23px $font_sans
+      padding: 5px 0 0 50px
+      height: 50px
+      span
+        display: block
+        vertical-align: top
+      i
+        color: white
+
+    .auth_block
+      position: absolute
+      left: 1019px
+      top: 15px
+      .control-group
+        margin-bottom: 0px
+      input.string,input.password
+        width: 200px
+        height: 23px
+        margin-bottom: 7px
+        padding: 0 7px 0 7px
+        background: #DEE0E7
+        @include border-radius(15px)
+        border: none
+      .btn
+        @include border-radius(10px)
+        border: none
+        font-size: 14px
+      a.btn
+        +background-image(linear-gradient(#fff, #ddd))
+        color: #233848
+        padding: 3px 16px 3px 16px
+      input.btn
+        +background-image(linear-gradient(#013B57, #01243E))
+        color: #D6DBE0
+        font-weight: bold
+        padding: 4px 22px 4px 22px
+
+  hr.top_hr
+    height: 10px
+    border: none
+    background: #D7D9DD
+    margin-top: 1px
+
+
+  .cell
+    width: 420px
+
+#footer
+  height: 258px
+  a
+    text-decoration: inherit
+    color: inherit
+
+  #bottom_menu
+    height: 66px
+    background: image-url('home/bottom_menu_bg.png') repeat-x
+    text-align: center
+    li
+      display: inline-block
+      padding: 0 15px 0 15px
+      margin-top: 16px
+      font-size: 14px
+
+  #footing
+    color: #182D40
+    height: 172px
+    background: image-url('home/footing_bg.png') repeat-x
+    padding: 20px 160px 0 160px
+    .cell
+      float: left
+      width: 160px
+      padding: 0 60px 0 60px
+    .cell_c
+      float: left
+      width: 240px
+      padding: 0 60px 0 60px
+      display: inline-block
+      text-align: center
+    .logo
+      text-transform: uppercase
+      color: #1A3140
+      font: italic 18px $font_serif
+      letter-spacing: 3px
+      b
+        font-weight: bold
+      i
+        margin-left: -5px
+
+#middle
+  padding: 20px 50px 50px 23px
+  vertical-align: top
+
+#left_column
+  display: inline-block
+  width: 730px
+  margin: 15px 23px 0 26px
+  float: left
+  .row
+    margin-top: 20px
+    .cell
+      vertical-align: top
+      width: 350px
+      display: inline-block
+      &:first-child
+        margin-right: 26px
+      img
+        float: left
+        margin: 8px 8px 8px 0
+  .banner_block
+    margin-top: 10px
+
+#right_column
+  display: inline-block
+  width: 405px
+  margin: 15px 0 0 23px
+  //float: right
+  .slider_block
+    margin-top: 10px
+  .block
+    margin-top: 10px
+    h4
+      width: 380px
+      height: 20px
+      padding: 10px 0px 10px 25px
+      +background-image(linear-gradient(#CED8DE, #BBC8CF))
+      +single-box-shadow(rgba(160,160,160,0.75), 0, 1px, 3px)
+      @include border-radius(9px)
+    .inner
+      color: #182D40
+      background: #F6F7F8
+      @include border-radius(5px)
+      margin-top: 7px
+      a
+        color: #3190D2
+      .elem
+        margin: 0 10px 10px 10px
+        width: 390px
+        display: inline-block
+        img
+          border: 1px solid #dddddd
+          @include border-radius(10px)
+          margin: 10px 10px 10px 0
+          float: left
+          width: 180px
+        p
+          padding-top: 10px
+  .top_block
+    @extend .block
+    .inner
+      background: #F2F3F4
+
+#partners_block
+  width: 1000px
+  margin: 20px 120px 0 120px
+  h5
+    padding-left: 10px
+  hr
+    border: 0
+    border-bottom: 1px dashed #8599B0
