@@ -23,7 +23,7 @@
 					%li запись на тест-драйв консультацию
 					%li или любое другое действие, которое в итоге приводит к продажам
 			%br
-			= link_to 'Регистрация рекламодателя', '#', :class => "btn2"
+			= link_to 'Регистрация рекламодателя', new_user_registration_path(:type => :advertiser), :class => "btn2"
 
 		.cell.webmaster_block.formated
 			.plate.orange
@@ -41,7 +41,7 @@
 					%li удобная система настройки
 					%li оплата за действие
 			%br
-			= link_to 'Регистрация вебмастера', '#', :class => "btn2"
+			= link_to 'Регистрация вебмастера', new_user_registration_path(:type => :webmaster), :class => "btn2"
 #right_column
 	%div
 		%h3 Наши клиенты

@@ -6,7 +6,7 @@
 			= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
 				= f.error_notification
 				.inputs
-					= f.input :_type, :required => true, :as => :select, :collection => ['Webmaster', 'Advertiser']
+					= f.input :_type, :required => true, :as => :select, :collection => ['Webmaster', 'Advertiser'], :selected => params[:type] ? params[:type].capitalize : nil
 					= f.input :email, :required => true, :autofocus => true
 					= f.input :password, :required => true
 					= f.input :password_confirmation, :required => true
