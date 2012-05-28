@@ -1,0 +1,6 @@
+.row
+	.span12
+		%h1= 'Новости'
+		%ul
+		- @news.each do |news|
+			%li= link_to news.title, news_path(news)

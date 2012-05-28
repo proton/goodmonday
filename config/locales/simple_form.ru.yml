@@ -41,6 +41,9 @@ ru:
         title: 'Название'
         content: 'Содержимое'
         active: 'Активна'
+      news:
+        title: 'Название'
+        content: 'Содержимое'
       banner:
         url: 'Ссылка'
     hints:

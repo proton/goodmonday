@@ -1,0 +1,26 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th.first= 'Название'
+			%th= 'Добавлена'
+			%th= 'Изменена'
+			%th.last
+	%tbody
+		- @news.each do |news|
+			%tr
+				%td= news.title
+				%td= news.created_at
+				%td= news.updated_at
+				%td
+					= link_to news_path(news), :class => 'btn btn-small' do
+						%i.icon-cog
+						= 'Открыть'
+					= link_to edit_news_path(news), :class => 'btn btn-small' do
+						%i.icon-pencil
+						= 'Редактировать'
+					= link_to news_path(news), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						%i.icon-trash.icon-white
+						= 'Удалить'
+= link_to new_news_path, :class => 'btn btn-primary' do
+	%i.icon-plus-sign.icon-white
+	= 'Добавить'

@@ -1,0 +1,13 @@
+= content_for :head_etc do
+	= include_imperavi_stylesheet
+	= include_imperavi_javascript
+
+= simple_form_for @news do |f|
+	=	f.input :title, :input_html => { :class => 'span8' }
+	=	f.input :content, :as => :text, :input_html => { :class => 'span9' }
+	=	f.button :submit
+	= link_to 'Отмена', articles_path, :class => "btn btn-danger"
+
+= include_imperavi_stylesheet
+= include_imperavi_javascript
+= imperavi :article_content

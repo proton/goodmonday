@@ -15,7 +15,7 @@
 						%li.active= link_to 'Главная', '/'
 						%li= 'о компании'
 						%li= 'контакты'
-						%li= 'новости'
+						%li= link_to 'новости', news_index_path
 						%li= 'список офферов'
 				#heading
 					= image_tag 'home/logo.png', :class => 'logo'
@@ -96,7 +96,7 @@
 						%li= ':'
 						%li= 'Контакты'
 						%li= ':'
-						%li= 'Новости'
+						%li= link_to 'Новости', news_index_path
 						%li= ':'
 						%li= 'Список офферов'
 		= javascript_include_tag "application"

@@ -77,10 +77,12 @@ Cpa::Application.routes.draw do
 				resources :grounds
 			end
       resources :articles
+      resources :news
 	  end
 	end
 
   resources :articles
+  resources :news
 
 	match "user_root", :to => "my::base#index"
 
