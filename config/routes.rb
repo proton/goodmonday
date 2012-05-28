@@ -1,4 +1,6 @@
 Cpa::Application.routes.draw do
+  mount ImperaviRails::Engine => "/imperavi"
+
   devise_for :users, :path_names =>
 	{
 		:sign_in => 'login',
@@ -74,8 +76,11 @@ Cpa::Application.routes.draw do
 				end
 				resources :grounds
 			end
+      resources :articles
 	  end
 	end
+
+  resources :articles
 
 	match "user_root", :to => "my::base#index"
 

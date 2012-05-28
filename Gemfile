@@ -45,6 +45,7 @@ gem 'devise'
 gem 'russian'
 gem 'ru_propisju'
 
+gem 'imperavi-rails', '>= 0.0.12.beta'
 gem 'chosen-rails'
 
 gem 'crummy', :git => 'git://github.com/proton/crummy.git' #waiting for fixing html_list format

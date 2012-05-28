@@ -1,0 +1,6 @@
+.row
+	.span12
+		%h1= 'Статьи'
+		%ul
+		- @articles.each do |article|
+			%li= link_to article.title, article_path(article)
