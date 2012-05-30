@@ -1,6 +1,4 @@
-class Advertiser < User
+class Advertiser < Member
 	has_many :offers
 	has_many :achievements
-
-	field :balance, type: Integer, default: 0
 end

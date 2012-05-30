@@ -6,14 +6,18 @@
 				- when Advertiser
 					= add_sidebar_link 'Рекламные кампании', offers_path, :inbox
 					= add_sidebar_link 'Достижения целей', achievements_path, :gift
+					= add_sidebar_link 'Платежи', payments_path, :briefcase
+					= add_sidebar_link 'Поддержка', discussions_path, :comment
 				- when Webmaster
 					= add_sidebar_link 'Рекламные площадки', grounds_path, :road
 					= add_sidebar_link 'Достижения целей', achievements_path, :gift
+					= add_sidebar_link 'Платежи', payments_path, :briefcase
+					= add_sidebar_link 'Поддержка', discussions_path, :comment
 				- when Operator
 					= add_sidebar_link 'Модерации', moderations_path, 'eye-open'
 					= add_sidebar_link 'Подозрителные действия', suspicions_path, :fire
 					= add_sidebar_link 'Пользователи', users_path, :user
 					= add_sidebar_link 'Статьи', articles_path, :book
 					= add_sidebar_link 'Новости', news_index_path, 'list-alt'
-			= add_sidebar_link 'Поддержка', discussions_path, :comment
+					= add_sidebar_link 'Поддержка', discussions_path, :comment
 			= yield :sidebar_etc

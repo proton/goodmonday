@@ -1,14 +1,10 @@
 %ul.nav.nav-tabs
 	%li.active
-		%a{"data-toggle" => "tab", :href => "#open"}= 'Открытые'
+		%a{"data-toggle" => "tab", :href => "#open"}= "Открытые (#{@discussions_open.size})"
 	%li
-		%a{"data-toggle" => "tab", :href => "#closed"}= 'Закрытые'
+		%a{"data-toggle" => "tab", :href => "#closed"}= "Закрытые (#{@discussions_closed.size})"
 .tab-content
 	#open.tab-pane.fade.active.in
-		.page-header
-			%h2
-				= 'Открытые'
-				%small= "(#{@discussions_open.size})"
 		%table.table.table-bordered.table-striped
 			%thead
 				%tr
@@ -29,10 +25,6 @@
 								%i.icon-cog
 								= 'Открыть'
 	#closed.tab-pane.fade
-		.page-header
-			%h2
-				= 'Закрытые'
-				%small= "(#{@discussions_closed.size})"
 		%table.table.table-bordered.table-striped
 			%thead
 				%tr

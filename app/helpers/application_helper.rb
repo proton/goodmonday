@@ -14,5 +14,9 @@ module ApplicationHelper
 		icon_raw = ''
 		icon_raw = "<i class='icon-#{icon.to_s}#{active ? ' icon-white' : ''}'></i> " if icon
 		"<li#{active ? " class='active'": ''}><a href='#{url}'>#{icon_raw}#{text}</a></li>".html_safe
-	end
+  end
+
+  def number_to_rubles(x)
+    number_to_currency(x/100.0)
+  end
 end

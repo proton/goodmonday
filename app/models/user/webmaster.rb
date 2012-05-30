@@ -1,10 +1,8 @@
-class Webmaster < User
+class Webmaster < Member
 	include Mongoid::Symbolize
 
 	has_many :grounds
 	has_many :achievements
-
-  field :balance, type: Integer, default: 0
 
   field :sub_ids, type: Array, default: []
 

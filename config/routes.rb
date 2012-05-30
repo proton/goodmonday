@@ -40,7 +40,8 @@ Cpa::Application.routes.draw do
 				resources :adverts, :controller => "ground_advert_offers"
 			end
 			#advertiser & webmaster
-			resources :achievements
+      resources :achievements
+      resources :payments
 			resources :discussions do
 				post :message
 				put :close
