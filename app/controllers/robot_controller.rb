@@ -108,7 +108,16 @@ class RobotController < ApplicationController
 						url = advert.url
 					else
 						url = offer.url
-					end
+          end
+
+          if params[:sub_id] && !params[:sub_id].empty?
+            sub_id = params[:sub_id]
+            webmaster = ground.webmaster
+            unless webmaster.sub_ids.include? sub_id
+              webmaster.sub_ids << sub_id
+              webmaster.save
+            end
+          end
 
 					if visitor.save
 						cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
@@ -152,7 +161,8 @@ class RobotController < ApplicationController
 								achievement = Achievement.new
 								achievement.webmaster = visitor.ground.webmaster
 								achievement.advertiser = offer.advertiser
-								achievement.ground = visitor.ground
+                achievement.ground = visitor.ground
+                achievement.sub_id = visitor.sub_id
 								achievement.offer = offer
 								achievement.visitor = visitor
 								achievement.target_id = target_id

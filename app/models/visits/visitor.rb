@@ -11,5 +11,6 @@ class Visitor
 
 	field :initial_page, type: String
 	field :initial_ip, type: String
-	field :user_agent, type: String
+  field :user_agent, type: String
+  field :sub_id, type: String
 end

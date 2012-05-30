@@ -1,0 +1,24 @@
+%b= 'Ваша ссылка:'
+%br
+%br
+%pre.prettyprint
+  = "http://r.goodmonday.ru:3000/robot/#{@ground.id}/goto/#{@offer.id}"
+
+%b= 'Полный код для вставки:'
+%br
+%br
+%pre.prettyprint
+  = "<a href='http://r.goodmonday.ru:3000/robot/#{@ground.id}/goto/#{@offer.id}'>"
+  -#%span.tag Текст ссылки
+  = content_tag(:span, 'Текст ссылки', :class => "atn")
+  = "</a>"
+
+%b= 'Если вы желаете использовать sub_id, просто передайте его в параметре ссылки:'
+%br
+%br
+%pre.prettyprint
+  = "<a href='http://r.goodmonday.ru:3000/robot/#{@ground.id}/goto/#{@offer.id}?sub_id="
+  = content_tag(:span, 'ваш_sub_id', :class => "str")
+  = "'>"
+  = content_tag(:span, 'Текст ссылки', :class => "atn")
+  = "</a>"

@@ -16,6 +16,8 @@ class Achievement
 	field :ip, type: String
 	index :ip
 
+  field :sub_id, type: String
+
 	field :price, type: Integer
 
 	field :order_id, type: String #optional for manual confirmation

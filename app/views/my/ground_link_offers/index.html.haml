@@ -36,8 +36,6 @@
 		%tr
 			%th= 'Название'
 			%th= 'Показы/Выплаты'
-			- if @state==:accepted
-				%th= 'Код'
 			%th= 'Действия'
 	%tbody
 		- @offers.each do |offer|
@@ -48,10 +46,11 @@
 					= offer.shows
 					= ' / '
 					= number_to_currency offer.payments
-				- if @state==:accepted
-					%td
-						%pre.prettyprint.linenums{:style => 'max-width:300px'}= "<a href='http://188.255.106.235:3000/robot/#{@ground.id}/goto/#{offer.id}'>Текст ссылки</a>"
 				%td
+					- if @state==:accepted
+						= link_to ground_link_path(@ground,offer), :class => 'btn btn-small' do
+							%i.icon-align-justify
+							= 'Показать код'
 					= link_to ground_link_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
 						%i.icon-trash.icon-white
 						= 'Удалить'

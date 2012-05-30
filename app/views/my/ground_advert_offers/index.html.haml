@@ -14,9 +14,9 @@
 				= 'Links'
 				%b.caret
 			%ul.dropdown-menu
-				%li= link_to 'Accepted', ground_adverts_path(@ground, :state => :accepted)
-				%li= link_to 'Denied', ground_adverts_path(@ground, :state => :denied)
-				%li= link_to 'Pending', ground_adverts_path(@ground, :state => :pending)
+				%li= link_to 'Accepted', ground_links_path(@ground, :state => :accepted)
+				%li= link_to 'Denied', ground_links_path(@ground, :state => :denied)
+				%li= link_to 'Pending', ground_links_path(@ground, :state => :pending)
 				- if @ground.is_accepted?
 					%li.divider
 					%li= link_to 'Добавить', new_ground_advert_path(@ground)

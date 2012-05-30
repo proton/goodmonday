@@ -26,7 +26,13 @@ class My::GroundLinkOffersController < My::BaseController
 	def new
 		add_crumb 'Новый оффер'
 		@offers = Offer.accepted.not_in(_id: @ground.link_offers_ids)
-	end
+  end
+
+  def show
+    @offer = Offer.find(params[:id])
+    add_crumb 'Одобренные офферы', ground_links_path(@ground, :state => :accepted)
+    add_crumb "Оффер #{@offer.title}"
+  end
 
 	def create
 		@offer = Offer.find(params[:offer_id])
