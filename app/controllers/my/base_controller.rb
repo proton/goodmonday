@@ -9,8 +9,11 @@ class My::BaseController < ApplicationController
 	add_crumb 'Кабинет', '/'
 
 	def index
-    if current_user.class==Operator
-      redirect_to moderations_url(:subdomain => :admin)
+    case current_user.class
+      when Advertiser, Webmaster
+        @common_stat = StatCounter.common_stat_for current_user
+      when Operator
+        redirect_to moderations_url(:subdomain => :admin)
     end
 	end
 

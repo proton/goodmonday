@@ -1,45 +1,61 @@
 class StatCounter
 	include Mongoid::Document
 
-	#belongs_to :advertiser
-	##field :advertiser_id, type: Fields::Serializable::ForeignKeys::Object, default: lambda{current_user.id}
-	#embeds_many :targets
-	#embeds_many :adverts #TODO: подумать над автообъявлениями (к примеру на основе яндекс.маркета)
-	#field :adverts_sizes, type: Array, default: []
-	##has_and_belongs_to_many :grounds
-	#has_many :ground_offers, dependent: :delete
-	#has_many :achievements
-	#belongs_to :category
+  belongs_to :ground, index: true
+  belongs_to :offer, index: true
+  belongs_to :adversiter, index: true
+  belongs_to :webmaster, index: true
+
+  field :date, type: Date
+  field :sub_id, type: String
+  field :target_id, type: BSON::ObjectId
+  field :subject, type: Symbol
+
+  field :value, type: Integer
+
+  index :date
+  index :sub_id
+
+  index({ webmaster_id: 1, date: 1 })
+  index({ adversiter_id: 1, date: 1 })
+
+  #index({ webmaster_id: 1, ground_id: 1 })
+  #index({ webmaster_id: 1, offer_id: 1 })
+  #index({ webmaster_id: 1, sub_id: 1 })
   #
-	#field :title, type: String
-	#field :url, type: String, default: ''
+  #index({ adversiter_id: 1, ground_id: 1 })
+  #index({ adversiter_id: 1, offer_id: 1 })
   #
-	#field :shows, type: Integer, default: 0
-	#field :payments, type: Integer, default: 0
-	#field :epc, type: Float, default: 0.0
+  #index({ webmaster_id: 1, ground_id: 1, offer_id: 1 })
+  #index({ webmaster_id: 1, ground_id: 1, date: 1 })
+  #index({ webmaster_id: 1, ground_id: 1, sub_id: 1 })
+  #index({ webmaster_id: 1, offer_id: 1, date: 1 })
+  #index({ webmaster_id: 1, offer_id: 1, sub_id: 1 })
+  #index({ webmaster_id: 1, date: 1, sub_id: 1 })
   #
-	#field :is_adult, type: Boolean, default: false
-	#field :is_doubtful, type: Boolean, default: false
-  #
-	#field :auto_accept_grounds, type: Boolean, default: true
-	#field :excepted_categories_ids, type: Array, default: []
-  #
-	#def excepted_categories
-	#	self.excepted_categories_ids
-	#end
-  #
-	#def excepted_categories= (ids)
-	#	self.excepted_categories_ids = ids.reject(&:blank?)
-	#end
-  #
-	#scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).order_by(:epc, :desc) }
-  #
-	#def update_adverts_sizes
-	#	self.adverts_sizes = self.adverts.where(moderation_state: :accepted).collect{|a| a.sizes}.flatten.compact
-	#	self.save
-	#end
-  #
-	#MODERATED_ATTRS = %w[title url category_id]
-	#MODERATED_EDIT_FIELDS = [:is_adult, :is_doubtful]
-	#include IsModerated
+  #index({ adversiter_id: 1, ground_id: 1, offer_id: 1 })
+  #index({ adversiter_id: 1, ground_id: 1, date: 1 })
+  #index({ adversiter_id: 1, offer_id: 1, date: 1 })
+
+  def self.common_stat_for(user)
+    if user.class==Webmaster
+      user_counters = StatCounter.where(:webmaster_id => user.id)
+    else
+      user_counters = StatCounter.where(:adversiter_id => user.id)
+    end
+    counters = {}
+    counters[:today] = user_counters.where(:date => Date.today)
+    counters[:yesterday] = user_counters.where(:date => Date.yesterday)
+    counters[:week] = user_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.week)
+    counters[:month] = user_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.month)
+    counters[:total] = user_counters.where(:date => Date.new(0))
+    stat = {:click => {}, :target => {}, :income => {}}
+    for time in [:today, :yesterday, :week, :month, :total] do
+      for subj in [:click, :target, :income]
+        v = counters[time].where(:subject => subj).sum(:value)
+        stat[subj][time] = v ? v : 0
+      end
+    end
+    stat
+  end
 end

@@ -13,26 +13,29 @@
 					%th Всего
 			%tbody
 				%tr
+					- subject = :click
 					%th Клики
-					%td 0
-					%td 3
-					%td 113
-					%td 569
-					%td 3913
+					%td= @common_stat[subject][:today]
+					%td= @common_stat[subject][:yesterday]
+					%td= @common_stat[subject][:week]
+					%td= @common_stat[subject][:month]
+					%td= @common_stat[subject][:total]
 				%tr
+					- subject = :target
 					%th Цели
-					%td 0
-					%td 3
-					%td 113
-					%td 569
-					%td 3913
+					%td= @common_stat[subject][:today]
+					%td= @common_stat[subject][:yesterday]
+					%td= @common_stat[subject][:week]
+					%td= @common_stat[subject][:month]
+					%td= @common_stat[subject][:total]
 				%tr
+					- subject = :income
 					%th Доход
-					%td 0
-					%td 3
-					%td 113
-					%td 569
-					%td 3913
+					%td= number_to_rubles @common_stat[subject][:today]
+					%td= number_to_rubles @common_stat[subject][:yesterday]
+					%td= number_to_rubles @common_stat[subject][:week]
+					%td= number_to_rubles @common_stat[subject][:month]
+					%td= number_to_rubles @common_stat[subject][:total]
 	.span3
 		.well
 			%b Баланс:
