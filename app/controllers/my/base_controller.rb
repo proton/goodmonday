@@ -9,14 +9,9 @@ class My::BaseController < ApplicationController
 	add_crumb 'Кабинет', '/'
 
 	def index
-		case current_user.class
-			when Advertiser
-				redirect_to offers_url(:subdomain => :my)
-			when Webmaster
-				redirect_to grounds_url(:subdomain => :my)
-			when Operator
-				redirect_to moderations_url(:subdomain => :admin)
-		end
+    if current_user.class==Operator
+      redirect_to moderations_url(:subdomain => :admin)
+    end
 	end
 
 	protected

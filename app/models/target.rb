@@ -12,7 +12,10 @@ class Target
   #TODO: 3 цены
 	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
 	field :confirm_url, type: String
+  field :hold, type: Integer, default: 20
 
-	MODERATED_ATTRS = %w[title fixed_price prc_price]
+  validates :hold, presence: true
+
+	MODERATED_ATTRS = %w[title fixed_price prc_price hold]
 	include IsModerated
 end
