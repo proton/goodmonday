@@ -3,5 +3,5 @@ class Payment
  	include Mongoid::Timestamps
   embedded_in :discussion
 
- 	field :amount, :type => Integer
+ 	field :amount, type: Integer, default: 0
 end

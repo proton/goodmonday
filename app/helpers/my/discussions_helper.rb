@@ -1,2 +1,0 @@
-module My::DiscussionsHelper
-end
