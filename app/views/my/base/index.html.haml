@@ -1,7 +1,43 @@
 .row
 	.span6
-		%h4= ''
-		= 'Трололо'
+		%h5 Сводная информация
+		%br
+		%table.table.table-striped.table-bordered
+			%thead
+				%tr
+					%th
+					%th Сегодня
+					%th Вчера
+					%th Неделя
+					%th Месяц
+					%th Всего
+			%tbody
+				%tr
+					%th Клики
+					%td 0
+					%td 3
+					%td 113
+					%td 569
+					%td 3913
+				%tr
+					%th Цели
+					%td 0
+					%td 3
+					%td 113
+					%td 569
+					%td 3913
+				%tr
+					%th Доход
+					%td 0
+					%td 3
+					%td 113
+					%td 569
+					%td 3913
 	.span3
 		.well
-			= 'Трололо'
+			%b Баланс:
+			= number_to_rubles @current_user.balance
+			%br
+			%b Ожидается:
+			= number_to_rubles @current_user.balance
+			%br
