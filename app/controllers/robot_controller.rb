@@ -110,6 +110,7 @@ class RobotController < ApplicationController
 						url = offer.url
           end
 
+          sub_id = nil
           if params[:sub_id] && !params[:sub_id].empty?
             sub_id = params[:sub_id]
             webmaster = ground.webmaster
@@ -123,6 +124,11 @@ class RobotController < ApplicationController
 						cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
 						#:path - The path for which this cookie applies. Defaults to the root of the application.
 						#:domain - The domain for which this cookie applies.
+
+            #collecting statistic:
+            StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id, subject: :click).inc(:value, 1)
+            StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id, subject: :click).inc(:value, 1)
+
 						redirect_to url
 					end
 				end
@@ -174,6 +180,12 @@ class RobotController < ApplicationController
 								if target.confirm_mode == :auto
 									achievement.price = target.fixed_price
 									achievement.state = :accepted
+
+                  #collecting statistic:
+                  StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id, subject: :target, target_id: target.id).inc(:value, 1)
+                  StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id, subject: :target, target_id: target.id).inc(:value, 1)
+                  StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id, subject: :income, target_id: target.id).inc(:value, achievement.price)
+                  StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id, subject: :income, target_id: target.id).inc(:value, achievement.price)
 								end
 								achievement.save
 							end

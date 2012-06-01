@@ -1,0 +1,43 @@
+.row
+	.span6
+		%table.table.table-striped.table-bordered.table-condensed
+			%thead
+				%tr
+					%th Дата
+					%th Клики
+					%th Цели
+					%th Доход
+					%th Конверсия
+			-#%tbody
+			-#	%tr
+			-#		- subject = :click
+			-#		%th Клики
+			-#		%td= @common_stat[subject][:today]
+			-#		%td= @common_stat[subject][:yesterday]
+			-#		%td= @common_stat[subject][:week]
+			-#		%td= @common_stat[subject][:month]
+			-#		%td= @common_stat[subject][:total]
+			-#	%tr
+			-#		- subject = :target
+			-#		%th Цели
+			-#		%td= @common_stat[subject][:today]
+			-#		%td= @common_stat[subject][:yesterday]
+			-#		%td= @common_stat[subject][:week]
+			-#		%td= @common_stat[subject][:month]
+			-#		%td= @common_stat[subject][:total]
+			-#	%tr
+			-#		- subject = :income
+			-#		%th Доход
+			-#		%td= number_to_rubles @common_stat[subject][:today]
+			-#		%td= number_to_rubles @common_stat[subject][:yesterday]
+			-#		%td= number_to_rubles @common_stat[subject][:week]
+			-#		%td= number_to_rubles @common_stat[subject][:month]
+			-#		%td= number_to_rubles @common_stat[subject][:total]
+	.span3
+		.well
+			%b Баланс:
+			= number_to_rubles @current_user.balance
+			%br
+			%b Ожидается:
+			= number_to_rubles @current_user.balance
+			%br

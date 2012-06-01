@@ -42,6 +42,7 @@ Cpa::Application.routes.draw do
 			#advertiser & webmaster
       resources :achievements
       resources :payments
+      resources :stats
 			resources :discussions do
 				post :message
 				put :close

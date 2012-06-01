@@ -9,9 +9,10 @@ class StatCounter
   field :date, type: Date
   field :sub_id, type: String
   field :target_id, type: BSON::ObjectId
-  field :subject, type: Symbol
 
-  field :value, type: Integer
+  field :clicks, type: Integer, default: 0
+  field :targets, type: Integer, default: 0
+  field :income, type: Integer, default: 0
 
   index :date
   index :sub_id
@@ -51,9 +52,11 @@ class StatCounter
     counters[:total] = user_counters.where(:date => Date.new(0))
     stat = {:click => {}, :target => {}, :income => {}}
     for time in [:today, :yesterday, :week, :month, :total] do
+      stat[:click][time] = counters[time].sum(:clicks)
+      stat[:target][time] = counters[time].sum(:targets)
+      stat[:income][time] = counters[time].sum(:income)
       for subj in [:click, :target, :income]
-        v = counters[time].where(:subject => subj).sum(:value)
-        stat[subj][time] = v ? v : 0
+        stat[subj][time] = 0 unless stat[subj][time]
       end
     end
     stat
