@@ -14,6 +14,12 @@ class My::StatsController < My::BaseController
     @period = (Date.today-2.weeks)..(Date.today)
     counters = counters.where(:date => @period)
 
+    cond = "{:date=>2012-06-03 00:00:00 UTC}"
+    func = "function(obj,prev) { prev.click_count += obj.clicks; prev.target_count += obj.targets; prev.income_count += obj.income}"
+    h = {key: :date, cond: cond, initial: {click_count: 0, target_count: 0, income_count: 0}, reduce: func}
+    @stats = StatCounter.collection.group(h)
+
+
     #counters = {}
     #counters[:today] = user_counters.where(:date => Date.today)
     #counters[:yesterday] = user_counters.where(:date => Date.yesterday)
