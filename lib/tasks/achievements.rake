@@ -30,10 +30,10 @@ namespace :achievements do
 							achievement.price = target.fixed_price + target.prc_price*price/100
 
               #collecting statistic:
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.today, sub_id: achievement.sub_id, subject: :target, target_id: achievement.target_id).inc(:value, 1)
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.new(0), sub_id: achievement.sub_id, subject: :target, target_id: achievement.target_id).inc(:value, 1)
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.today, sub_id: achievement.sub_id, subject: :income, target_id: achievement.target_id).inc(:value, achievement.price)
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.new(0), sub_id: achievement.sub_id, subject: :income, target_id: achievement.target_id).inc(:value, achievement.price)
+              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.today, sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:targets, 1)
+              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.new(0), sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:targets, 1)
+              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.today, sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:income, achievement.price)
+              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.new(0), sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:income, achievement.price)
 						elsif status==3
 							achievement.state = :denied
 						end
