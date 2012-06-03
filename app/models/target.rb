@@ -6,9 +6,11 @@ class Target
 	has_many :achievements
 
 	field :title, type: String
-	field :fixed_price, type: Integer, default: 0
+  field :fixed_price, type: Integer, default: 0
+  field :fixed_prices, type: Hash, default: {:bronze => 0, :silver => 0, :gold => 0}
   #TODO: 3 цены
 	field :prc_price, type: Integer, default: 0
+  field :prc_prices, type: Hash, default: {:bronze => 0, :silver => 0, :gold => 0}
   #TODO: 3 цены
 	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
 	field :confirm_url, type: String

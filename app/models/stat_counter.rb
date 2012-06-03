@@ -42,7 +42,7 @@ class StatCounter
     if user.class==Webmaster
       user_counters = StatCounter.where(:webmaster_id => user.id)
     else
-      user_counters = StatCounter.where(:adversiter_id => user.id)
+      user_counters = StatCounter.where(:advertiser_id => user.id)
     end
     counters = {}
     counters[:today] = user_counters.where(:date => Date.today)
