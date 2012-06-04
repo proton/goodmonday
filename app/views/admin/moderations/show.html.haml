@@ -4,7 +4,7 @@
 	.row
 		-#= @moderation.moderated.inspect
 		- moderated_class = @moderation.moderated_type.constantize
-		.span12
+		.span9
 			%b= 'Дата: '
 			= @moderation.updated_at
 			%br
@@ -33,7 +33,7 @@
 							- if changed_value.class==BSON::ObjectId && key[-3..-1]=='_id'
 								- klass = key[0..-4].camelize.constantize
 								- type = :association
-							- elsif moderated_class.respond_to?(:MODERATED_ATTRS_INFO) && moderated_class::MODERATED_ATTRS_INFO[key]
+							- elsif moderated_class.const_defined?(:MODERATED_ATTRS_INFO) && moderated_class::MODERATED_ATTRS_INFO[key]
 								- attr_info = moderated_class::MODERATED_ATTRS_INFO[key]
 								- type = attr_info[:type]
 							%tr
@@ -48,6 +48,8 @@
 												%br
 												- show_method = attr_info[:show_method] ? attr_info[:show_method] : key
 												= image_tag @moderation.moderated_object.method(show_method).call
+											- when :currency
+												= number_to_rubles changed_value
 											- else
 												= changed_value
 								%td
@@ -55,6 +57,8 @@
 										- case type
 											- when :association
 												= klass.find(accepted_value).title
+											- when :currency
+												= number_to_rubles accepted_value
 											- else
 												= accepted_value
 
@@ -62,13 +66,15 @@
 					- if defined? moderated_class::MODERATED_EDIT_FIELDS
 						%h4= 'Дополнительные настройки:'
 						- moderated_class::MODERATED_EDIT_FIELDS.each do |key|
-							%p
+							.span4
 								= key
 								- options = moderated_class.fields[key.to_s].options
 								- field_name = "moderated_edit[#{key.to_s}]"
 								- case options[:type].to_s
 									- when 'Boolean'
 										= check_box_tag field_name, 1, options[:default]
+									- when 'Integer'
+										= number_field_tag field_name, @moderation.moderated_object.read_attribute(key), :class => 'span2'
 									- else
 										= ''
 					= button_tag :class => 'btn btn-success' do
@@ -79,7 +85,7 @@
 						= 'Отказать'
 				%hr
 	.row
-		.span6
+		.span4
 			%h3= 'Последние изменения'
 			%table.table.table-bordered.table-striped
 				%thead
@@ -91,7 +97,7 @@
 						%tr
 							%td= change.created_at
 							%td= change.changed_fields.keys.to_sentence
-		.span6
+		.span5
 			%h3= 'Последние проверки'
 			%table.table.table-bordered.table-striped
 				%thead

@@ -7,11 +7,15 @@ class Target
 
 	field :title, type: String
   field :fixed_price, type: Integer, default: 0
-  field :fixed_prices, type: Hash, default: {:bronze => 0, :silver => 0, :gold => 0}
-  #TODO: 3 цены
-	field :prc_price, type: Integer, default: 0
-  field :prc_prices, type: Hash, default: {:bronze => 0, :silver => 0, :gold => 0}
-  #TODO: 3 цены
+  field :fixed_prices_bronze, type: Integer, default: 0
+  field :fixed_prices_silver, type: Integer, default: 0
+  field :fixed_prices_gold, type: Integer, default: 0
+
+  field :prc_price, type: Integer, default: 0
+  field :prc_prices_bronze, type: Integer, default: 0
+  field :prc_prices_silver, type: Integer, default: 0
+  field :prc_prices_gold, type: Integer, default: 0
+
 	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
 	field :confirm_url, type: String
   field :hold, type: Integer, default: 20
@@ -19,5 +23,7 @@ class Target
   validates :hold, presence: true
 
 	MODERATED_ATTRS = %w[title fixed_price prc_price hold]
+  MODERATED_ATTRS_INFO = {'fixed_price' => {:type => :currency} }
+  MODERATED_EDIT_FIELDS = [:fixed_prices_bronze, :fixed_prices_silver, :fixed_prices_gold, :prc_prices_bronze, :prc_prices_silver, :prc_prices_gold]
 	include IsModerated
 end

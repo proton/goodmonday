@@ -1,11 +1,12 @@
 - auto_mode = (@target.confirm_mode==:auto)
 = simple_form_for([@user.becomes(User), @offer, @target], :html => {:class => 'form-horizontal' }) do |f|
-	.control-group= f.input :title, :input_html => { :class => "span6" }
-	.control-group= f.input :confirm_mode, :required => true, :as => :select, :collection => Target.get_confirm_mode_values, :input_html => { :class => "span6" }
+	= f.input :title, :input_html => { :class => "span6" }
+	= f.input :confirm_mode, :required => true, :as => :select, :collection => Target.get_confirm_mode_values, :input_html => { :class => "span6" }
 	.manual_mode_fields{:style => auto_mode ? 'display:none' : 'display:block'}
-		.control-group= f.input :confirm_url, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-		.control-group= f.input :prc_price, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-	.control-group= f.input :fixed_price, :required => true, :as => :decimal, :input_html => { :class => "span6" }
+		= f.input :confirm_url, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
+		= f.input :prc_price, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
+	= f.input :fixed_price, :required => true, :as => :decimal, :input_html => { :class => "span6", :value => @target.fixed_price/100 }       
+	= f.input :hold, :input_html => { :class => "span6" }
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Отмена', offer_targets_path, :class => "btn btn-danger"
 

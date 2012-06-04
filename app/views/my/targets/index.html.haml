@@ -18,7 +18,7 @@
 					- if target.prc_price>0 && target.fixed_price>0
 						= ' + '
 					- if target.fixed_price>0
-						= number_to_currency target.fixed_price
+						= number_to_rubles target.fixed_price
 				%td
 					= link_to offer_target_path(@offer, target), :class => 'btn btn-small' do
 						%i.icon-edit
