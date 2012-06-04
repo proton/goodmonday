@@ -1,0 +1,17 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'E-mail'
+			%th= 'Баланс'
+			%th= 'Овердрафт'
+			%th= 'Его'
+	%tbody
+		- @users.each do |user|
+			%tr
+				%td= user.email
+				%td= number_to_rubles user.balance
+				%td= number_to_rubles user.overdraft
+				%td
+					= link_to user_offers_path(user), :class => 'btn btn-small' do
+						%i.icon-inbox
+						= 'Офферы'

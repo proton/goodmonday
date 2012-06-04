@@ -20,9 +20,14 @@
 						%td= number_to_rubles (stat['income_count']/stat['click_count'])
 	.span3
 		.well
-			%b Баланс:
-			= number_to_rubles @current_user.balance
+			%b Фильтрация
 			%br
-			%b Ожидается:
-			= number_to_rubles @current_user.balance
 			%br
+			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'span2' } } do |f|
+				= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker span2' }
+				= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker span2' }
+				-#= f.input :ground
+				-#= f.input :offer
+				-#= f.input :sub_id
+				-#= f.input :target
+				= f.submit 'Фильтровать'

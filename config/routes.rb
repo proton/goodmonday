@@ -80,6 +80,7 @@ Cpa::Application.routes.draw do
 			end
       resources :articles
       resources :news
+      resources :debtors
 	  end
 	end
 

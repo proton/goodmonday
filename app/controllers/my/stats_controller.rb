@@ -7,6 +7,12 @@ class My::StatsController < My::BaseController
 
     @date_start = Date.today-2.weeks
     @date_stop = Date.today
+    if params[:filter][:date_start]
+      @date_start = Date.parse(params[:filter][:date_start])
+    end
+    if params[:filter][:date_stop]
+      @date_stop = Date.parse(params[:filter][:date_stop])
+    end
     t_start =  Time.utc(@date_start.year,@date_start.month,@date_start.day)
     t_stop =  Time.utc(@date_stop.year,@date_stop.month,@date_stop.day)
 
