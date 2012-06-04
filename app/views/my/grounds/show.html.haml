@@ -35,6 +35,40 @@
 			.control-group= cf.input :block_doubtful, :as => :boolean, :input_html => { :class => "span6" }
 	= f.button :submit, :class => 'btn-primary'
 
+%h3= 'Код для ротации банеров:'
+%br
+%b= '1. Вставьте в javascript код в любое место вашей страницы:'
+%br
+%br
+%pre.prettyprint
+	= "<script src='http://r.goodmonday.ru/#{@ground.id}/rotator.js' />"
+
+%b= '2. В места для банеров вставьте следующий код:'
+%br
+%br
+%pre.prettyprint
+	= "<div class='goodmonday_adv size_"
+	= content_tag(:span, '200x100', :class => "atn")
+	= "'></div>"
+Где
+%b 200x100
+= '- размер желаемого банера.'
+%br
+Банер может иметь один из следующих размеров:
+= ADVERTS_SIZES.to_sentence
+
+%br
+%br
+%b= 'Если вы желаете использовать sub_id, просто добавьте его в список классов:'
+%br
+%br
+%pre.prettyprint
+	= "<div class='goodmonday_adv size_"
+	= content_tag(:span, '200x100', :class => "atn")
+	= ' subid_'
+	= content_tag(:span, 'ваш_sub_id', :class => "str")
+	= "'></div>"
+
 :javascript
 	$(document).ready(function() {
 		$('#ground_rotator_mode').change(function () {

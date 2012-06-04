@@ -44,7 +44,7 @@ if elems.length > 0
   for k of h
     size_params += "sizes[#{k}]=#{encodeURIComponent(h[k])}&"
 
-  url =  "http://188.255.106.235:3000/robot/<%= @ground.id %>/advert.json?#{size_params}rn=#{Math.random()}"
+  url =  "http://r.goodmonday.ru/<%= @ground.id %>/advert.json?#{size_params}rn=#{Math.random()}"
   xmlhttp = getXmlHttp()
   xmlhttp.open "GET", url, true
   xmlhttp.onreadystatechange = ->
