@@ -18,13 +18,13 @@ class My::StatsController < My::BaseController
 
     cond = {:date => {'$gte' => t_start, '$lte' => t_stop}}
 
-    #if current_user.class==Webmaster
-    #  cond[:webmaster_id] = current_user.id
-    #  #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :webmaster_id => current_user.id}
-    #else
-    #  cond[:advertiser_id] = current_user.id
-    #  #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :advertiser_id => current_user.id}
-    #end
+    if current_user.class==Webmaster
+      cond[:webmaster_id] = current_user.id
+      #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :webmaster_id => current_user.id}
+    else
+      cond[:advertiser_id] = current_user.id
+      #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :advertiser_id => current_user.id}
+    end
 
     func = "function(obj,prev) { prev.click_count += obj.clicks; prev.target_count += obj.targets; prev.income_count += obj.income}"
     h = {key: :date, cond: cond, initial: {click_count: 0, target_count: 0, income_count: 0}, reduce: func}
