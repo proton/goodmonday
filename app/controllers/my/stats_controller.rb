@@ -5,35 +5,24 @@ class My::StatsController < My::BaseController
 	def index
 		add_crumb "Статистика"
 
-    if current_user.class==Webmaster
-      counters = StatCounter.where(:webmaster_id => current_user.id)
-    else
-      counters = StatCounter.where(:adversiter_id => current_user.id)
-    end
+    @date_start = Date.today-2.weeks
+    @date_stop = Date.today
+    t_start =  Time.utc(@date_start.year,@date_start.month,@date_start.day)
+    t_stop =  Time.utc(@date_stop.year,@date_stop.month,@date_stop.day)
 
-    @period = (Date.today-2.weeks)..(Date.today)
-    counters = counters.where(:date => @period)
+    cond = {:date => {'$gte' => t_start, '$lte' => t_stop}}
 
-    cond = "{:date=>2012-06-03 00:00:00 UTC}"
+    #if current_user.class==Webmaster
+    #  cond[:webmaster_id] = current_user.id
+    #  #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :webmaster_id => current_user.id}
+    #else
+    #  cond[:advertiser_id] = current_user.id
+    #  #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :advertiser_id => current_user.id}
+    #end
+
     func = "function(obj,prev) { prev.click_count += obj.clicks; prev.target_count += obj.targets; prev.income_count += obj.income}"
     h = {key: :date, cond: cond, initial: {click_count: 0, target_count: 0, income_count: 0}, reduce: func}
     @stats = StatCounter.collection.group(h)
-
-
-    #counters = {}
-    #counters[:today] = user_counters.where(:date => Date.today)
-    #counters[:yesterday] = user_counters.where(:date => Date.yesterday)
-    #counters[:week] = user_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.week)
-    #counters[:month] = user_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.month)
-    #counters[:total] = user_counters.where(:date => Date.new(0))
-    #stat = {:click => {}, :target => {}, :income => {}}
-    #for time in [:today, :yesterday, :week, :month, :total] do
-    #  for subj in [:click, :target, :income]
-    #    v = counters[time].where(:subject => subj).sum(:value)
-    #    stat[subj][time] = v ? v : 0
-    #  end
-    #end
-    #stat
 	end
 	
 end
