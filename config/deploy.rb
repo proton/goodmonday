@@ -2,6 +2,8 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Для работы rvm
 require 'rvm/capistrano' # Для работы rvm
 require 'bundler/capistrano' # Для работы bundler. При изменении гемов bundler автоматически обновит все гемы на сервере, чтобы они в точности соответствовали гемам разработчика.
 
+default_run_options[:pty] = true #fix sudo problem
+
 set :application, "cpa"
 set :rails_env, "production"
 set :domain, "www@vsestulya.ru" # Это необходимо для деплоя через ssh. Именно ради этого я настоятельно советовал сразу же залить на сервер свой ключ, чтобы не вводить паролей.
