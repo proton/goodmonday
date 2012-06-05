@@ -42,12 +42,12 @@ role :db,  domain, :primary => true
 
 namespace :deploy do
   task :start do
-    sudo "/usr/bin/thin.#{application} start"
+    sudo "/etc/init.d/thin.#{application} start"
   end
   task :stop do
-    sudo "/usr/bin/thin.#{application} stop"
+    sudo "/etc/init.d/thin.#{application} stop"
   end
   task :restart do
-    sudo "/usr/bin/thin.#{application} reload"
+    sudo "/etc/init.d/thin.#{application} reload"
   end
 end
