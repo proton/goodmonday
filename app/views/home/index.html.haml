@@ -43,10 +43,10 @@
 			%br
 			= link_to 'Регистрация вебмастера', new_user_registration_path(:type => :webmaster), :class => "btn2"
 #right_column
-	%div
-		%h3 Наши клиенты
-		.slider_block
-			= image_tag 'tmp/slider.png'
+	-#%div
+	-#	%h3 Наши клиенты
+	-#	.slider_block
+	-#		= image_tag 'tmp/slider.png'
 	.block
 		%h4 Новости
 		.inner
@@ -57,41 +57,41 @@
 						= news.content.html_safe
 						%br
 						= link_to 'подробнее...', news_path(news)
-			.elem
-				= image_tag 'tmp/news1.png'
-				%p
-					%h6= link_to '05.05.2012:', '#'
-					Еженедельное точное сопоставление графика выполнения работ и выполненных работ по факту! В случае отклонения от графика необходимо быстро... выявить причину и в кратчайшие сроки устранить ее! И конечно еженедельный фотоотчет  и ежемесячное подписание с клиентом и с подрядной организацией актов КС2 и КС3, которые тщательно проверяет сметчик, инженер и эксперт компании SWISS.CON
-					%br
-					= link_to 'подробнее...', '#'
-	.top_block
-		%h4 Топ вебмастеров
-		.inner
-			.elem
-				= image_tag 'tmp/top1.png'
-				%p
-					%h6= link_to 'Компания ArtGold', '#'
-					Системы управления контентом
-			.elem
-				= image_tag 'tmp/top2.png'
-				%p
-					%h6= link_to 'Компания ArtGold', '#'
-					Системы управления контентом
-	.top_block
-		%h4 Топ компаний
-		.inner
-			.elem
-				= image_tag 'tmp/top3.png'
-				%p
-					%h6= link_to 'Компания ArtGold', '#'
-					Системы управления контентом
-			.elem
-				= image_tag 'tmp/top4.jpg'
-				%p
-					%h6= link_to 'Компания ArtGold', '#'
-					Системы управления контентом
+			-#.elem
+			-#	= image_tag 'tmp/news1.png'
+			-#	%p
+			-#		%h6= link_to '05.05.2012:', '#'
+			-#		Еженедельное точное сопоставление графика выполнения работ и выполненных работ по факту! В случае отклонения от графика необходимо быстро... выявить причину и в кратчайшие сроки устранить ее! И конечно еженедельный фотоотчет  и ежемесячное подписание с клиентом и с подрядной организацией актов КС2 и КС3, которые тщательно проверяет сметчик, инженер и эксперт компании SWISS.CON
+			-#		%br
+			-#		= link_to 'подробнее...', '#'
+	-#.top_block
+	-#	%h4 Топ вебмастеров
+	-#	.inner
+	-#		.elem
+	-#			= image_tag 'tmp/top1.png'
+	-#			%p
+	-#				%h6= link_to 'Компания ArtGold', '#'
+	-#				Системы управления контентом
+	-#		.elem
+	-#			= image_tag 'tmp/top2.png'
+	-#			%p
+	-#				%h6= link_to 'Компания ArtGold', '#'
+	-#				Системы управления контентом
+	-#.top_block
+	-#	%h4 Топ компаний
+	-#	.inner
+	-#		.elem
+	-#			= image_tag 'tmp/top3.png'
+	-#			%p
+	-#				%h6= link_to 'Компания ArtGold', '#'
+	-#				Системы управления контентом
+	-#		.elem
+	-#			= image_tag 'tmp/top4.jpg'
+	-#			%p
+	-#				%h6= link_to 'Компания ArtGold', '#'
+	-#				Системы управления контентом
 #partners_block
-	%h5 Наши партнеры
-	%hr
-	.slider_block
-		= image_tag 'tmp/partners.png'
+	-#%h5 Наши партнеры
+	-#%hr
+	-#.slider_block
+	-#	= image_tag 'tmp/partners.png'
