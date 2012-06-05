@@ -19,4 +19,9 @@ module ApplicationHelper
   def number_to_rubles(x)
     number_to_currency(x/100.0)
   end
+
+  def safe_image_tag(source, options = {})
+    source ||= "rails.png"
+    image_tag(source, options)
+  end
 end
