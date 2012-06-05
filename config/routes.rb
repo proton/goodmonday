@@ -10,15 +10,17 @@ Cpa::Application.routes.draw do
 		:unlock => 'unblock',
 		:registration => 'register'
 	}, :controllers => { :registrations => "my/registrations" }
-
-	match 'robot/:ground_id/rotator' => 'robot#rotator'
-	match 'robot/:ground_id/advert' => 'robot#advert'
-	match 'robot/:ground_id/advert/:offer_id' => 'robot#advert'
-	match 'robot/:ground_id/goto/:offer_id' => 'robot#redirect'
-	match 'robot/:ground_id/goto/:offer_id/:advert_id' => 'robot#redirect'
-	match 'robot/:offer_id/visit' => 'robot#visit'
-	match 'robot/:offer_id/target/:target_id' => 'robot#target'
-	match 'robot/:offer_id/target/:target_id/:order_id' => 'robot#target'
+              
+  constraints :subdomain => "r" do
+    match ':ground_id/rotator' => 'robot#rotator'
+    match ':ground_id/advert' => 'robot#advert'
+    match ':ground_id/advert/:offer_id' => 'robot#advert'
+    match ':ground_id/goto/:offer_id' => 'robot#redirect'
+    match ':ground_id/goto/:offer_id/:advert_id' => 'robot#redirect'
+    match ':offer_id/visit' => 'robot#visit'
+    match ':offer_id/target/:target_id' => 'robot#target'
+    match ':offer_id/target/:target_id/:order_id' => 'robot#target'
+  end
 
 	constraints :subdomain => "my" do
 	  scope :module => "my" do
