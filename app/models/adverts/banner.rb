@@ -11,8 +11,9 @@ class Banner < Advert
 		self.save
 	end
 
-	def html_code(size)
+	def html_code(size, ground)
 		banner_image = banner_images.where(:size => size.to_sym).first
-		"<a href='#{self.url}'><img src='#{banner_image.image}' /></a>"
+    #"<a href='#{self.url}'><img src='#{banner_image.image}' /></a>"
+    "<a href='http://r.goodmonday.ru/#{ground.id}/goto/#{offer.id}/#{self.id}'><img src='#{banner_image.image}' /></a>"
 	end
 end

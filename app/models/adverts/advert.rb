@@ -18,7 +18,7 @@ class Advert
 		"<a href='http://goodmonday.ru'><img src='http://placehold.it/#{size}' /></a>"
 	end
 
-	def html_code(size)
+	def html_code(size, ground)
 		Advert.html_code(size)
 	end
 end

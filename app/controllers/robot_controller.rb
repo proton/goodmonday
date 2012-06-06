@@ -58,7 +58,7 @@ class RobotController < ApplicationController
 					offers.each do |offer|
 						adverts = offer.adverts.for_size(size)
 						advert = adverts.skip(Random.rand(adverts.count)).limit(1).first
-						banners[size] << advert.html_code(size)
+						banners[size] << advert.html_code(size, ground)
 						used_offers << offer.id
 					end
 				elsif offers_count>0
@@ -68,7 +68,7 @@ class RobotController < ApplicationController
 						offer = offers.skip(n).limit(1).first
 						adverts = offer.adverts.for_size(size)
 						advert = adverts.skip(Random.rand(adverts.count)).limit(1).first
-						banners[size] << advert.html_code(size)
+						banners[size] << advert.html_code(size, ground)
 						used_offers << offer.id
 					end
 				else
@@ -113,10 +113,14 @@ class RobotController < ApplicationController
           sub_id = nil
           if params[:sub_id] && !params[:sub_id].empty?
             sub_id = params[:sub_id]
-            webmaster = ground.webmaster
-            unless webmaster.sub_ids.include? sub_id
-              webmaster.sub_ids << sub_id
-              webmaster.save
+            if sub_id && !sub_id.empty?
+              webmaster = ground.webmaster
+              unless webmaster.sub_ids.include? sub_id
+                webmaster.sub_ids << sub_id
+                webmaster.save
+              end
+            else
+              sub_id = nil
             end
           end
 
