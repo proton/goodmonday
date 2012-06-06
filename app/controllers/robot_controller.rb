@@ -14,30 +14,6 @@ class RobotController < ApplicationController
 		if sizes.empty? || !ground
 			render :json => nil
 		else
-			#offers = ground.accepted_offers.for_advert_size(@size)
-			#offers_count = offers.count
-			#if offers_count>0
-			#	n = case Random.rand(6)
-			#		when 0 then 0
-			#		when 1 then Random.rand([offers_count, 3].min)
-			#		when 2 then Random.rand([offers_count, 5].min)
-			#		when 3 then Random.rand([offers_count, 10].min)
-			#		when 4 then Random.rand([offers_count, 50].min)
-			#		else Random.rand(offers_count)
-			#	end
-			#	offer = offers.skip(n).limit(1)
-			#	#
-			#	#offer = (params[:offer_id])? Offer.find(params[:offer_id]) : ground.accepted_offers.first
-			#	#entry = Entry.skip(rand(Entry.count)).limit(1)
-			#	adverts = offer.adverts.for_size(size)
-			#	advert = Random.rand(offers.count).skip(Random.rand(adverts.count)).limit(1)
-			#	offer.inc(:shows, 1)
-			#	render :text => @advert.html_code(size)
-			#else
-			#	render :text => Advert.html_code(size)
-			#	end
-			#"<img src='http://placehold.it/#{size}' />"
-
 			used_offers = []
 			banners = {}
 			#
