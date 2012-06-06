@@ -182,14 +182,7 @@ class RobotController < ApplicationController
 									achievement.order_id = params[:order_id]
 								end
 								if target.confirm_mode == :auto
-									achievement.price = target.fixed_price
-									achievement.state = :accepted
-
-                  #collecting statistic:
-                  StatCounter.find_or_create_by(ground_id: achievement.ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id, target_id: target.id).inc(:targets, 1)
-                  StatCounter.find_or_create_by(ground_id: achievement.ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id, target_id: target.id).inc(:targets, 1)
-                  StatCounter.find_or_create_by(ground_id: achievement.ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id, target_id: target.id).inc(:income, achievement.price)
-                  StatCounter.find_or_create_by(ground_id: achievement.ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id, target_id: target.id).inc(:income, achievement.price)
+									achievement.accept(target.fixed_price)
 								end
 								achievement.save
 							end

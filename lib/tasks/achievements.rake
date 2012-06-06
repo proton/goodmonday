@@ -26,14 +26,7 @@ namespace :achievements do
 
 					if [1,3].include? status
 						if status==1
-							achievement.state = :accepted
-							achievement.price = target.fixed_price + target.prc_price*price/100
-
-              #collecting statistic:
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.today, sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:targets, 1)
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.new(0), sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:targets, 1)
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.today, sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:income, achievement.price)
-              StatCounter.find_or_create_by(ground_id: achievement.ground_id, offer_id: achievement.offer_id, advertiser_id: achievement.advertsiter_id, webmaster_id: achievement.webmaster_id, date: Date.new(0), sub_id: achievement.sub_id, target_id: achievement.target_id).inc(:income, achievement.price)
+              achievement.accept(target.fixed_price + target.prc_price*price/100)
 						elsif status==3
 							achievement.state = :denied
 						end
@@ -42,5 +35,13 @@ namespace :achievements do
 				end
 			end
 		end
-	end
+  end
+
+  task :pay => :environment do
+    Achievement.accepted.unpaid.where(:hold_date.lte => Date.today).each do |achievement|
+      achievement.pay
+    end
+
+  end
+
 end
