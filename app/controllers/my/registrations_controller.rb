@@ -10,5 +10,9 @@ class My::RegistrationsController < Devise::RegistrationsController
 		if cookies[:referral] && !cookies[:referral].empty?
 			@affiliator_id = cookies[:referral]
 		end
-	end
+  end
+
+  def after_sign_up_path_for(resource)
+    root_url(:subdomain => 'my')
+  end
 end

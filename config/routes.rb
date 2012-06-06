@@ -89,7 +89,5 @@ Cpa::Application.routes.draw do
   resources :articles
   resources :news
 
-	match "user_root", :to => "my::base#index"
-
 	root :to => 'home#index'
 end
