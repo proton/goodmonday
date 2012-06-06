@@ -3,6 +3,7 @@
 		%tr
 			%th= 'E-mail'
 			%th= 'Баланс'
+			%th= 'Ожидаемый баланс'
 			%th= 'Овердрафт'
 			%th= 'Его'
 	%tbody
@@ -10,6 +11,7 @@
 			%tr
 				%td= user.email
 				%td= number_to_rubles user.balance
+				%td= number_to_rubles user.hold_balance
 				%td= number_to_rubles user.overdraft
 				%td
 					= link_to user_offers_path(user), :class => 'btn btn-small' do
