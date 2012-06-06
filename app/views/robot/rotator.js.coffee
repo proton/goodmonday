@@ -57,7 +57,13 @@ if elems.length > 0
           len = size_elems.length
           i = 0
           while i < len
-            size_elems[i].innerHTML = size_banners[i]
+            banner_code = size_banners[i]
+            sub_id = a.match(/subid_\S+/)
+            if sub_id?
+              if sub_id.length>0
+                sub_id = sub_id[0].substring(6)
+                banner_code = banner_code.replace('/goto',"?sub_id=#{sub_id}/goto")
+            size_elems[i].innerHTML = banner_code
             i++
 
   xmlhttp.send null
