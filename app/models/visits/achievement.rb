@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Achievement
 	include Mongoid::Document
 	include Mongoid::Timestamps
@@ -35,9 +37,18 @@ class Achievement
   end
 
   def pay
-    if self.advertiser.can_pay? self.price
-      self.webmaster.inc(:balance, self.price)
-      self.advertiser.inc(:balance, -self.price)
+    amount = self.price
+    if self.advertiser.can_pay? amount
+      webmaster = self.webmaster
+      webmaster.balance += amount
+      webmaster.payments.new(amout: amount, description: 'Перечисление средств за цель')
+      webmaster.save!
+      #
+      advertiser = self.advertiser
+      advertiser.balance -= amount
+      advertiser.payments.new(amout: -amount, description: 'Перечисление средств за цель')
+      advertiser.save!
+      #
       self.payment_state = :paid
       self.save!
     end

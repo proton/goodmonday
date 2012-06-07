@@ -4,6 +4,7 @@
 			%th= 'Дата'
 			%th= 'Тип'
 			%th= 'Сумма'
+			%th= 'Описание'
 	%tbody
 		- @payments.each do |payment|
 			%tr
@@ -15,5 +16,5 @@
 					- else
 						%i.icon-minus-sign
 						= 'Списание'
-				%td
-					= number_to_rubles payment.amount
+				%td= number_to_rubles payment.amount
+				%td= payment.description
