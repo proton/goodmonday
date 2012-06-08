@@ -14,7 +14,7 @@ class Offer
 	field :title, type: String
 	field :url, type: String, default: ''
 
-	field :shows, type: Integer, default: 0
+	field :clicks, type: Integer, default: 0
 	field :payments, type: Integer, default: 0
 	field :epc, type: Float, default: 0.0
 

@@ -11,7 +11,7 @@ class GroundOffer
 
 	symbolize :state, :in => [:accepted, :denied, :pending], :default => :pending
 
-	field :shows, type: Integer, default: 0
+	field :clicks, type: Integer, default: 0
 	field :payments, type: Integer, default: 0
 	field :epc, type: Float, default: 0.0
 

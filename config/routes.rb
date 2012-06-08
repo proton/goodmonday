@@ -88,6 +88,7 @@ Cpa::Application.routes.draw do
 
   resources :articles
   resources :news
+  resources :offers
 
 	root :to => 'home#index'
 end

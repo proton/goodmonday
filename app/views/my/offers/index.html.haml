@@ -4,7 +4,7 @@
 			%th= 'Название'
 			%th= 'Статус'
 			-#%th= 'Режим'
-			%th= 'Показы/Выплаты'
+			%th= 'Клики/Выплаты'
 			%th= 'Действия'
 	%tbody
 		- @offers.each do |offer|
@@ -13,7 +13,7 @@
 				%td= state_label(offer.moderated_state)
 				-#%td= offer.mode
 				%td
-					= offer.shows
+					= offer.clicks
 					= ' / '
 					= number_to_currency offer.payments
 				%td

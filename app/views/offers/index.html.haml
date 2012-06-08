@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Название'
+			%th= 'Категория'
+			%th= 'Выплачено'
+			%th= 'EPC'
+	%tbody
+		- @offers.each do |offer|
+			%tr{:class => offer.is_accepted? ? '' : 'muted'}
+				%td= offer.title
+				%td= offer.category.title
+				%td= offer.epc
+				%td= number_to_currency offer.payments

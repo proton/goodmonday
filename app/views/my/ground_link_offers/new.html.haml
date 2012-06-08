@@ -3,7 +3,7 @@
 		%tr
 			%th= 'Название'
 			%th= 'Тематика'
-			%th= 'Показы/Выплаты'
+			%th= 'Клики/Выплаты'
 			%th= 'Действия'
 	%tbody
 		- @offers.each do |offer|
@@ -11,7 +11,7 @@
 				%td= offer.title
 				%td= offer.category.title
 				%td
-					= offer.shows
+					= offer.clicks
 					= ' / '
 					= number_to_currency offer.payments
 				%td
