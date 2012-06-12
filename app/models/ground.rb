@@ -11,7 +11,7 @@ class Ground
 	field :title, type: String, default: ''
 	field :url, type: String, default: ''
 
-	symbolize :type, :in => [:website, :doorway, :socialnet], :default => :website
+	symbolize :type, :in => [:website, :doorway, :socialnet, :context, :email, :etc], :default => :website
 
 	symbolize :rotator_mode, :in => [:manual, :auto], :default => :manual
 	embeds_one :ground_rotator_config

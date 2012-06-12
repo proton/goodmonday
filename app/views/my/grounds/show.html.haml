@@ -3,7 +3,7 @@
 		%li.active= link_to 'Home', ground_path(@ground)
 		%li.dropdown
 			= link_to '#', :class => 'dropdown-toggle' do
-				= 'Links'
+				= 'Статические ссылки'
 				%b.caret
 			%ul.dropdown-menu
 				%li= link_to 'Accepted', ground_links_path(@ground, :state => :accepted)
@@ -12,17 +12,18 @@
 				- if @ground.is_accepted?
 					%li.divider
 					%li= link_to 'Добавить', new_ground_link_path(@ground)
-		%li.dropdown
-			= link_to '#', :class => 'dropdown-toggle' do
-				= 'Rotator'
-				%b.caret
-			%ul.dropdown-menu
-				%li= link_to 'Accepted', ground_adverts_path(@ground, :state => :accepted)
-				%li= link_to 'Denied', ground_adverts_path(@ground, :state => :denied)
-				%li= link_to 'Pending', ground_adverts_path(@ground, :state => :pending)
-				- if @ground.is_accepted?
-					%li.divider
-					%li= link_to 'Добавить', new_ground_advert_path(@ground)
+		- if [:website, :doorway, :etc].include? @ground.type
+			%li.dropdown
+				= link_to '#', :class => 'dropdown-toggle' do
+					= 'Ротатор объявлений'
+					%b.caret
+				%ul.dropdown-menu
+					%li= link_to 'Accepted', ground_adverts_path(@ground, :state => :accepted)
+					%li= link_to 'Denied', ground_adverts_path(@ground, :state => :denied)
+					%li= link_to 'Pending', ground_adverts_path(@ground, :state => :pending)
+					- if @ground.is_accepted?
+						%li.divider
+						%li= link_to 'Добавить', new_ground_advert_path(@ground)
 
 - auto_mode = (@ground.rotator_mode==:auto)
 %h3= 'Настройки подбора банеров:'
