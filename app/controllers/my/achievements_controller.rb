@@ -4,7 +4,10 @@ class My::AchievementsController < My::BaseController
 	before_filter :and_crumbs
 
 	def index
-		@achievements = current_user.achievements
+    @achievements = {}
+    [:pending, :accepted, :denied].each do |state|
+      @achievements[state] = current_user.achievements.where(state: state)
+    end
 	end
 
 	def show
