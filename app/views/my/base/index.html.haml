@@ -44,3 +44,10 @@
 			%b Ожидается:
 			= number_to_rubles @current_user.hold_balance
 			%br
+			- if @current_user.class==Advertiser && @current_user.overdraft>0
+				%b Допустимый кредит:
+				= number_to_rubles @current_user.overdraft
+				%br
+			%b Всего выплат:
+			= number_to_rubles @current_user.total_payments
+			%br

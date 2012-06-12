@@ -41,11 +41,13 @@ class Achievement
     if self.advertiser.can_pay? amount
       webmaster = self.webmaster
       webmaster.balance += amount
+      advertiser.total_payments += amount
       webmaster.payments.new(amout: amount, description: 'Перечисление средств за цель')
       webmaster.save!
       #
       advertiser = self.advertiser
       advertiser.balance -= amount
+      advertiser.total_payments += amount
       advertiser.payments.new(amout: -amount, description: 'Перечисление средств за цель')
       advertiser.save!
       #
