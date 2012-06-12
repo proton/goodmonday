@@ -12,7 +12,7 @@
 			#header
 				#top_menu
 					%ul
-						%li.active= link_to 'Главная', '/'
+						%li.active= link_to 'Главная', root_url(:host => request.domain)
 						%li= 'о компании'
 						%li= 'контакты'
 						%li= link_to 'новости', news_index_path
@@ -50,7 +50,7 @@
 					.cell
 						%h5 Рекламодателям
 						%br
-						Новости
+						= link_to 'Новости', news_index_path
 						%br
 						Каталог программ
 						%br
@@ -58,7 +58,7 @@
 						%br
 						FAQ
 						%br
-						Подключиться сейчас
+						= link_to 'Подключиться сейчас', new_user_registration_path(:type => :advertiser)
 					.cell_c
 						.logo
 							%b good
@@ -79,7 +79,7 @@
 					.cell
 						%h5 Вебмастерам
 						%br
-						Новости
+						= link_to 'Новости', news_index_path
 						%br
 						Каталог программ
 						%br
@@ -87,7 +87,7 @@
 						%br
 						FAQ
 						%br
-						Подключиться сейчас
+						= link_to 'Подключиться сейчас', new_user_registration_path(:type => :webmaster)
 				#bottom_menu
 					%ul
 						%li.active= link_to 'Главная', '/'
@@ -98,5 +98,5 @@
 						%li= ':'
 						%li= link_to 'Новости', news_index_path
 						%li= ':'
-						%li= 'Список офферов'
+						%li= link_to 'Cписок офферов', offers_path
 		= javascript_include_tag "application"
