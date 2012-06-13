@@ -20,6 +20,7 @@ ru:
        password_confirmation: 'Подтверждение пароля'
        current_password: 'Текущий пароль'
       ground:
+        category_id: 'Категория'
         title: 'Название'
         url: 'Ссылка'
         type: 'Тип'
@@ -30,6 +31,7 @@ ru:
           block_adult: 'Блокировать объявления "для взослых"'
           block_doubtful: 'Блокировать сомнительные объявления'
       offer:
+        category_id: 'Категория'
         title: 'Название'
         url: 'Ссылка'
         category: 'Категория'
