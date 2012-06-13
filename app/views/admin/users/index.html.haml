@@ -25,7 +25,7 @@
 					= link_to edit_user_path(user), :class => 'btn btn-small' do
 						%i.icon-pencil
 						= 'Редактировать'
-					= link_to user_path(user), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+					= link_to user_path(user), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => 'Вы уверены?' } do
 						%i.icon-trash.icon-white
 						= 'Удалить'
 = link_to new_user_path, :class => 'btn btn-primary' do

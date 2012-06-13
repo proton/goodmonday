@@ -2,8 +2,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ru:
-  auto: 'Автоматический'
-  manual: 'Ручной'
   common:
     state:
       open: 'Открыто'
@@ -11,6 +9,12 @@ ru:
       accepted: 'Одобрено'
       denied: 'Отклонено'
       pending: 'Ожидание'
+    mode:
+      auto: 'Автоматический'
+      manual: 'Ручной'
+    reason:
+      created: 'Создано'
+      updated: 'Обновлено'
   mongoid:
     symbolizes:
       ground:
@@ -18,6 +22,9 @@ ru:
           website: 'Веб-сайт'
           doorway: 'Дорвей'
           socialnet: 'Социальная сеть'
+          context: 'Контекстная реклама в поисковых системах'
+          email: 'E-mail рассылка'
+          etc: 'Другое'
         rotator_mode:
           manual: 'Ручной отбор'
           auto: 'Автоматический отбор'

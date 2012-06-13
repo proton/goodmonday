@@ -9,10 +9,10 @@
 			= @moderation.updated_at
 			%br
 			%b= 'Статус: '
-			= @moderation.state
+			= state_label @moderation.state
 			%br
 			%b= 'Причина: '
-			= @moderation.reason
+			=t "common.reason.#{@moderation.reason.to_s}"
 			%br
 			%b= 'Тип объекта: '
 			= @moderation.moderated_type
@@ -37,7 +37,9 @@
 								- attr_info = moderated_class::MODERATED_ATTRS_INFO[key]
 								- type = attr_info[:type]
 							%tr
-								%td= key.to_s
+								%td
+									=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
+									= "(#{key.to_s})"
 								%td
 									- if changed_value
 										- case type
@@ -67,7 +69,7 @@
 						%h4= 'Дополнительные настройки:'
 						- moderated_class::MODERATED_EDIT_FIELDS.each do |key|
 							.span4
-								= key
+								=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
 								- options = moderated_class.fields[key.to_s].options
 								- field_name = "moderated_edit[#{key.to_s}]"
 								- case options[:type].to_s
@@ -111,6 +113,6 @@
 					- @moderation.moderation_state_changes.each do |change|
 						%tr
 							%td= change.created_at
-							%td= change.state
+							%td=t "common.state.#{change.state.to_s}"
 							%td= change.operator_id
 							%td= change.edit_fields

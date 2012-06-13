@@ -20,6 +20,10 @@ ru:
        password_confirmation: 'Подтверждение пароля'
        current_password: 'Текущий пароль'
       ground:
+        title: 'Название'
+        url: 'Ссылка'
+        type: 'Тип'
+        category: 'Категория'
         rotator_mode: 'Режим ротатора'
         ground_rotator_config:
           categories: 'Категории'
@@ -31,12 +35,15 @@ ru:
         category: 'Категория'
         auto_accept_grounds: 'Автоматически принимать площадки'
         excepted_categories: 'Отклонять площадки следующих категорий'
+        is_adult: 'Для взрослых'
+        is_doubtful: 'Сомнительная'
       target:
         title: 'Название'
         confirm_mode: 'Режим подтверждения'
         confirm_url: 'Url для подтверждения'
         fixed_price: 'Стоимость (руб.)'
         prc_price: 'Стоимость (процент от продажи)'
+        hold: 'Холд (дней)'
       article:
         title: 'Название'
         content: 'Содержимое'
@@ -44,9 +51,26 @@ ru:
       news:
         title: 'Название'
         content: 'Содержимое'
+      discussion:
+        subject: 'Тема'
+        text: 'Текст'
       banner:
         url: 'Ссылка'
+      filter:
+        date_start: 'От'
+        date_stop: 'До'
     hints:
       ground:
         ground_rotator_config:
           categories: 'Если список категорий пуст, то будут отображаться объявления всех категорий'
+  mongoid:
+    models:
+      user: 'пользователя'
+      ground: 'площадку'
+      offer: 'рекламную кампанию'
+      banner_image: 'изображение'
+      target: 'цель'
+      article: 'статью'
+      banner: "банер"
+      news: "новость"
+      discussion: "сообшение"

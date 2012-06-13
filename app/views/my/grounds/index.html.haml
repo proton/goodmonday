@@ -12,7 +12,7 @@
 				%td= ground.title
 				%td= ground.url
 				%td= state_label(ground.moderated_state)
-				%td= ground.rotator_mode
+				%td=t "common.mode.#{ground.rotator_mode.to_s}"
 				%td
 					= link_to ground_path(ground), :class => 'btn btn-small' do
 						%i.icon-cog
