@@ -6,3 +6,16 @@
 		document.write("<"+"script language='javascript' src='http://r.goodmonday.ru/#{@offer.id}/visit.js?n="+Math.random()+"'></"+"script>")
 	= tag(:br)
 	= "</script>"
+%hr
+= link_to offer_targets_path(@offer), :class => 'btn btn-small' do
+	%i.icon-screenshot
+	= 'Цели'
+= link_to offer_adverts_path(@offer), :class => 'btn btn-small' do
+	%i.icon-picture
+	= 'Банеры'
+= link_to offer_grounds_path(@offer), :class => 'btn btn-small' do
+	%i.icon-road
+	= 'Площадки'
+= link_to edit_offer_path(@offer), :class => 'btn btn-small' do
+	%i.icon-cog
+	= 'Настройки'
