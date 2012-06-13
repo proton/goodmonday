@@ -29,6 +29,10 @@
 					%a.brand{:href => root_url(:host => request.domain)}GoodMonday
 					.container.nav-collapse
 						%ul.nav
+							%li= link_to 'Главная', root_url(:host => request.domain)
+							%li= link_to 'Новости', news_index_url(:host => request.domain)
+							%li= link_to 'Список офферов', offers_url(:host => request.domain)
+							%li.divider-vertical
 							- if user_signed_in?
 								%li= link_to "Кабинет", '/'
 								%li= link_to "Выход", destroy_user_session_path, :method => :delete
