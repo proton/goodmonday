@@ -22,10 +22,10 @@ module IsModerated
 	def add_moderation
 		moderated_fields = self.class::MODERATED_ATTRS
 		change_moderation moderated_fields, :created
-	end
+  end
 
 	def set_moderation
-		return if @changed_attrs.has_key? 'moderated_state'
+		return if @changed_attrs.has_key? 'moderated_state' #не достаточно, если уже :pending не помогает, надо проверять, что с модерациями
 		moderated_fields = @changed_attrs.keys & self.class::MODERATED_ATTRS
 		change_moderation moderated_fields, :updated
 	end
@@ -33,16 +33,20 @@ module IsModerated
 	def change_moderation(moderated_fields, reason)
 		return if moderated_fields.empty?
 		state = :pending
+    puts __LINE__
+    unless self.moderated_state==state
+      self.update(moderated_state: state)
+    end
+    puts __LINE__
 		moderation = self.moderation
 		unless moderation
 			moderation = self.build_moderation
 			if self.embedded?
 				moderation.moderated_path = generate_moderated_path
 			end
-		end
+    end
 		moderation.reason = reason
 		moderation.state = state
-		write_attribute(:moderated_state, state)
 		moderation.moderation_state_changes.build({:state => state, :reason => reason})
 		moderation_field_change = moderation.moderation_field_changes.build
 		moderated_fields.each do |f|
@@ -51,7 +55,7 @@ module IsModerated
 			moderation.changed_fields[f] = value
 		end
 		moderation.save
-		self.save
+    puts __LINE__
 	end
 
 	def generate_moderated_path
