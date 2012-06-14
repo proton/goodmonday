@@ -16,6 +16,7 @@ ru:
        email: 'Электронная почта'
        password: 'Пароль'
       user:
+       _type: 'Тип'
        remember_me: 'Запомнить'
        password_confirmation: 'Подтверждение пароля'
        current_password: 'Текущий пароль'
