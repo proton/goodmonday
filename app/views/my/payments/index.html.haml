@@ -1,3 +1,11 @@
+.row
+	.span9{:style => 'text-align:right'}
+		%b Текущий баланс:
+		= number_to_rubles @current_user.balance
+		%br
+		%b Ожидаемый баланс:
+		= number_to_rubles @current_user.hold_balance
+%br
 %table.table.table-bordered.table-striped
 	%thead
 		%tr
