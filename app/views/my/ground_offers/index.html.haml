@@ -1,3 +1,5 @@
+%p Список площадок, желающих рекламировать ваш оффер
+
 %table.table.table-bordered.table-striped
 	%thead
 		%tr
@@ -7,11 +9,12 @@
 			%th= 'Статус'
 			%th= 'Действия'
 	%tbody
-		- @ground_offers.each do |ground_offer|
+		- @ground_offers.each do |ground_offer|     
+			- ground = ground_offer.ground
 			%tr
-				%td= ground_offer.ground.title
-				%td= t(ground_offer.ground.type)
-				%td= ground_offer.ground.category.title
+				%td= ground.title
+				%td= t(ground.type)
+				%td= ground.category.title
 				%td= state_label(ground_offer.state)
 				%td
 					- unless ground_offer.state==:accepted
