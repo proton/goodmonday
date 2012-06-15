@@ -1,83 +1,93 @@
-%h3= 'Офферы:'
-.subnav
-	%ul.nav.nav-pills
-		%li.dropdown
-			= link_to '#', :class => 'dropdown-toggle' do
-				= 'Статические ссылки'
-				%b.caret
-			%ul.dropdown-menu
-				%li= link_to 'Одобренные', ground_links_path(@ground, :state => :accepted)
-				%li= link_to 'Отклонённые', ground_links_path(@ground, :state => :denied)
-				%li= link_to 'Ожидающие подтверждения', ground_links_path(@ground, :state => :pending)
-				- if @ground.is_accepted?
-					%li.divider
-					%li= link_to 'Добавить', new_ground_link_path(@ground)
-		- if [:website, :doorway, :etc].include? @ground.type
+%b Статус:
+= state_label(@ground.moderated_state)
+%br
+%br
+- case @ground.moderated_state
+- when :pending
+	%p= 'Ваша рекламная площадка ожидает подтверждения. Как только она будет одобрена модераторами, вы сможете добавлять рекламные кампании.'
+- when :denied
+	%p= 'Ваша рекламная площадка отклонена модераторами.'
+- when :accepted
+	%h3= 'Офферы:'
+	.subnav
+		%ul.nav.nav-pills
 			%li.dropdown
 				= link_to '#', :class => 'dropdown-toggle' do
-					= 'Ротатор объявлений'
+					= 'Статические ссылки'
 					%b.caret
 				%ul.dropdown-menu
-					%li= link_to 'Одобренные', ground_adverts_path(@ground, :state => :accepted)
-					%li= link_to 'Отклонённые', ground_adverts_path(@ground, :state => :denied)
-					%li= link_to 'Ожидающие подтверждения', ground_adverts_path(@ground, :state => :pending)
+					%li= link_to 'Одобренные', ground_links_path(@ground, :state => :accepted)
+					%li= link_to 'Отклонённые', ground_links_path(@ground, :state => :denied)
+					%li= link_to 'Ожидающие подтверждения', ground_links_path(@ground, :state => :pending)
 					- if @ground.is_accepted?
 						%li.divider
-						%li= link_to 'Добавить', new_ground_advert_path(@ground)
+						%li= link_to 'Добавить', new_ground_link_path(@ground)
+			- if [:website, :doorway, :etc].include? @ground.type
+				%li.dropdown
+					= link_to '#', :class => 'dropdown-toggle' do
+						= 'Ротатор объявлений'
+						%b.caret
+					%ul.dropdown-menu
+						%li= link_to 'Одобренные', ground_adverts_path(@ground, :state => :accepted)
+						%li= link_to 'Отклонённые', ground_adverts_path(@ground, :state => :denied)
+						%li= link_to 'Ожидающие подтверждения', ground_adverts_path(@ground, :state => :pending)
+						- if @ground.is_accepted?
+							%li.divider
+							%li= link_to 'Добавить', new_ground_advert_path(@ground)
 
-- auto_mode = (@ground.rotator_mode==:auto)
-%h3= 'Настройки подбора банеров:'
-= simple_form_for(@ground, :html => {:class => 'form-horizontal' }) do |f|
-	.control-group= f.input :rotator_mode, :required => true, :as => :select, :collection => Ground.get_rotator_mode_values, :input_html => { :class => "span6" }
-	= f.fields_for @ground.ground_rotator_config do |cf|
-		.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
-			.control-group= cf.input :categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6"}
-			.control-group= cf.input :block_adult, :as => :boolean, :input_html => { :class => "span6" }
-			.control-group= cf.input :block_doubtful, :as => :boolean, :input_html => { :class => "span6" }
-	= f.button :submit, :class => 'btn-primary'
+	- auto_mode = (@ground.rotator_mode==:auto)
+	%h3= 'Настройки подбора банеров:'
+	= simple_form_for(@ground, :html => {:class => 'form-horizontal' }) do |f|
+		.control-group= f.input :rotator_mode, :required => true, :as => :select, :collection => Ground.get_rotator_mode_values, :input_html => { :class => "span6" }
+		= f.fields_for @ground.ground_rotator_config do |cf|
+			.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
+				.control-group= cf.input :categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6"}
+				.control-group= cf.input :block_adult, :as => :boolean, :input_html => { :class => "span6" }
+				.control-group= cf.input :block_doubtful, :as => :boolean, :input_html => { :class => "span6" }
+		= f.button :submit, :class => 'btn-primary'
 
-%h3= 'Код для ротации банеров:'
-%br
-%b= '1. Вставьте в javascript код в любое место вашей страницы:'
-%br
-%br
-%pre.prettyprint
-	= "<script src='http://r.goodmonday.ru/#{@ground.id}/rotator.js' />"
+	%h3= 'Код для ротации банеров:'
+	%br
+	%b= '1. Вставьте в javascript код в любое место вашей страницы:'
+	%br
+	%br
+	%pre.prettyprint
+		= "<script src='http://r.goodmonday.ru/#{@ground.id}/rotator.js' />"
 
-%b= '2. В места для банеров вставьте следующий код:'
-%br
-%br
-%pre.prettyprint
-	= "<div class='goodmonday_adv size_"
-	= content_tag(:span, '200x100', :class => "atn")
-	= "'></div>"
-Где
-%b 200x100
-= '- размер желаемого банера.'
-%br
-Банер может иметь один из следующих размеров:
-= ADVERTS_SIZES.to_sentence
+	%b= '2. В места для банеров вставьте следующий код:'
+	%br
+	%br
+	%pre.prettyprint
+		= "<div class='goodmonday_adv size_"
+		= content_tag(:span, '200x100', :class => "atn")
+		= "'></div>"
+	Где
+	%b 200x100
+	= '- размер желаемого банера.'
+	%br
+	Банер может иметь один из следующих размеров:
+	= ADVERTS_SIZES.to_sentence
 
-%br
-%br
-%b= 'Если вы желаете использовать sub_id, просто добавьте его в список классов:'
-%br
-%br
-%pre.prettyprint
-	= "<div class='goodmonday_adv size_"
-	= content_tag(:span, '200x100', :class => "atn")
-	= ' subid_'
-	= content_tag(:span, 'ваш_sub_id', :class => "str")
-	= "'></div>"
+	%br
+	%br
+	%b= 'Если вы желаете использовать sub_id, просто добавьте его в список классов:'
+	%br
+	%br
+	%pre.prettyprint
+		= "<div class='goodmonday_adv size_"
+		= content_tag(:span, '200x100', :class => "atn")
+		= ' subid_'
+		= content_tag(:span, 'ваш_sub_id', :class => "str")
+		= "'></div>"
 
-:javascript
-	$(document).ready(function() {
-		$('#ground_rotator_mode').change(function () {
-			var rotator_mode = $(this).val();
-			var auto_mode = (rotator_mode=='auto')
-			var form = $(this).closest("form");
-			var auto_mode_fields = form.find('.auto_mode_fields');
-			auto_mode_fields.toggle(auto_mode);
-			auto_mode_fields.find('input').prop('disabled', !auto_mode);
+	:javascript
+		$(document).ready(function() {
+			$('#ground_rotator_mode').change(function () {
+				var rotator_mode = $(this).val();
+				var auto_mode = (rotator_mode=='auto')
+				var form = $(this).closest("form");
+				var auto_mode_fields = form.find('.auto_mode_fields');
+				auto_mode_fields.toggle(auto_mode);
+				auto_mode_fields.find('input').prop('disabled', !auto_mode);
+			});
 		});
-	});
