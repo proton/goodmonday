@@ -79,6 +79,8 @@
 										= number_field_tag field_name, @moderation.moderated_object.read_attribute(key), :class => 'span2'
 									- else
 										= ''
+						%br
+						%br
 					= button_tag :class => 'btn btn-success' do
 						%i.icon-ok.icon-white
 						= 'Одобрить'
