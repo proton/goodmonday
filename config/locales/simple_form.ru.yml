@@ -16,10 +16,14 @@ ru:
        email: 'Электронная почта'
        password: 'Пароль'
       user:
-       _type: 'Тип'
-       remember_me: 'Запомнить'
-       password_confirmation: 'Подтверждение пароля'
-       current_password: 'Текущий пароль'
+        _type: 'Тип'
+        remember_me: 'Запомнить'
+        password_confirmation: 'Подтверждение пароля'
+        current_password: 'Текущий пароль'
+        types:
+          Advertiser: 'Рекламодатель'
+          Webmaster: 'Вебмастер'
+          Operator: 'Оператор'
       ground:
         category_id: 'Категория'
         title: 'Название'

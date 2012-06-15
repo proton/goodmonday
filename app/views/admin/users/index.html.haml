@@ -1,3 +1,19 @@
+- type = ''
+- type = params[:type] if params[:type] && !params[:type].empty?
+%ul.nav.nav-tabs
+	- t = ''
+	%li{:class => (type==t) ? 'active' : ''}
+		%a{:href => "?type=#{t}"} Все
+	- t = 'Advertiser'
+	%li{:class => (type==t) ? 'active' : ''}
+		%a{:href => "?type=#{t}"} Рекламодатели
+	- t = 'Webmaster'
+	%li{:class => (type==t) ? 'active' : ''}
+		%a{:href => "?type=#{t}"} Вебмастера
+	- t = 'Operator'
+	%li{:class => (type==t) ? 'active' : ''}
+		%a{:href => "?type=#{t}"} Операторы
+
 %table.table.table-bordered.table-striped
 	%thead
 		%tr
@@ -10,7 +26,7 @@
 			%tr
 				%td= user.email
 				%td
-					%span.label= user.class
+					%span.label=t "simple_form.labels.user.types.#{user.class.to_s}"
 				%td
 					- case user.class
 						- when Advertiser

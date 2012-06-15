@@ -6,6 +6,9 @@ class Admin::UsersController < Admin::BaseController
 
 	def index
 		@users = User.all
+    if params[:type] && !params[:type].empty?
+      @users = @users.where(_type: params[:type])
+    end
 		add_crumb "Пользователи"
 	end
 
