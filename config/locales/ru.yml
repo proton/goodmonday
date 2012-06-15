@@ -2,6 +2,15 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ru:
+  model:
+    Ground: 'Площадка'
+    Offer: 'Оффер'
+    Target: 'Цель'
+    Banner: 'Банер'
+    BannerImage: 'Изображение банера'
+    Advertiser: 'Рекламодатель'
+    Webmaster: 'Вебмастер'
+    Operator: 'Оператор'
   common:
     state:
       open: 'Открыто'

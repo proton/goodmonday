@@ -24,7 +24,7 @@
 			%tbody
 				- @moderations_pending.each do |moderation|
 					%tr
-						%td= moderation.moderated_type
+						%td=t "model.#{moderation.moderated_type}"
 						%td=t "common.reason.#{moderation.reason.to_s}"
 						%td= state_label moderation.state
 						%td= moderation.updated_at
@@ -48,7 +48,7 @@
 			%tbody
 				- @moderations_accepted.each do |moderation|
 					%tr
-						%td= moderation.moderated_type
+						%td=t "model.#{moderation.moderated_type}"
 						%td=t "common.reason.#{moderation.reason.to_s}"
 						%td= state_label moderation.state
 						%td= moderation.updated_at
@@ -72,7 +72,7 @@
 			%tbody
 				- @moderations_denied.each do |moderation|
 					%tr
-						%td= moderation.moderated_type
+						%td=t "model.#{moderation.moderated_type}"
 						%td=t "common.reason.#{moderation.reason.to_s}"
 						%td= state_label moderation.state
 						%td= moderation.updated_at

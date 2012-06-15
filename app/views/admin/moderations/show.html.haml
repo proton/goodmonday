@@ -15,7 +15,7 @@
 			=t "common.reason.#{@moderation.reason.to_s}"
 			%br
 			%b= 'Тип объекта: '
-			= @moderation.moderated_type
+			=t "model.#{@moderation.moderated_type}"
 			%hr
 			- if @moderation.state==:pending
 				%h2= 'Изменения'

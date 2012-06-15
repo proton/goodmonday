@@ -26,7 +26,7 @@
 			%tr
 				%td= user.email
 				%td
-					%span.label=t "simple_form.labels.user.types.#{user.class.to_s}"
+					%span.label=t "model.#{user.class.to_s}"
 				%td
 					- case user.class
 						- when Advertiser
