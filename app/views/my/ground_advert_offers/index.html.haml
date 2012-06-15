@@ -48,7 +48,7 @@
 					= number_to_currency offer.payments
 				%td
 					- if @ground.rotator_mode==:manual
-						= link_to ground_advert_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+						= link_to ground_advert_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
 							%i.icon-trash.icon-white
 							= 'Удалить'
 - if @ground.is_accepted? && @ground.rotator_mode==:manual

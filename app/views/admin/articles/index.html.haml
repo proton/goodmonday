@@ -20,7 +20,7 @@
 					= link_to edit_article_path(article), :class => 'btn btn-small' do
 						%i.icon-pencil
 						= 'Редактировать'
-					= link_to article_path(article), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+					= link_to article_path(article), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
 						%i.icon-trash.icon-white
 						= 'Удалить'
 = link_to new_article_path, :class => 'btn btn-primary' do

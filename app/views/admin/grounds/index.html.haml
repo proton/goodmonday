@@ -20,7 +20,7 @@
 					= link_to edit_user_ground_path(@user, ground), :class => 'btn btn-small' do
 						%i.icon-pencil
 						= 'Редактировать'
-					= link_to user_ground_path(@user, ground), :class => 'btn btn-small btn-danger', :method => :delete, :confirm => "Вы уверены?" do
+					= link_to user_ground_path(@user, ground), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
 						%i.icon-trash.icon-white
 						= 'Удалить'
 = link_to new_user_ground_path(@user), :class => 'btn btn-primary' do
