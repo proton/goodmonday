@@ -17,9 +17,9 @@
 							%td= suspicion.ip
 							%td= suspicion.created_at
 							%td
-								= link_to suspicion_block_path(moderation), :class => 'btn btn-small' do
+								= link_to suspicion_block_path(suspicion), :class => 'btn btn-small' do
 									%i.icon-ban-circle
 										= 'Заблокировать'
-								= link_to suspicion_forgive_path(moderation), :class => 'btn btn-small' do
+								= link_to suspicion_forgive_path(suspicion), :class => 'btn btn-small' do
 									%i.icon-remove-circle
 										= 'Скрыть'
