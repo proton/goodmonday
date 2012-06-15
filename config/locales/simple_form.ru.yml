@@ -51,6 +51,7 @@ ru:
         title: 'Название'
         content: 'Содержимое'
         active: 'Активна'
+        show_in_menu: 'Показывать в меню'
       news:
         title: 'Название'
         content: 'Содержимое'

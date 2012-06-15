@@ -6,6 +6,7 @@
 	=	f.input :title, :input_html => { :class => 'span8' }
 	=	f.input :content, :as => :text, :input_html => { :class => 'span9' }
 	=	f.input :active, :as => :boolean
+	=	f.input :show_in_menu, :as => :boolean
 	=	f.button :submit
 	= link_to 'Отмена', articles_path, :class => "btn btn-danger"
 

@@ -13,10 +13,10 @@
 				#top_menu
 					%ul
 						%li.active= link_to 'Главная', root_url(:host => request.domain)
-						%li= 'о компании'
-						%li= 'контакты'
-						%li= link_to 'новости', news_index_path
-						%li= link_to 'список офферов', offers_path
+						- @menu_articles.each do |article|
+							%li= link_to article.title, article_path(article)
+						%li= link_to 'Новости', news_index_path
+						%li= link_to 'Список офферов', offers_path
 				#heading
 					= image_tag 'home/logo.png', :class => 'logo'
 					.phone_block
@@ -91,10 +91,9 @@
 				#bottom_menu
 					%ul
 						%li.active= link_to 'Главная', '/'
-						%li= ':'
-						%li= 'О компании'
-						%li= ':'
-						%li= 'Контакты'
+						- @menu_articles.each do |article|
+							%li= ':'
+							%li= link_to article.title, article_path(article)
 						%li= ':'
 						%li= link_to 'Новости', news_index_path
 						%li= ':'
