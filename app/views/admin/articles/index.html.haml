@@ -12,7 +12,7 @@
 				%td= article.title
 				%td= article.created_at
 				%td= article.updated_at
-				%td= article.active?
+				%td=t article.active?
 				%td
 					= link_to article_path(article), :class => 'btn btn-small' do
 						%i.icon-cog

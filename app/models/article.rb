@@ -7,4 +7,6 @@ class Article
  	field :title, :type => String
  	slug :title
  	field :content, :type => String
+
+  validates_presence_of :title
 end
