@@ -61,61 +61,65 @@ class RobotController < ApplicationController
 		end
 	end
 
-	def redirect
-		ground_id = params[:ground_id]
-		offer_id = params[:offer_id]
+  def redirect
+ 		url = 'http://goodmonday.ru' #fallback url
 
-		ip = request.remote_ip
-		if BlackIp.exclude(ip) && cheack_for_suspicions(request)
-			ground = Ground.find(ground_id)
-			if ground
-				offer = Offer.find(offer_id)
-				if offer && ground.find_offer_permission(offer_id).state==:accepted
-					visitor = Visitor.new
-					visitor.ground = ground
-					visitor.offer = offer
-					visitor.initial_ip = ip
-					visitor.initial_page = request.referer
-					visitor.user_agent = request.user_agent
+ 		ground_id = params[:ground_id]
+ 		offer_id = params[:offer_id]
 
-					if params[:advert_id] && !params[:advert_id].empty?
-						advert = offer.adverts.find(params[:advert_id])
-						visitor.advert_id = advert.id
-						url = advert.url
-					else
-						url = offer.url
-          end
+ 		ground = Ground.find(ground_id)
+ 		if ground
+ 			offer = Offer.find(offer_id)
+      if params[:advert_id] && !params[:advert_id].empty?
+        advert = offer.adverts.find(params[:advert_id])
+        url = advert.url
+      else
+        url = offer.url
+      end
+ 		end
 
-          sub_id = nil
-          if params[:sub_id] && !params[:sub_id].empty?
-            sub_id = params[:sub_id]
-            if sub_id && !sub_id.empty?
-              webmaster = ground.webmaster
-              unless webmaster.sub_ids.include? sub_id
-                webmaster.sub_ids << sub_id
-                webmaster.save
-              end
-            else
-              sub_id = nil
-            end
-          end
+ 		ip = request.remote_ip
+ 		if BlackIp.exclude(ip) && check_for_suspicions(request)
+ 			if ground.find_offer_permission(offer_id).state==:accepted
+ 				visitor = Visitor.new
+ 				visitor.ground = ground
+ 				visitor.offer = offer
+ 				visitor.initial_ip = ip
+ 				visitor.initial_page = request.referer
+ 				visitor.user_agent = request.user_agent
 
-					if visitor.save
-						cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
-						#:path - The path for which this cookie applies. Defaults to the root of the application.
-						#:domain - The domain for which this cookie applies.
+ 				if defined? advert
+ 					visitor.advert_id = advert.id
+ 				end
 
-            #collecting statistic:
-            StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id).inc(:clicks, 1)
-            StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id).inc(:clicks, 1)
+ 				sub_id = nil
+ 				if params[:sub_id] && !params[:sub_id].empty?
+ 					sub_id = params[:sub_id]
+ 					if sub_id && !sub_id.empty?
+ 						webmaster = ground.webmaster
+ 						unless webmaster.sub_ids.include? sub_id
+ 							webmaster.sub_ids << sub_id
+ 							webmaster.save
+ 						end
+ 					else
+ 						sub_id = nil
+ 					end
+ 				end
 
-						redirect_to url
-					end
-				end
-			end
-		end
-		#404 или 403
-	end
+ 				if visitor.save
+ 					cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
+ 					#:path - The path for which this cookie applies. Defaults to the root of the application.
+ 					#:domain - The domain for which this cookie applies.
+
+ 					#collecting statistic:
+ 					StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id).inc(:clicks, 1)
+ 					StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id).inc(:clicks, 1)
+
+ 				end
+ 			end
+ 		end
+ 		redirect_to url
+ 	end
 
 	def visit
 		offer = Offer.find(params[:offer_id])
@@ -133,7 +137,7 @@ class RobotController < ApplicationController
 
 	def target
 		ip = request.remote_ip
-		if BlackIp.exclude(ip) && cheack_for_suspicions(request)
+		if BlackIp.exclude(ip) && check_for_suspicions(request)
 			offer = Offer.find(params[:offer_id])
 			if offer
 				if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
@@ -172,7 +176,7 @@ class RobotController < ApplicationController
 
 	protected
 
-	def cheack_for_suspicions(request)
+	def check_for_suspicions(request)
 		reason = nil
 		reason = "#{reason}Пустой referer. " if !request.referer || request.referer.empty?
 		reason = "#{reason}Пустой user_agent. " if !request.user_agent || request.user_agent.empty?
