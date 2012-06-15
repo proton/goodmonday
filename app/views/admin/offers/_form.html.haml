@@ -1,11 +1,11 @@
 - auto_mode = @offer.auto_accept_grounds
 = simple_form_for([@user.becomes(User), @offer], :html => {:class => 'form-horizontal' }) do |f|
-	.control-group= f.input :title
-	.control-group= f.input :url, :placeholder => 'http://'
-	.control-group= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
-	.control-group= f.input :auto_accept_grounds, :as => :boolean
+	= f.input :title
+	= f.input :url, :placeholder => 'http://'
+	= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
+	= f.input :auto_accept_grounds, :as => :boolean
 	.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
-		.control-group= f.input :excepted_categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6"}
+		= f.input :excepted_categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6"}
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Отмена', offers_path, :class => "btn btn-danger"
 

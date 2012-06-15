@@ -1,7 +1,7 @@
 = simple_form_for([@user.becomes(User), @ground], :html => {:class => 'form-horizontal' }) do |f|
-	.control-group= f.input :title
-	.control-group= f.input :url
-	.control-group= f.input :type, :as => :select, :collection => Ground.get_type_values
-	.control-group= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
+	= f.input :title
+	= f.input :url, :placeholder => 'http://'
+	= f.input :type, :as => :select, :collection => Ground.get_type_values
+	= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Отмена', grounds_path, :class => "btn btn-danger"
