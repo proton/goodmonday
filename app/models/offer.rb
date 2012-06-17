@@ -24,6 +24,8 @@ class Offer
 	field :auto_accept_grounds, type: Boolean, default: true
 	field :excepted_categories_ids, type: Array, default: []
 
+  mount_uploader :logo, OfferLogoUploader
+
 	def excepted_categories
 		self.excepted_categories_ids
 	end
@@ -39,7 +41,8 @@ class Offer
 		self.save
 	end
 
-	MODERATED_ATTRS = %w[title url category_id]
+	MODERATED_ATTRS = %w[title url category_id logo]
+  MODERATED_ATTRS_INFO = {'logo' => {:type => :carrierwave_image} }
 	MODERATED_EDIT_FIELDS = [:is_adult, :is_doubtful]
 	include IsModerated
 end

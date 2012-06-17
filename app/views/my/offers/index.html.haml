@@ -1,6 +1,7 @@
 %table.table.table-bordered.table-striped
 	%thead
 		%tr
+			%th= 'Логотип'
 			%th= 'Название'
 			%th= 'Статус'
 			-#%th= 'Режим'
@@ -9,6 +10,11 @@
 	%tbody
 		- @offers.each do |offer|
 			%tr{:class => offer.is_accepted? ? '' : 'muted'}
+				%td
+					- if offer.logo.present?
+						%ul.thumbnails
+							%li
+								.thumbnail= image_tag offer.logo
 				%td= offer.title
 				%td= state_label(offer.moderated_state)
 				-#%td= offer.mode

@@ -1,6 +1,7 @@
 - auto_mode = @offer.auto_accept_grounds
 = simple_form_for([@user.becomes(User), @offer], :html => {:class => 'form-horizontal' }) do |f|
 	= f.input :title
+	= f.input :logo, :as => :file
 	= f.input :url, :placeholder => 'http://'
 	= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
 	= f.input :auto_accept_grounds, :as => :boolean

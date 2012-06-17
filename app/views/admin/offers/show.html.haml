@@ -1,6 +1,23 @@
+= image_tag @offer.logo if @offer.logo.present?
+= @offer.logo.filename
 %p= 'Пожалуйста, установите данный код на все страницы сайта. Это не обязательно, но позволит давать более чистый трафик, а также отображать больше информации о посетителях.'
-%pre.prettyprint.linenums
+%pre.prettyprint
+	= "<script language='javascript'>"
+	= tag(:br)
 	:escaped
-		<script language='javascript'>
 		document.write("<"+"script language='javascript' src='http://r.goodmonday.ru/#{@offer.id}/visit.js?n="+Math.random()+"'></"+"script>")
-		</script>
+	= tag(:br)
+	= "</script>"
+%hr
+= link_to user_offer_targets_path(@user, @offer), :class => 'btn btn-small' do
+	%i.icon-screenshot
+	= 'Цели'
+= link_to user_offer_adverts_path(@user, @offer), :class => 'btn btn-small' do
+	%i.icon-picture
+	= 'Банеры'
+= link_to user_offer_grounds_path(@user, @offer), :class => 'btn btn-small' do
+	%i.icon-road
+	= 'Площадки'
+= link_to user_edit_offer_path(@user, @offer), :class => 'btn btn-small' do
+	%i.icon-cog
+	= 'Настройки'

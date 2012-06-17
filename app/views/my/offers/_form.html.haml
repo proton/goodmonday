@@ -1,8 +1,8 @@
 - auto_mode = @offer.auto_accept_grounds
 = simple_form_for(@offer, :html => {:class => 'form-horizontal' }) do |f|
 	= f.input :title, :input_html => { :class => "span6" }
+	= f.input :logo, :as => :file
 	= f.input :url, :input_html => { :class => "span6" }, :placeholder => 'http://'
-	-#= f.association :category, :collection => Category.all
 	= f.input :category, :collection => Category.all, :label_method => :title, :selected => lambda { |v| v.id == f.object.category_id }
 	= f.input :auto_accept_grounds, :as => :boolean
 	.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
