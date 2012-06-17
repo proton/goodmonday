@@ -1,0 +1,23 @@
+.row
+	.span3
+		= image_tag @offer.logo if @offer.logo.present?
+	.span9
+		%h2= @offer.title
+		= link_to @offer.url, @offer.url
+%br
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Цель'
+			%th= 'Бронзовый'
+			%th= 'Серебряный'
+			%th= 'Золотой'
+			%th= 'Холд'
+	%tbody
+		- @offer.targets.each do |target|
+			%tr
+				%td= target.title
+				%td= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
+				%td= show_target_price(target.prc_prices_silver, target.fixed_prices_silver)
+				%td= show_target_price(target.prc_prices_gold, target.fixed_prices_gold)
+				%td= "#{target.hold} дней"
