@@ -13,7 +13,9 @@ class Admin::TargetsController < Admin::BaseController
 
 	def create
     attrs = params[:target]
-    attrs[:fixed_price]=attrs[:fixed_price].to_i*100
+    [:fixed_price, :fixed_prices_bronze, :fixed_prices_silver, :fixed_prices_gold].each do |price|
+      attrs[price]=attrs[price].to_i*100
+    end
 		@target = @offer.targets.new(attrs)
 		flash[:notice] = 'Цель добавлена.' if @target.save
 		respond_with(@target, :location => user_offer_targets_path(@user, @offer))
@@ -21,7 +23,9 @@ class Admin::TargetsController < Admin::BaseController
 
 	def update
     attrs = params[:target]
-    attrs[:fixed_price]=attrs[:fixed_price].to_i*100
+    [:fixed_price, :fixed_prices_bronze, :fixed_prices_silver, :fixed_prices_gold].each do |price|
+      attrs[price]=attrs[price].to_i*100
+    end
 		flash[:notice] = 'Цель обновлена.' if @target.update_attributes(attrs)
 		respond_with(@target, :location => user_offer_targets_path(@user, @offer))
 	end
