@@ -49,7 +49,11 @@
 												= changed_value
 												%br
 												- show_method = attr_info[:show_method] ? attr_info[:show_method] : key
-												= image_tag @moderation.moderated_object.method(show_method).call
+												- img = @moderation.moderated_object.method(show_method).call
+												- if img.present?
+													= image_tag(img)
+												- else
+													= '-'
 											- when :currency
 												= number_to_rubles changed_value
 											- else

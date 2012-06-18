@@ -21,7 +21,7 @@ class BannerImage
 	#end
 
   MODERATED_ATTRS = %w[image]
-	#MODERATED_ATTRS_INFO = {'image' => {:type => :carrierwave_image} }
+	MODERATED_ATTRS_INFO = {'image' => {:type => :carrierwave_image} }
 	include IsModerated
 
 	def update_advert_sizes
