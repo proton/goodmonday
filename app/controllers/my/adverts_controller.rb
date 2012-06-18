@@ -28,7 +28,8 @@ class My::AdvertsController < My::BaseController
 	end
 
 	def new
-		@type = params[:type].constantize if params[:type]
+    #@type = params[:type].constantize if params[:type]
+    @type = Banner #Temporary hack
 		@advert = @offer.adverts.build({}, @type)
 		add_crumb "Новое объявление"
 	end
