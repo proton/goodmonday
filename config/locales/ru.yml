@@ -48,4 +48,11 @@ ru:
           bronze: 'Бронзовый'
           silver: 'Серебряный'
           gold: 'Золотой'
-
+      webmaster_profile:
+        person_state:
+          natural: 'Физическое лицо'
+          sole: 'Индивидуальный предприниматель'
+          artificial: 'Юридическое лицо'
+        payment_method:
+          webmoney: 'WebMoney'
+          bank: 'Банковский платёж'

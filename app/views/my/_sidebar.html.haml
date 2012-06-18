@@ -4,12 +4,14 @@
 			%li.nav-header= 'Кабинет'
 			- case current_user.class
 				- when Advertiser
+					= add_sidebar_link 'Профиль', profile_path, :user
 					= add_sidebar_link 'Рекламные кампании', offers_path, :inbox
 					= add_sidebar_link 'Достижения целей', achievements_path, :gift
 					= add_sidebar_link 'Платежи', payments_path, :briefcase
 					= add_sidebar_link 'Статистика', stats_path, :signal
 					= add_sidebar_link 'Поддержка', discussions_path, :comment
 				- when Webmaster
+					= add_sidebar_link 'Профиль', profile_path, :user
 					= add_sidebar_link 'Рекламные площадки', grounds_path, :road
 					= add_sidebar_link 'Достижения целей', achievements_path, :gift
 					= add_sidebar_link 'Платежи', payments_path, :briefcase

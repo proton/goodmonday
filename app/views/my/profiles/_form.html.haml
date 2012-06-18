@@ -1,0 +1,62 @@
+= simple_form_for(@profile, :url => profile_path, :html => {:class => 'form-horizontal' }) do |f|
+	%h5 Персональная информация
+	.well
+		= f.input :first_name
+		= f.input :last_name
+		= f.input :person_state, collection: WebmasterProfile.get_person_state_values
+		= f.input :city
+		= f.input :phone
+	%h5 Финансовая информация
+	.well
+		.nperson_state_natural
+			= f.input :payment_method, collection: WebmasterProfile.get_payment_method_values
+		.payment_method_webmoney
+			= f.input :wallet_wmr
+		.payment_method_bank
+			.person_state_sole
+				= f.input :ogrnip
+			= f.input :recipient_bank
+			= f.input :correspondent_account
+			= f.input :bik
+			= f.input :payment_account
+			.person_state_artificial
+				= f.input :recipient
+			.person_state_sole
+				= f.input :fio
+			= f.input :inn
+			.person_state_artificial
+				= f.input :kpp
+				= f.input :juridical_address, as: :text, :input_html => { :rows => 3}
+				= f.input :physical_address, as: :text, :input_html => { :rows => 3}
+
+	%h5 Уведомления
+	.well
+		= f.input :email_offer_changes, as: :boolean
+		= f.input :email_new_offers, as: :boolean
+
+	= f.button :submit, :class => 'btn-primary'
+
+:javascript
+	function toggle_form_elements()
+	{
+		var webmaster_profile_person_state = $('#webmaster_profile_person_state').val();
+		var webmaster_profile_payment_method = $('#webmaster_profile_payment_method').val();
+
+		var is_payment_method_bank = (webmaster_profile_person_state!='natural' && webmaster_profile_payment_method=='bank');
+		var is_payment_method_webmoney =  (webmaster_profile_person_state=='natural' || webmaster_profile_payment_method=='webmoney');
+		var isn_person_state_natural =  (webmaster_profile_person_state!='natural')
+		var is_person_state_sole =  (webmaster_profile_person_state=='sole')
+		var is_person_state_artificial =  (webmaster_profile_person_state=='artificial')
+
+		$('.nperson_state_natural').toggle(isn_person_state_natural);
+		$('.payment_method_webmoney').toggle(is_payment_method_webmoney);
+		$('.person_state_sole').toggle(is_person_state_sole);
+		$('.person_state_artificial').toggle(is_person_state_artificial);
+		$('.payment_method_bank').toggle(is_payment_method_bank);
+	}
+
+	$(document).ready(function() {
+		toggle_form_elements();
+		$('#webmaster_profile_person_state').change(function() {toggle_form_elements();});
+		$('#webmaster_profile_payment_method').change(function() {toggle_form_elements();});
+	});
