@@ -16,13 +16,13 @@ class Suspicion
 			black_ip.discard_at = DateTime.now+period
 		end
 		if black_ip.save
-			self.update_state(:accepted)
-			Achievement.pending.where(:ip => self.ip).update_all(state: :denied)
+      self.update_attribute(:state, :accepted)
+			Achievement.pending.where(:ip => self.ip).update(state: :denied)
 		end
 	end
 
 	def forgive
-		self.update_state(:denied)
+    self.update_attribute(:state, :denied)
 	end
 
 end
