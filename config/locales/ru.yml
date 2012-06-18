@@ -43,4 +43,9 @@ ru:
         confirm_mode:
           auto: 'Автоматический'
           manual: 'Ручной'
+      user:
+        rank:
+          bronze: 'Бронзовый'
+          silver: 'Серебряный'
+          gold: 'Золотой'
 
