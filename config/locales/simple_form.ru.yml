@@ -39,6 +39,7 @@ ru:
         category: 'Категория'
         auto_accept_grounds: 'Автоматически принимать площадки'
         excepted_categories: 'Отклонять площадки следующих категорий'
+        excepted_ground_types: 'Отклонять площадки следующих видов'
         is_adult: 'Для взрослых'
         is_doubtful: 'Сомнительная'
       target:

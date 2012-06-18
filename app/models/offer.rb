@@ -22,7 +22,8 @@ class Offer
 	field :is_doubtful, type: Boolean, default: false
 
 	field :auto_accept_grounds, type: Boolean, default: true
-	field :excepted_categories_ids, type: Array, default: []
+  field :excepted_categories_ids, type: Array, default: []
+  field :excepted_ground_types, type: Array, default: []
 
   mount_uploader :logo, OfferLogoUploader
 
