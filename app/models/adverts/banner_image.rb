@@ -4,10 +4,10 @@ class BannerImage
 	include Mongoid::Timestamps
 	embedded_in :banner
 
-	before_save :update_advert_sizes
+	after_save :update_advert_sizes
 	before_destroy :update_advert_sizes
 
-	symbolize :size, :in => ADVERTS_SIZES
+  symbolize :size, :in => ADVERTS_SIZES
 
 	field :auto_generated, type: Boolean, default: false
 	mount_uploader :image, BannerImageUploader
@@ -20,8 +20,8 @@ class BannerImage
 	#	true
 	#end
 
-	MODERATED_ATTRS = %w[image]
-	MODERATED_ATTRS_INFO = {'image' => {:type => :carrierwave_image} }
+  MODERATED_ATTRS = %w[image]
+	#MODERATED_ATTRS_INFO = {'image' => {:type => :carrierwave_image} }
 	include IsModerated
 
 	def update_advert_sizes

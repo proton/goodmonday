@@ -33,11 +33,9 @@ module IsModerated
 	def change_moderation(moderated_fields, reason)
 		return if moderated_fields.empty?
 		state = :pending
-    puts __LINE__
     unless self.moderated_state==state
       self.update(moderated_state: state)
     end
-    puts __LINE__
 		moderation = self.moderation
 		unless moderation
 			moderation = self.build_moderation
@@ -55,7 +53,6 @@ module IsModerated
 			moderation.changed_fields[f] = value
 		end
 		moderation.save
-    puts __LINE__
 	end
 
 	def generate_moderated_path
