@@ -80,6 +80,7 @@ Cpa::Application.routes.draw do
 					end
 				end
 				resources :grounds
+        resource :profile
 			end
       resources :articles
       resources :news

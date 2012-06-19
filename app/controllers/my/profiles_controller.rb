@@ -5,9 +5,13 @@ class My::ProfilesController < My::BaseController
 
   before_filter :find_profile
 
+  def show
+    add_crumb "Профиль"
+  end
+
   def update
     profile_params = params[:webmaster_profile] ? params[:webmaster_profile] : params[:advertiser_profile]
-    flash[:notice] = 'Статья обновлена.' if @profile.update_attributes(profile_params)
+    flash[:notice] = 'Профиль обновлён.' if @profile.update_attributes(profile_params)
     respond_with(@profile, :location => profile_path)
   end
 
