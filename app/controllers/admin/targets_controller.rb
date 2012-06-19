@@ -14,7 +14,7 @@ class Admin::TargetsController < Admin::BaseController
 	def create
     attrs = params[:target]
     [:fixed_price, :fixed_prices_bronze, :fixed_prices_silver, :fixed_prices_gold].each do |price|
-      attrs[price]=attrs[price].to_i*100
+      attrs[price]=attrs[price].to_i*100 if attrs[price]
     end
 		@target = @offer.targets.new(attrs)
 		flash[:notice] = 'Цель добавлена.' if @target.save
