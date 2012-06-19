@@ -4,10 +4,9 @@
 			%th= 'Логотип'
 			%th= 'Название'
 			%th= 'Категория'
+			%th= 'Цели'
 			%th= 'Выплачено'
 			%th= 'EPC'
-			%th= 'Цели'
-			%th
 	%tbody
 		- @offers.each do |offer|
 			%tr{:class => offer.is_accepted? ? '' : 'muted'}
@@ -16,12 +15,27 @@
 						%ul.thumbnails
 							%li
 								.thumbnail= image_tag offer.logo
-				%td= offer.title
-				%td= offer.category.title
-				%td= offer.epc
-				%td= number_to_currency offer.payments
-				%td= offer.targets.count
 				%td
-					= link_to offer_path(offer), :class => 'btn btn-small' do
-						-#%i.icon-screenshot
-						= 'Открыть'
+					= offer.title
+					- if !offer.url.empty? && offer.url.start_with?('http')
+						%br
+						= link_to @offer.url, @offer.url
+				%td= offer.category.title
+				%td
+					%table.table.table-bordered.table-condensed
+						%thead
+							%tr
+								%th= 'Цель'
+								%th= 'Стоимость'
+								%th= 'Холд'
+						- offer.targets.each do |target|
+							%tr
+								%td= target.title
+								%td= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
+								%td= "#{target.hold} дней"
+				%td= number_to_rubles offer.payments
+				%td= number_to_rubles offer.epc
+				-#%td
+				-#	= link_to offer_path(offer), :class => 'btn btn-small' do
+				-#		-#%i.icon-screenshot
+				-#		= 'Открыть'

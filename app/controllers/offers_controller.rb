@@ -3,9 +3,10 @@
 class OffersController < ApplicationController
 
 	def index
-		@offers = Offer.accepted
+    @offers = Offer.accepted.where('targets.moderated_state' => :accepted)
     add_crumb "Рекламные кампании"
-	end
+  end
+
 	def show
     @offer = Offer.find(params[:id])
     add_crumb "Рекламные кампании", offers_path

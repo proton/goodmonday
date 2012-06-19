@@ -17,7 +17,9 @@ module ApplicationHelper
   end
 
   def number_to_rubles(x)
-    number_to_currency(x/100.0)
+    sum = x/100.0
+    sum = 0 if sum.nan?
+    number_to_currency(sum)
   end
 
   def safe_image_tag(source, options = {})
