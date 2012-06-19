@@ -6,12 +6,12 @@
 		= f.input :confirm_url, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
 		= f.input :prc_price, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
 		= f.input :prc_prices_bronze, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-		= f.input :prc_prices_silver, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-		= f.input :prc_prices_gold, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
+		-#= f.input :prc_prices_silver, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
+		-#= f.input :prc_prices_gold, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
 	= f.input :fixed_price, :required => true, :as => :decimal, :input_html => { :class => "span6", :value => @target.fixed_price/100 }
 	= f.input :fixed_prices_bronze, :required => true, :as => :decimal, :input_html => { :class => "span6", :value => @target.fixed_prices_bronze/100 }
-	= f.input :fixed_prices_silver, :required => true, :as => :decimal, :input_html => { :class => "span6", :value => @target.fixed_prices_silver/100 }
-	= f.input :fixed_prices_gold, :required => true, :as => :decimal, :input_html => { :class => "span6", :value => @target.fixed_prices_gold/100 }
+	-#= f.input :fixed_prices_silver, :required => true, :as => :decimal, :input_html => { :class => "span6", :value => @target.fixed_prices_silver/100 }
+	-#= f.input :fixed_prices_gold, :required => true, :as => :decimal, :input_html => { :class => "span6", :value => @target.fixed_prices_gold/100 }
 	= f.input :hold, :input_html => { :class => "span6" }
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Отмена', offer_targets_path, :class => "btn btn-danger"
