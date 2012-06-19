@@ -6,7 +6,7 @@ class My::ProfilesController < My::BaseController
   before_filter :find_profile
 
   def update
-    profile_params = params[:webmaster_profile].merge(params[:webmaster_profile])
+    profile_params = params[:webmaster_profile] ? params[:webmaster_profile] : params[:advertiser_profile]
     flash[:notice] = 'Статья обновлена.' if @profile.update_attributes(profile_params)
     respond_with(@profile, :location => profile_path)
   end
@@ -19,7 +19,7 @@ class My::ProfilesController < My::BaseController
         @profile = current_user.webmaster_profile
         @profile = current_user.create_webmaster_profile if @profile.nil?
       when Advertiser
-        current_user.advertiser_profile
+        @profile = current_user.advertiser_profile
         @profile = current_user.create_advertiser_profile if @profile.nil?
     end
   end

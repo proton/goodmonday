@@ -1,0 +1,39 @@
+= simple_form_for(@profile, :url => profile_path, :html => {:class => 'form-horizontal' }) do |f|
+	%h5 Информация о компании
+	.well
+		= f.input :company_name
+		= f.input :website, :placeholder => 'http://'
+		= f.input :contact_person
+		= f.input :contact_phone
+	%h5 Финансовая информация
+	.well
+		= f.input :payment_method, collection: AdvertiserProfile.get_payment_method_values
+		.payment_method_webmoney
+			= f.input :wallet_wmr
+		.payment_method_cashless
+			= f.input :payment_account
+			= f.input :bank_name
+			= f.input :correspondent_account
+			= f.input :bik
+			= f.input :inn
+			= f.input :kpp
+			= f.input :juridical_address, as: :text, :input_html => { :rows => 3}
+
+	= f.button :submit, :class => 'btn-primary'
+
+:javascript
+	function toggle_form_elements()
+	{
+		var advertiser_profile_payment_method = $('#advertiser_profile_payment_method').val();
+
+		var is_payment_method_cashless = (advertiser_profile_payment_method=='cashless');
+		var is_payment_method_webmoney = (advertiser_profile_payment_method=='webmoney');
+
+		$('.payment_method_webmoney').toggle(is_payment_method_webmoney);
+		$('.payment_method_cashless').toggle(is_payment_method_cashless);
+	}
+
+	$(document).ready(function() {
+		toggle_form_elements();
+		$('#advertiser_profile_payment_method').change(function() {toggle_form_elements();});
+	});

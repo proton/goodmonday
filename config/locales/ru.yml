@@ -56,3 +56,7 @@ ru:
         payment_method:
           webmoney: 'WebMoney'
           bank: 'Банковский платёж'
+      advertiser_profile:
+        payment_method:
+          webmoney: 'WebMoney'
+          cashless: 'Безналичный платеж'
