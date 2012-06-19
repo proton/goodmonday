@@ -36,13 +36,15 @@
 	- @offer.adverts.each do |advert|
 		- if advert.is_a? Banner
 			- advert.sizes.each do |size|
-				- img = advert.banner_images.where(:size => size.to_sym).first.image.to_s
-				%tr
-					%td
-						%ul.thumbnails
-							%li
-								.thumbnail
-									= link_to image_tag(img), img
-									.caption= size
-					%td
-						%pre.prettyprint= advert.html_code(size, @ground)
+				- banner_image = advert.banner_images.where(:size => size.to_sym).first
+				- if banner_image
+					- img = advert.banner_images.where(:size => size.to_sym).first.image.to_s
+					%tr
+						%td
+							%ul.thumbnails
+								%li
+									.thumbnail
+										= link_to image_tag(img), img
+										.caption= size
+						%td
+							%pre.prettyprint= advert.html_code(size, @ground)
