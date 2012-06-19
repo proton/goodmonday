@@ -44,12 +44,12 @@
 				%td
 					= offer.clicks
 					= ' / '
-					= number_to_currency offer.payments
+					= number_to_rubles offer.payments
 				%td
 					- if @state==:accepted
 						= link_to ground_link_path(@ground,offer), :class => 'btn btn-small' do
 							%i.icon-align-justify
-							= 'Показать код'
+							= 'Показать код и промо-материалы'
 					= link_to ground_link_path(@ground,offer), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
 						%i.icon-trash.icon-white
 						= 'Удалить'

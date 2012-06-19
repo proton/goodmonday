@@ -1,24 +1,48 @@
+%h5 Код для вставки
+%br
+
 %b= 'Ваша ссылка:'
 %br
 %br
 %pre.prettyprint
-  = "http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}"
+	= "http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}"
 
 %b= 'Полный код для вставки:'
 %br
 %br
 %pre.prettyprint
-  = "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}'>"
-  -#%span.tag Текст ссылки
-  = content_tag(:span, 'Текст ссылки', :class => "atn")
-  = "</a>"
+	= "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}'>"
+	-#%span.tag Текст ссылки
+	= content_tag(:span, 'Текст ссылки', :class => "atn")
+	= "</a>"
 
 %b= 'Если вы желаете использовать sub_id, просто передайте его в параметре ссылки:'
 %br
 %br
 %pre.prettyprint
-  = "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}?sub_id="
-  = content_tag(:span, 'ваш_sub_id', :class => "str")
-  = "'>"
-  = content_tag(:span, 'Текст ссылки', :class => "atn")
-  = "</a>"
+	= "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}?sub_id="
+	= content_tag(:span, 'ваш_sub_id', :class => "str")
+	= "'>"
+	= content_tag(:span, 'Текст ссылки', :class => "atn")
+	= "</a>"
+
+%h5 Промо-материалы
+
+%table.table.table-bordered
+	%thead
+		%tr
+			%th= 'Изображение'
+			%th= 'Код'
+	- @offer.adverts.each do |advert|
+		- if advert.is_a? Banner
+			- advert.sizes.each do |size|
+				- img = advert.banner_images.where(:size => size.to_sym).first.image.to_s
+				%tr
+					%td
+						%ul.thumbnails
+							%li
+								.thumbnail
+									= link_to image_tag(img), img
+									.caption= size
+					%td
+						%pre.prettyprint= advert.html_code(size, @ground)
