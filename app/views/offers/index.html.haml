@@ -20,7 +20,7 @@
 					= offer.title
 					- if !offer.url.empty? && offer.url.start_with?('http')
 						%br
-						= link_to @offer.url, @offer.url
+						= link_to offer.url, offer.url
 				%td= offer.category.title
 				%td
 					%table.table.table-bordered.table-condensed
