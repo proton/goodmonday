@@ -39,10 +39,10 @@
 	.span3
 		.well
 			%b= @current_user.email
-			- if @current_user.is_a? Webmaster
-				%br
-				%b Статус:
-				=t "mongoid.symbolizes.user.rank.#{@current_user.rank}"
+			-#- if @current_user.is_a? Webmaster
+			-#	%br
+			-#	%b Статус:
+			-#	=t "mongoid.symbolizes.user.rank.#{@current_user.rank}"
 			%hr
 			%b Баланс:
 			= number_to_rubles @current_user.balance

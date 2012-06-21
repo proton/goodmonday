@@ -5,6 +5,8 @@
 	-#= f.input :_type, :as => :hidden, :input_html => { :value => type.capitalize }
 	- case @type
 		- when Banner
+			%b= 'Укажите ссылку на страницу, куда будет переходить посетитель при клике на банер:'
+			%br
 			.control-group= f.input :url, :input_html => { :class => "span6" }, :placeholder => 'http://'
 			-#%p= "Пожалуйста, загрузите изображение одного из следующих размеров: #{ADVERTS_SIZES.to_sentence}:"
 			-#.control-group= f.input :url, :input_html => { :class => "span6" }
