@@ -80,6 +80,9 @@ Cpa::Application.routes.draw do
 					end
 				end
 				resources :grounds
+        resources :payments do
+          #
+        end
         resource :profile
 			end
       resources :articles

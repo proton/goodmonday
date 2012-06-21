@@ -1,0 +1,37 @@
+.row
+	.span9{:style => 'text-align:right'}
+		%b Текущий баланс:
+		= number_to_rubles @user.balance
+		%br
+		%b Ожидаемый баланс:
+		= number_to_rubles @user.hold_balance
+%br
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Дата'
+			%th= 'Тип'
+			%th= 'Сумма'
+			%th= 'Описание'
+	%tbody
+		- @payments.each do |payment|
+			%tr
+				%td= payment.created_at
+				%td
+					- if payment.amount>0
+						%i.icon-plus-sign
+						= 'Пополнение'
+					- else
+						%i.icon-minus-sign
+						= 'Списание'
+				%td= number_to_rubles payment.amount
+				%td= payment.description
+%br
+%h5 Пополнение счёта
+= simple_form_for([@user.becomes(User), @user.payments.new]) do |f|
+	.row
+		.span2= f.input :amount, :as => :decimal, :input_html => {:class => 'span2'}
+		.span5= f.input :description, :as => :text, :input_html => { :rows => 1, :class => 'span5' }
+		.span2
+			%br
+			= f.button :submit, :class => 'btn-primary'

@@ -14,9 +14,9 @@ class My::TargetsController < My::BaseController
 	def create
     attrs = params[:target]
     attrs[:fixed_price]=attrs[:fixed_price].to_i*100
-		@target = @offer.targets.new(attrs)
-		flash[:notice] = 'Цель добавлена.' if @target.save
-		respond_with(@target, :location => offer_targets_path(@offer))
+    @target = @offer.targets.new(attrs)
+    flash[:notice] = 'Цель добавлена.' if @target.save
+    respond_with(@target, :location => offer_targets_path(@offer))
 	end
 
 	def update

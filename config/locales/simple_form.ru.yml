@@ -107,6 +107,9 @@ ru:
       filter:
         date_start: 'От'
         date_stop: 'До'
+      payment:
+        amount: 'Сумма'
+        description: 'Описание'
     hints:
       ground:
         ground_rotator_config:
@@ -125,3 +128,4 @@ ru:
       banner: "банер"
       news: "новость"
       discussion: "сообшение"
+      payment: "платёж"
