@@ -65,9 +65,9 @@
 			- if @current_user.is_a? Webmaster
 				%hr
 				%h6 Статистика рефералов
-				%br
-				%b Ожидается:
-				= "+#{number_to_rubles @current_user.referal_hold_balance}"
+				-#%br
+				-#%b Ожидается:
+				-#= "+#{number_to_rubles @current_user.referal_hold_balance}"
 				%br
 				%b Начислено:
 				= number_to_rubles @current_user.referal_total_payments

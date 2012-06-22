@@ -40,6 +40,14 @@ class User
   # field :authentication_token, :type => String
 
 	field :affiliator_id, type: BSON::ObjectId
+
+  def affiliator
+    if self.affiliator_id
+      Member.where(:_id => self.affiliator_id).first
+    else
+      nil
+    end
+  end
 	#before_create :set_affiliator #, :if => Proc.new { cookies[:referral]? }
 	#
 	#def set_affiliator
