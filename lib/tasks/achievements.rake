@@ -18,12 +18,15 @@ namespace :achievements do
 			end
 			doc = Hpricot(open(url))
 
-			(doc/:item).each do |item|
+			(doc/:items/:item).each do |item|
 				id = item.at('id').inner_text
 				if id==order_id
 					status = item.at('status').inner_text.to_i
 					price = item.at('price').inner_text.to_f
 
+          #1 - :accepted
+          #2 - :pending
+          #3 - :denied
 					if [1,3].include? status
 						if status==1
               achievement.accept(target.fixed_price + target.prc_price*price/100)
