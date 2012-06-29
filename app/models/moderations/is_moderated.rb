@@ -4,9 +4,8 @@ module IsModerated
 	included do
 		has_one :moderation, as: :moderated, dependent: :delete
 		field :moderated_state, type: Symbol, default: :pending
-		after_create :add_moderation
-		before_update{ @changed_attrs = changes.clone }
-		after_update :set_moderation
+    around_create :add_moderation
+    around_update :set_moderation
 
 		scope :accepted, where(:moderated_state => :accepted)
 		scope :denied,	 where(:moderated_state => :denied)
@@ -21,21 +20,23 @@ module IsModerated
 
 	def add_moderation
 		moderated_fields = self.class::MODERATED_ATTRS
-		change_moderation moderated_fields, :created
+    self.moderated_state = :pending unless moderated_fields.empty?
+    yield
+    change_moderation moderated_fields, :created
   end
 
 	def set_moderation
-		return if @changed_attrs.has_key? 'moderated_state' #не достаточно, если уже :pending не помогает, надо проверять, что с модерациями
-		moderated_fields = @changed_attrs.keys & self.class::MODERATED_ATTRS
-		change_moderation moderated_fields, :updated
-	end
+    changed_attrs = changes.clone
+		return if changed_attrs.has_key? 'moderated_state'
+		moderated_fields = changed_attrs.keys & self.class::MODERATED_ATTRS
+    self.moderated_state = :pending unless moderated_fields.empty?
+    yield
+    change_moderation moderated_fields, :updated
+  end
 
 	def change_moderation(moderated_fields, reason)
-		return if moderated_fields.empty?
+    return if moderated_fields.empty?
 		state = :pending
-    unless self.moderated_state==state
-      self.update(moderated_state: state)
-    end
 		moderation = self.moderation
 		unless moderation
 			moderation = self.build_moderation
