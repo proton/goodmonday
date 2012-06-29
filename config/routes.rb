@@ -95,5 +95,7 @@ Cpa::Application.routes.draw do
   resources :news
   resources :offers
 
+  resources :ref, :controller => "referals"
+
 	root :to => 'home#index'
 end
