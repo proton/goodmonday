@@ -76,11 +76,12 @@
 								=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
 								- options = moderated_class.fields[key.to_s].options
 								- field_name = "moderated_edit[#{key.to_s}]"
+								- value = @moderation.moderated_object.read_attribute(key)
 								- case options[:type].to_s
 									- when 'Boolean'
-										= check_box_tag field_name, 1, options[:default]
+										= check_box_tag field_name, 1, value
 									- when 'Integer'
-										= number_field_tag field_name, @moderation.moderated_object.read_attribute(key), :class => 'span2'
+										= number_field_tag field_name, value, :class => 'span2'
 									- else
 										= ''
 						%br
