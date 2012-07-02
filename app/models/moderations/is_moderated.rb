@@ -28,7 +28,6 @@ module IsModerated
 
 	def set_moderation
     changed_attrs = changes.clone
-		return if changed_attrs.has_key? 'moderated_state'
 		moderated_fields = changed_attrs.keys & self.class::MODERATED_ATTRS
     self.moderated_state = :pending unless moderated_fields.empty?
     yield
