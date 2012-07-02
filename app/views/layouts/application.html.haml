@@ -50,14 +50,10 @@
 					.cell
 						%h5 Рекламодателям
 						%br
-						= link_to 'Новости', news_index_path
-						%br
-						Каталог программ
-						%br
 						Правила
 						%br
-						FAQ
-						%br
+						-#FAQ
+						-#%br
 						= link_to 'Подключиться сейчас', new_user_registration_path(:type => :advertiser)
 					.cell_c
 						.logo
@@ -85,8 +81,8 @@
 						%br
 						Правила
 						%br
-						FAQ
-						%br
+						-#FAQ
+						-#%br
 						= link_to 'Подключиться сейчас', new_user_registration_path(:type => :webmaster)
 				#bottom_menu
 					%ul
