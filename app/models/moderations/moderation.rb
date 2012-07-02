@@ -43,7 +43,11 @@ class Moderation
 
 	def moderated_object
 		if self.moderated_path
-			eval(self.moderated_path)
+      begin
+			  eval(self.moderated_path)
+      rescue Exception
+        nil
+      end
 		else
 			moderated
 		end

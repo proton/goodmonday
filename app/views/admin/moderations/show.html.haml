@@ -4,122 +4,127 @@
 	.row
 		-#= @moderation.moderated.inspect
 		- moderated_class = @moderation.moderated_type.constantize
+		- moderated_object = @moderation.moderated_object
 		.span9
-			%b= 'Дата: '
-			= @moderation.updated_at
-			%br
-			%b= 'Статус: '
-			= state_label @moderation.state
-			%br
-			%b= 'Причина: '
-			=t "common.reason.#{@moderation.reason.to_s}"
-			%br
-			%b= 'Тип объекта: '
-			=t "model.#{@moderation.moderated_type}"
-			%hr
-			- if @moderation.state==:pending
-				%h2= 'Изменения'
+			- unless moderated_object
+				%h2= 'Объект удалён!'
+				- @moderation.destroy
+			- else
+				%b= 'Дата: '
+				= @moderation.updated_at
+				%br
+				%b= 'Статус: '
+				= state_label @moderation.state
+				%br
+				%b= 'Причина: '
+				=t "common.reason.#{@moderation.reason.to_s}"
+				%br
+				%b= 'Тип объекта: '
+				=t "model.#{@moderation.moderated_type}"
+				%hr
+				- if @moderation.state==:pending
+					%h2= 'Изменения'
+					%table.table.table-bordered.table-striped
+						%thead
+							%tr
+								%th= 'Поле'
+								%th= 'Значение'
+								%th= 'Утверждённое значение'
+						%tbody
+							- @moderation.changed_fields.keys.each do |key|
+								- changed_value = @moderation.changed_fields[key]
+								- accepted_value = @moderation.accepted_fields[key]
+								- type = :default
+								- if changed_value.class==BSON::ObjectId && key[-3..-1]=='_id'
+									- klass = key[0..-4].camelize.constantize
+									- type = :association
+								- elsif moderated_class.const_defined?(:MODERATED_ATTRS_INFO) && moderated_class::MODERATED_ATTRS_INFO[key]
+									- attr_info = moderated_class::MODERATED_ATTRS_INFO[key]
+									- type = attr_info[:type]
+								%tr
+									%td
+										=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
+										= "(#{key.to_s})"
+									%td
+										- if changed_value
+											- case type
+												- when :association
+													= klass.find(changed_value).title
+												- when :carrierwave_image
+													= changed_value
+													%br
+													- show_method = attr_info[:show_method] ? attr_info[:show_method] : key
+													- img = moderated_object.method(show_method).call
+													- if img.present?
+														= image_tag(img)
+													- else
+														= '-'
+												- when :currency
+													= number_to_rubles changed_value
+												- else
+													= changed_value
+									%td
+										- if accepted_value
+											- case type
+												- when :association
+													= klass.find(accepted_value).title
+												- when :currency
+													= number_to_rubles accepted_value
+												- else
+													= accepted_value
+
+					= form_tag(moderation_accept_path(@moderation), :method => :get) do
+						- if defined? moderated_class::MODERATED_EDIT_FIELDS
+							%h4= 'Дополнительные настройки:'
+							- moderated_class::MODERATED_EDIT_FIELDS.each do |key|
+								.span4
+									=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
+									- options = moderated_class.fields[key.to_s].options
+									- field_name = "moderated_edit[#{key.to_s}]"
+									- value = moderated_object.read_attribute(key)
+									- case options[:type].to_s
+										- when 'Boolean'
+											= check_box_tag field_name, 1, value
+										- when 'Integer'
+											= number_field_tag field_name, value, :class => 'span2'
+										- else
+											= ''
+							%br
+							%br
+						= button_tag :class => 'btn btn-success' do
+							%i.icon-ok.icon-white
+							= 'Одобрить'
+						= link_to moderation_deny_path(@moderation), :class => 'btn btn-danger' do
+							%i.icon-remove.icon-white
+							= 'Отказать'
+					%hr
+		.row
+			.span4
+				%h3= 'Последние изменения'
 				%table.table.table-bordered.table-striped
 					%thead
 						%tr
-							%th= 'Поле'
-							%th= 'Значение'
-							%th= 'Утверждённое значение'
+							%th= 'Дата'
+							%th= 'Поля'
 					%tbody
-						- @moderation.changed_fields.keys.each do |key|
-							- changed_value = @moderation.changed_fields[key]
-							- accepted_value = @moderation.accepted_fields[key]
-							- type = :default
-							- if changed_value.class==BSON::ObjectId && key[-3..-1]=='_id'
-								- klass = key[0..-4].camelize.constantize
-								- type = :association
-							- elsif moderated_class.const_defined?(:MODERATED_ATTRS_INFO) && moderated_class::MODERATED_ATTRS_INFO[key]
-								- attr_info = moderated_class::MODERATED_ATTRS_INFO[key]
-								- type = attr_info[:type]
+						- @moderation.moderation_field_changes.each do |change|
 							%tr
-								%td
-									=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
-									= "(#{key.to_s})"
-								%td
-									- if changed_value
-										- case type
-											- when :association
-												= klass.find(changed_value).title
-											- when :carrierwave_image
-												= changed_value
-												%br
-												- show_method = attr_info[:show_method] ? attr_info[:show_method] : key
-												- img = @moderation.moderated_object.method(show_method).call
-												- if img.present?
-													= image_tag(img)
-												- else
-													= '-'
-											- when :currency
-												= number_to_rubles changed_value
-											- else
-												= changed_value
-								%td
-									- if accepted_value
-										- case type
-											- when :association
-												= klass.find(accepted_value).title
-											- when :currency
-												= number_to_rubles accepted_value
-											- else
-												= accepted_value
-
-				= form_tag(moderation_accept_path(@moderation), :method => :get) do
-					- if defined? moderated_class::MODERATED_EDIT_FIELDS
-						%h4= 'Дополнительные настройки:'
-						- moderated_class::MODERATED_EDIT_FIELDS.each do |key|
-							.span4
-								=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
-								- options = moderated_class.fields[key.to_s].options
-								- field_name = "moderated_edit[#{key.to_s}]"
-								- value = @moderation.moderated_object.read_attribute(key)
-								- case options[:type].to_s
-									- when 'Boolean'
-										= check_box_tag field_name, 1, value
-									- when 'Integer'
-										= number_field_tag field_name, value, :class => 'span2'
-									- else
-										= ''
-						%br
-						%br
-					= button_tag :class => 'btn btn-success' do
-						%i.icon-ok.icon-white
-						= 'Одобрить'
-					= link_to moderation_deny_path(@moderation), :class => 'btn btn-danger' do
-						%i.icon-remove.icon-white
-						= 'Отказать'
-				%hr
-	.row
-		.span4
-			%h3= 'Последние изменения'
-			%table.table.table-bordered.table-striped
-				%thead
-					%tr
-						%th= 'Дата'
-						%th= 'Поля'
-				%tbody
-					- @moderation.moderation_field_changes.each do |change|
+								%td= change.created_at
+								%td= change.changed_fields.keys.to_sentence
+			.span5
+				%h3= 'Последние проверки'
+				%table.table.table-bordered.table-striped
+					%thead
 						%tr
-							%td= change.created_at
-							%td= change.changed_fields.keys.to_sentence
-		.span5
-			%h3= 'Последние проверки'
-			%table.table.table-bordered.table-striped
-				%thead
-					%tr
-						%th= 'Дата'
-						%th= 'Статус'
-						%th= 'Проверяющий'
-						- if defined? moderated_class::MODERATED_EDIT_FIELDS && !moderated_class::MODERATED_EDIT_FIELDS.empty?
-							%th= 'Установленные значения'
-				%tbody
-					- @moderation.moderation_state_changes.each do |change|
-						%tr
-							%td= change.created_at
-							%td=t "common.state.#{change.state.to_s}"
-							%td= change.operator_id
-							%td= change.edit_fields
+							%th= 'Дата'
+							%th= 'Статус'
+							%th= 'Проверяющий'
+							- if defined? moderated_class::MODERATED_EDIT_FIELDS && !moderated_class::MODERATED_EDIT_FIELDS.empty?
+								%th= 'Установленные значения'
+					%tbody
+						- @moderation.moderation_state_changes.each do |change|
+							%tr
+								%td= change.created_at
+								%td=t "common.state.#{change.state.to_s}"
+								%td= change.operator_id
+								%td= change.edit_fields

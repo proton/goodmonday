@@ -6,6 +6,7 @@ module IsModerated
 		field :moderated_state, type: Symbol, default: :pending
     around_create :add_moderation
     around_update :set_moderation
+    around_destroy :del_moderation
 
 		scope :accepted, where(:moderated_state => :accepted)
 		scope :denied,	 where(:moderated_state => :denied)
@@ -54,7 +55,13 @@ module IsModerated
 			moderation.changed_fields[f] = value
 		end
 		moderation.save
-	end
+  end
+
+  def del_moderation
+    moderation = self.moderation
+    yield
+    moderation.destroy
+  end
 
 	def generate_moderated_path
 		path = ''
