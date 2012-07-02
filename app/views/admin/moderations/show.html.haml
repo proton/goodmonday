@@ -98,33 +98,33 @@
 							%i.icon-remove.icon-white
 							= 'Отказать'
 					%hr
-		.row
-			.span4
-				%h3= 'Последние изменения'
-				%table.table.table-bordered.table-striped
-					%thead
-						%tr
-							%th= 'Дата'
-							%th= 'Поля'
-					%tbody
-						- @moderation.moderation_field_changes.each do |change|
+			.row
+				.span4
+					%h3= 'Последние изменения'
+					%table.table.table-bordered.table-striped
+						%thead
 							%tr
-								%td= change.created_at
-								%td= change.changed_fields.keys.to_sentence
-			.span5
-				%h3= 'Последние проверки'
-				%table.table.table-bordered.table-striped
-					%thead
-						%tr
-							%th= 'Дата'
-							%th= 'Статус'
-							%th= 'Проверяющий'
-							- if defined? moderated_class::MODERATED_EDIT_FIELDS && !moderated_class::MODERATED_EDIT_FIELDS.empty?
-								%th= 'Установленные значения'
-					%tbody
-						- @moderation.moderation_state_changes.each do |change|
+								%th= 'Дата'
+								%th= 'Поля'
+						%tbody
+							- @moderation.moderation_field_changes.each do |change|
+								%tr
+									%td= change.created_at
+									%td= change.changed_fields.keys.to_sentence
+				.span5
+					%h3= 'Последние проверки'
+					%table.table.table-bordered.table-striped
+						%thead
 							%tr
-								%td= change.created_at
-								%td=t "common.state.#{change.state.to_s}"
-								%td= change.operator_id
-								%td= change.edit_fields
+								%th= 'Дата'
+								%th= 'Статус'
+								%th= 'Проверяющий'
+								- if defined? moderated_class::MODERATED_EDIT_FIELDS && !moderated_class::MODERATED_EDIT_FIELDS.empty?
+									%th= 'Установленные значения'
+						%tbody
+							- @moderation.moderation_state_changes.each do |change|
+								%tr
+									%td= change.created_at
+									%td=t "common.state.#{change.state.to_s}"
+									%td= change.operator_id
+									%td= change.edit_fields
