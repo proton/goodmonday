@@ -13,8 +13,8 @@ Cpa::Application.routes.draw do
               
   constraints :subdomain => "r" do
     match ':ground_id/rotator' => 'robot#rotator'
-    match ':ground_id/advert' => 'robot#advert'
-    match ':ground_id/advert/:offer_id' => 'robot#advert'
+    match ':ground_id/advert' => 'robot#show'
+    match ':ground_id/advert/:offer_id' => 'robot#show'
     match ':ground_id/goto/:offer_id' => 'robot#redirect'
     match ':ground_id/goto/:offer_id/:advert_id' => 'robot#redirect'
     match ':offer_id/visit' => 'robot#visit'

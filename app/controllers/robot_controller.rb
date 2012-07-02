@@ -8,7 +8,7 @@ class RobotController < ApplicationController
 		render :nothing => true, :status => whatever unless @ground
 	end
 
-	def advert
+	def show
 		sizes = params[:sizes]
 		ground = Ground.find(params[:ground_id])
 		if sizes.empty? || !ground
@@ -62,6 +62,7 @@ class RobotController < ApplicationController
 	end
 
   def redirect
+
  		url = 'http://goodmonday.ru' #fallback url
 
  		ground_id = params[:ground_id]
@@ -70,22 +71,13 @@ class RobotController < ApplicationController
  		ground = Ground.find(ground_id)
     offer = Offer.find(offer_id)
     if params[:advert_id] && !params[:advert_id].empty?
-      advert = offer.adverts.find(params[:advert_id])
+      adv = offer.adverts.find(params[:advert_id])
     end
-
- 		if ground
-      if params[:advert_id] && !params[:advert_id].empty?
-        advert = offer.adverts.find(params[:advert_id])
-        url = advert.url
-      else
-        url = offer.url
-      end
-     end
 
     if params[:url] && !params[:url].empty? && params[:url].starts_with?('http')
       url = params[:url]
     elsif ground
-      url = defined?(advert) ? advert.url : offer.url
+      url = (defined? adv) ? adv.url : offer.url
     end
 
  		ip = request.remote_ip
@@ -98,8 +90,8 @@ class RobotController < ApplicationController
  				visitor.initial_page = request.referer
  				visitor.user_agent = request.user_agent
 
- 				if defined? advert
- 					visitor.advert_id = advert.id
+ 				if defined? adv
+ 					visitor.advert_id = adv.id
  				end
 
  				sub_id = nil
