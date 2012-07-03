@@ -70,14 +70,14 @@ class RobotController < ApplicationController
 
  		ground = Ground.find(ground_id)
     offer = Offer.find(offer_id)
-    if params[:advert_id] && !params[:advert_id].empty?
-      adv = offer.adverts.find(params[:advert_id])
+    if false
+      advert = 'c'
     end
 
     if params[:url] && !params[:url].empty? && params[:url].starts_with?('http')
       url = params[:url]
     elsif ground
-      url = (defined? adv) ? adv.url : offer.url
+      url = ((defined? advert) && advert) ? advert.url : offer.url
     end
 
  		ip = request.remote_ip
@@ -90,8 +90,8 @@ class RobotController < ApplicationController
  				visitor.initial_page = request.referer
  				visitor.user_agent = request.user_agent
 
- 				if defined? adv
- 					visitor.advert_id = adv.id
+ 				if (defined? advert) && advert
+ 					visitor.advert_id = advert.id
  				end
 
  				sub_id = nil
