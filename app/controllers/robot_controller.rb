@@ -112,12 +112,11 @@ class RobotController < ApplicationController
  					cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
  					#:path - The path for which this cookie applies. Defaults to the root of the application.
  					#:domain - The domain for which this cookie applies.
+        end
 
- 					#collecting statistic:
- 					StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id).inc(:clicks, 1)
- 					StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id).inc(:clicks, 1)
-
- 				end
+        #collecting statistic:
+        StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id).inc(:clicks, 1)
+        StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertsiter.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id).inc(:clicks, 1)
  			end
  		end
  		redirect_to url
