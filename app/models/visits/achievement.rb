@@ -66,7 +66,7 @@ class Achievement
     ground = self.ground
     target_id = self.target_id
     target = offer.targets.find(target_id)
-    advertsiter_id = offer.advertsiter.id
+    advertiser_id = offer.advertiser.id
     webmaster_id = ground.webmaster.id
 
     self.state = :accepted
@@ -75,8 +75,8 @@ class Achievement
     self.prepay
 
     #collecting statistic:
-    today_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertsiter_id, webmaster_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
-    total_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertsiter_id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
+    today_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
+    total_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
     today_stat.inc(:targets, 1)
     total_stat.inc(:targets, 1)
     today_stat.inc(:income, self.price)
