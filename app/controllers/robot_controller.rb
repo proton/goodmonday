@@ -164,7 +164,7 @@ class RobotController < ApplicationController
 									achievement.order_id = params[:order_id]
 								end
 								if target.confirm_mode == :auto
-									achievement.accept(target.fixed_price)
+									achievement.accept(target.webmaster_price, target.advertiser_price)
 								end
 								achievement.save
 							end

@@ -21,7 +21,8 @@ class Achievement
 
   field :sub_id, type: String
 
-	field :price, type: Integer
+  field :webmaster_amount, type: Integer
+  field :advertiser_amount, type: Integer
 
 	field :order_id, type: String #optional for manual confirmation
 
@@ -32,36 +33,37 @@ class Achievement
   end
 
   def prepay
-    self.webmaster.inc(:hold_balance, self.price)
-    self.advertiser.inc(:hold_balance, -self.price)
+    self.webmaster.inc(:hold_balance, self.webmaster_amount)
+    self.advertiser.inc(:hold_balance, -self.advertiser_amount)
   end
 
   def pay
-    amount = self.price
-    if self.advertiser.can_pay? amount
+    webmaster_amount = self.webmaster_amount
+    advertiser_amount = self.advertiser_amount
+    if self.advertiser.can_pay? advertiser_amount
       webmaster = self.webmaster
-      webmaster.balance += amount
-      advertiser.hold_balance -= amount
-      advertiser.total_payments += amount
-      webmaster.payments.new(amout: amount, description: 'Перечисление средств за цель')
+      webmaster.balance += webmaster_amount
+      webmaster.hold_balance -= webmaster_amount
+      webmaster.total_payments += webmaster_amount
+      webmaster.payments.new(amout: webmaster_amount, description: 'Перечисление средств за цель')
       webmaster.save!
       #
       advertiser = self.advertiser
-      advertiser.balance -= amount
-      advertiser.hold_balance += amount
-      advertiser.total_payments += amount
-      advertiser.payments.new(amout: -amount, description: 'Перечисление средств за цель')
+      advertiser.balance -= advertiser_amount
+      advertiser.hold_balance += advertiser_amount
+      advertiser.total_payments += advertiser_amount
+      advertiser.payments.new(amout: -advertiser_amount, description: 'Перечисление средств за цель')
       advertiser.save!
       #
       affiliator = webmaster.affiliator
-      affiliator.inc(:referal_total_payments, amount*0.05) if affiliator
+      affiliator.inc(:referal_total_payments, webmaster_amount*0.05) if affiliator
       #
       self.payment_state = :paid
       self.save!
     end
   end
 
-  def accept(sum)
+  def accept(webmaster_amount, advertiser_amount)
     offer = self.offer
     ground = self.ground
     target_id = self.target_id
@@ -70,11 +72,13 @@ class Achievement
     webmaster_id = ground.webmaster.id
 
     self.state = :accepted
-    self.price = sum
+    self.webmaster_amount = webmaster_amount
+    self.advertiser_amount = advertiser_amount
     self.hold_date = Date.today + target.hold.days
     self.prepay
 
     #collecting statistic:
+    #TODO: говно!!! у рекламодателя и вебмастера разные доходы и статистика должна быть разная
     today_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
     total_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
     today_stat.inc(:targets, 1)

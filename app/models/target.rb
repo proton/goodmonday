@@ -16,6 +16,22 @@ class Target
   field :prc_prices_silver, type: Integer, default: 0
   field :prc_prices_gold, type: Integer, default: 0
 
+  def webmaster_price(price = nil)
+    if price && self.confirm_mode==:manual
+      target.fixed_prices_bronze + target.prc_prices_bronze*price/100
+    else
+      target.fixed_prices_bronze
+    end
+  end
+
+  def advertiser_price(price = nil)
+    if price && self.confirm_mode==:manual
+      target.fixed_price + target.prc_price*price/100
+    else
+      target.fixed_price
+    end
+  end
+
 	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
 	field :confirm_url, type: String
   field :hold, type: Integer, default: 20

@@ -29,7 +29,7 @@ namespace :achievements do
           #3 - :denied
 					if [1,3].include? status
 						if status==1
-              achievement.accept(target.fixed_price + target.prc_price*price/100)
+              achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
 						elsif status==3
 							achievement.state = :denied
 						end
