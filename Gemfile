@@ -56,9 +56,10 @@ gem 'rb-inotify' #for sass
 
 group :development, :test do
    gem 'rnotify'
-	 gem 'hpricot'
 	 gem 'ruby_parser'
    gem 'capistrano'
 end
+
+gem 'hpricot' #for task achievements:confirm
 
 gem 'cucumber' #хз зачем, но без него не стартует ( O_o )
