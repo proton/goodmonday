@@ -18,19 +18,23 @@ class My::StatsController < My::BaseController
     t_start =  Time.utc(@date_start.year,@date_start.month,@date_start.day)
     t_stop =  Time.utc(@date_stop.year,@date_stop.month,@date_stop.day)
 
-    cond = {:date => {'$gte' => t_start, '$lte' => t_stop}}
+    base_cond = {:date => {'$gte' => t_start, '$lte' => t_stop}}
+    click_cond = base_cond.clone
+    target_cond = base_cond.clone
 
     if current_user.class==Webmaster
-      cond[:webmaster_id] = current_user.id
-      #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :webmaster_id => current_user.id}
+      click_cond[:webmaster_id] = current_user.id
     else
-      cond[:advertiser_id] = current_user.id
-      #cond = {:date => {'$gte' => t_start, '$lte' => t_stop}, :advertiser_id => current_user.id}
+      click_cond[:advertiser_id] = current_user.id
     end
+   target_cond[:advertiser_id] = current_user.id
 
-    func = "function(obj,prev) { prev.click_count += obj.clicks; prev.target_count += obj.targets; prev.income_count += obj.income}"
-    h = {key: :date, cond: cond, initial: {click_count: 0, target_count: 0, income_count: 0}, reduce: func}
-    @stats = StatCounter.collection.group(h)
+    click_func = "function(obj,prev) { prev.click_count += obj.clicks}"
+    click_h = {key: :date, cond: click_cond, initial: {click_count: 0}, reduce: click_func}
+    @click_stats = StatClickCounter.collection.group(click_h)
+    target_func = "function(obj,prev) { prev.target_count += obj.targets; prev.income_count += obj.income}"
+    target_h = {key: :date, cond: target_cond, initial: {target_count: 0, income_count: 0}, reduce: target_func}
+    @target_stats = StatTargetCounter.collection.group(target_h)
 	end
 	
 end

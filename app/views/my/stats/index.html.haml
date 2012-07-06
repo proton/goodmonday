@@ -10,14 +10,16 @@
 					%th PPC
 					%th CPC
 			%tbody
-				- @stats.each do |stat|
+				- @click_stats.each_key do |key|
+				- click_stat = @click_stats[key]
+				- target_stat = @target_stats[key]
 					%tr
 						%td= stat['date'].strftime('%d/%m/%Y')
-						%td= stat['click_count'].to_i
-						%td= stat['target_count'].to_i
-						%td= number_to_rubles stat['income_count']
-						%td= stat['target_count']/stat['click_count']
-						%td= number_to_rubles (stat['income_count']/stat['click_count'])
+						%td= click_stat['click_count'].to_i
+						%td= target_stat['target_count'].to_i
+						%td= number_to_rubles target_stat['income_count']
+						%td= target_stat['target_count']/click_stat['click_count']
+						%td= number_to_rubles (target_stat['income_count']/click_stat['click_count'])
 	.span3
 		.well
 			%b Фильтрация

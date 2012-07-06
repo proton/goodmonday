@@ -78,12 +78,17 @@ class Achievement
     self.prepay
 
     #collecting statistic:
-    #TODO: говно!!! у рекламодателя и вебмастера разные доходы и статистика должна быть разная
-    today_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
-    total_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
-    today_stat.inc(:targets, 1)
-    total_stat.inc(:targets, 1)
-    today_stat.inc(:income, self.price)
-    total_stat.inc(:income, self.price)
+    webmaster_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
+    advertiser_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: advertiser_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
+    webmaster_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
+    advertiser_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: advertiser_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
+    webmaster_today_stat.inc(:targets, 1)
+    advertiser_today_stat.inc(:targets, 1)
+    webmaster_total_stat.inc(:targets, 1)
+    advertiser_total_stat.inc(:targets, 1)
+    webmaster_today_stat.inc(:income, self.webmaster_amount)
+    advertiser_today_stat.inc(:income, self.advertiser_amount)
+    webmaster_total_stat.inc(:income, self.webmaster_amount)
+    advertiser_total_stat.inc(:income, self.advertiser_amount)
   end
 end

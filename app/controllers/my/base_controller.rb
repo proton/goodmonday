@@ -11,7 +11,7 @@ class My::BaseController < ApplicationController
 	def index
     case current_user.class
       when Advertiser, Webmaster
-        @common_stat = StatCounter.common_stat_for current_user
+        @common_stat = current_user.common_stats
       when Operator
         redirect_to moderations_url(:subdomain => :admin)
     end
