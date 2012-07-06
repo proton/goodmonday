@@ -109,7 +109,7 @@ class RobotController < ApplicationController
  				end
 
  				if visitor.save
- 					cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => 1.month.from_now }
+ 					cookies[offer.id.to_s] = { :value => visitor.id.to_s, :expires => offer.cookie_time.days.from_now }
  					#:path - The path for which this cookie applies. Defaults to the root of the application.
  					#:domain - The domain for which this cookie applies.
         end

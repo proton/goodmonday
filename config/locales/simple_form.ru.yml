@@ -71,6 +71,7 @@ ru:
         title: 'Название'
         logo: 'Логотип'
         url: 'Ссылка'
+        cookie_time: 'Период учёта'
         category: 'Категория'
         auto_accept_grounds: 'Автоматически принимать площадки'
         excepted_categories: 'Отклонять площадки следующих категорий'
