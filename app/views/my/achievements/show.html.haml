@@ -3,6 +3,11 @@
 - ground =  @achievement.ground
 - visitor =  @achievement.visitor
 - user_agent = AgentOrange::UserAgent.new(visitor.user_agent).device
+- price = case current_user.class
+- when 'Webmaster'
+	- achievement.webmaster_amount
+- when 'Advertiser'
+	- achievement.advertiser_amount
 
 %h3= 'Основная информация'
 %b= 'Оффер:'
@@ -18,8 +23,8 @@
 = @achievement.created_at
 %br
 %b= 'Стоимость:'
-- if @achievement.price
-	= number_to_currency @achievement.price
+- if price
+	= number_to_currency price
 - else
 	= 'нет данных'
 %br

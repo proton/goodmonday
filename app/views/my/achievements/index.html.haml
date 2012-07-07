@@ -23,13 +23,18 @@
 						- offer = achievement.offer
 						- target = offer.targets.find(achievement.target_id)
 						- ground = achievement.ground
+						- price = case current_user.class
+						- when 'Webmaster'
+							- achievement.webmaster_amount
+						- when 'Advertiser'
+							- achievement.advertiser_amount
 						%tr{:class => achievement.is_accepted? ? '' : 'muted'}
 							%td= offer.title
 							%td= target.title
 							%td= "#{ground.title} (#{ground.url})"
 							%td
-								- if achievement.price
-									= number_to_currency achievement.price
+								- if price
+									= number_to_currency(price)
 								- else
 									= 'н/д'
 							%td= state_label achievement.state
