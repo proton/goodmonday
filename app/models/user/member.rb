@@ -18,9 +18,9 @@ class Member < User
   end
 
   def common_stats
-    if user.class==Webmaster
+    if self.is_a? Webmaster
       user_click_counters = StatClickCounter.where(:webmaster_id => self.id)
-    else
+    elsif self.is_a? Advertiser
       user_click_counters = StatClickCounter.where(:advertiser_id => self.id)
     end
     user_target_counters = StatTargetCounter.where(:user_id => self.id)
