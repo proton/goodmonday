@@ -31,10 +31,19 @@ class My::StatsController < My::BaseController
 
     click_func = "function(obj,prev) { prev.click_count += obj.clicks}"
     click_h = {key: :date, cond: click_cond, initial: {click_count: 0}, reduce: click_func}
-    @click_stats = StatClickCounter.collection.group(click_h)
+    click_stats = StatClickCounter.collection.group(click_h)
     target_func = "function(obj,prev) { prev.target_count += obj.targets; prev.income_count += obj.income}"
     target_h = {key: :date, cond: target_cond, initial: {target_count: 0, income_count: 0}, reduce: target_func}
-    @target_stats = StatTargetCounter.collection.group(target_h)
+    target_stats = StatTargetCounter.collection.group(target_h)
+
+    @click_stat_hash = {}
+    click_stats.each do |stat|
+      @click_stat_hash[stat['date']] = stat
+    end
+    target_stat_hash = {}
+    target_stats.each do |stat|
+      @target_stat_hash[stat['date']] = stat
+    end
 	end
 	
 end
