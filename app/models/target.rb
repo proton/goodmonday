@@ -3,6 +3,8 @@ class Target
 	include Mongoid::Symbolize
 	embedded_in :offer
 
+  before_validation :nullify_nil_prices
+
 	has_many :achievements
 
 	field :title, type: String
@@ -37,6 +39,17 @@ class Target
   field :hold, type: Integer, default: 20
 
   validates :hold, presence: true
+
+  def nullify_nil_prices
+    self.fixed_price = 0 unless self.fixed_price
+    self.fixed_prices_bronze = 0 unless self.fixed_prices_bronze
+    self.fixed_prices_silver = 0 unless self.fixed_prices_silver
+    self.fixed_prices_gold = 0 unless self.fixed_prices_gold
+    self.prc_price = 0 unless self.prc_price
+    self.prc_prices_bronze = 0 unless self.prc_prices_bronze
+    self.prc_prices_silver = 0 unless self.prc_prices_silver
+    self.prc_prices_gold = 0 unless self.prc_prices_gold
+  end
 
 	MODERATED_ATTRS = %w[title fixed_price prc_price hold]
   MODERATED_ATTRS_INFO = {'fixed_price' => {:type => :currency} }
