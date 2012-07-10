@@ -18,17 +18,17 @@ class Target
 
   def webmaster_price(price = nil)
     if price && self.confirm_mode==:manual
-      target.fixed_prices_bronze + target.prc_prices_bronze*price/100
+      self.fixed_prices_bronze + self.prc_prices_bronze*price/100
     else
-      target.fixed_prices_bronze
+      self.fixed_prices_bronze
     end
   end
 
   def advertiser_price(price = nil)
     if price && self.confirm_mode==:manual
-      target.fixed_price + target.prc_price*price/100
+      self.fixed_price + self.prc_price*price/100
     else
-      target.fixed_price
+      self.fixed_price
     end
   end
 
