@@ -15,8 +15,16 @@
 				- target_stat = @target_stat_hash[date]
 					%tr
 						%td= date.strftime('%d/%m/%Y')
-						%td= click_stat['click_count'].to_i if click_stat
-						%td= target_stat['target_count'].to_i if target_stat
+						%td
+							- if click_stat
+								= click_stat['click_count'].to_i
+							- else
+								= '0'
+						%td
+							- if target_stat
+								= target_stat['target_count'].to_i
+							- else
+								= '0'
 						%td= number_to_rubles target_stat['income_count'] if target_stat
 						%td= target_stat['target_count']/click_stat['click_count'] if click_stat && target_stat
 						%td= number_to_rubles (target_stat['income_count']/click_stat['click_count']) if click_stat && target_stat
