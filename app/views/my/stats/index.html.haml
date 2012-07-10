@@ -10,7 +10,7 @@
 					%th PPC
 					%th CPC
 			%tbody
-				- @click_stat_hash.each_key do |date|
+				- @dates.each do |date|
 				- click_stat = @click_stat_hash[date]
 				- target_stat = @target_stat_hash[date]
 					%tr

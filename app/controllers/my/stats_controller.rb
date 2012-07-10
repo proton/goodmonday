@@ -27,7 +27,7 @@ class My::StatsController < My::BaseController
     else
       click_cond[:advertiser_id] = current_user.id
     end
-   target_cond[:advertiser_id] = current_user.id
+   target_cond[:user_id] = current_user.id
 
     click_func = "function(obj,prev) { prev.click_count += obj.clicks}"
     click_h = {key: :date, cond: click_cond, initial: {click_count: 0}, reduce: click_func}
@@ -40,10 +40,12 @@ class My::StatsController < My::BaseController
     click_stats.each do |stat|
       @click_stat_hash[stat['date']] = stat
     end
-    target_stat_hash = {}
+    @target_stat_hash = {}
     target_stats.each do |stat|
       @target_stat_hash[stat['date']] = stat
     end
+
+    @dates = @click_stat_hash.keys | @target_stat_hash.keys
 	end
 	
 end
