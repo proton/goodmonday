@@ -3,6 +3,7 @@
 		%p
 			%b= 'URL: '
 			= @advert.url
+			= link_to '(редактировать)', edit_user_offer_advert_path(@user, @offer, @advert)
 %hr
 - case @advert.class
 	- when Banner

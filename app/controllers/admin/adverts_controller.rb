@@ -18,7 +18,7 @@ class Admin::AdvertsController < Admin::BaseController
 	end
 
 	def update
-		flash[:notice] = 'Объявление обновлено.' if @advert.update_attributes(params[:advert])
+    flash[:notice] = 'Объявление обновлено.' if @advert.update_attributes(params[@advert.class.to_s.underscore])
 		respond_with(@advert, :location => user_offer_adverts_path(@user, @offer))
 	end
 
@@ -26,6 +26,10 @@ class Admin::AdvertsController < Admin::BaseController
 		flash[:notice] = 'Объявление удалено.' if @advert.destroy
 		respond_with(@advert, :location => user_offer_adverts_path(@user, @offer))
 	end
+
+  def edit
+    @type = @advert.class
+  end
 
 	def new
 		@type = params[:type].constantize if params[:type]

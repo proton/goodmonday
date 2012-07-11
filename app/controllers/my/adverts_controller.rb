@@ -18,7 +18,7 @@ class My::AdvertsController < My::BaseController
 	end
 
 	def update
-		flash[:notice] = 'Объявление обновлено.' if @advert.update_attributes(params[:advert])
+		flash[:notice] = 'Объявление обновлено.' if @advert.update_attributes(params[@advert.class.to_s.underscore])
 		respond_with(@advert, :location => offer_adverts_path(@offer))
 	end
 
@@ -27,12 +27,16 @@ class My::AdvertsController < My::BaseController
 		respond_with(@advert, :location => offer_adverts_path(@offer))
 	end
 
-	def new
-    #@type = params[:type].constantize if params[:type]
-    @type = Banner #Temporary hack
-		@advert = @offer.adverts.build({}, @type)
-		add_crumb "Новое объявление"
-	end
+  def edit
+    @type = @advert.class
+  end
+
+  def new
+     #@type = params[:type].constantize if params[:type]
+     @type = Banner #Temporary hack
+ 		@advert = @offer.adverts.build({}, @type)
+ 		add_crumb "Новое объявление"
+ 	end
 
 	protected
 
