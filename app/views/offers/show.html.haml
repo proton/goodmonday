@@ -5,6 +5,39 @@
 		%h2= @offer.title
 		= link_to @offer.url, @offer.url
 %br
+%b Категория:
+= @offer.category.title
+%br
+%b Выплачено:
+= number_to_rubles @offer.payments
+%br
+%b EPC:
+= number_to_rubles @offer.epc
+%br
+%b eEPC:
+= number_to_rubles (@offer.epc*1000)
+%br
+%b Категория:
+= "#{@offer.cookie_time} дней"
+%br
+%hr
+- if @offer.auto_accept_grounds
+	Отбирает площадки автоматически
+	- unless @offer.excepted_categories_ids.empty?
+		%br
+		Не принимает площадки	следующих категорий:
+		- categories = Category.find(@offer.excepted_categories_ids)
+		= categories.collect{|c| c.title}.to_sentence
+	- unless @offer.excepted_ground_types.empty?
+		%br
+		Не принимает площадки	следующих типов:
+		= @offer.excepted_ground_types.reject! {|t| t.empty?}.collect{|t| t("mongoid.symbolizes.ground.type.#{t.to_str}")}.to_sentence
+- else
+	Отбирает площадки вручную.
+%br
+%hr
+%h5 Цели:
+%br
 %table.table.table-bordered.table-striped
 	%thead
 		%tr
