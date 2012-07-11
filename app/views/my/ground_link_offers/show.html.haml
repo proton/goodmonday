@@ -78,7 +78,7 @@
 			- advert.sizes.each do |size|
 				- banner_image = advert.banner_images.where(:size => size.to_sym).first
 				- if banner_image
-					- img = advert.banner_images.where(:size => size.to_sym).first.image.to_s
+					- img = banner_image.image.to_s
 					%tr
 						%td
 							%ul.thumbnails
