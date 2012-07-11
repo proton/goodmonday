@@ -6,17 +6,17 @@ class My::GroundAdvertOffersController < My::BaseController
 
 	def index
 		@state = (params[:state]) ? params[:state].to_sym : :accepted
-		case @state
-			when :accepted
-				@offers = Offer.find(@ground.accepted_rotator_offers_ids)
-				add_crumb 'Одобренные офферы'
-			when :denied
-				@offers = Offer.find(@ground.denied_rotator_offers_ids)
-				add_crumb 'Отвергнутые офферы'
-			when :pending
-				@offers = Offer.find(@ground.pending_rotator_offers_ids)
-				add_crumb 'Ожидающие одобрения офферы'
-		end
+    case @state
+      when :accepted
+        @offers = Offer.any_in(_id: @ground.accepted_rotator_offers_ids).accepted
+        add_crumb 'Одобренные офферы'
+      when :denied
+        @offers = Offer.any_in(_id: @ground.denied_rotator_offers_ids).accepted
+        add_crumb 'Отвергнутые офферы'
+      when :pending
+        @offers = Offer.any_in(_id: @ground.pending_rotator_offers_ids).accepted
+        add_crumb 'Ожидающие одобрения офферы'
+    end
 	end
 
 	def new

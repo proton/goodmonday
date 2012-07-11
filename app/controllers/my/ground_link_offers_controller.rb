@@ -12,13 +12,13 @@ class My::GroundLinkOffersController < My::BaseController
 		@state = (params[:state]) ? params[:state].to_sym : :accepted
 		case @state
 			when :accepted
-				@offers = Offer.find(@ground.accepted_link_offers_ids)
+				@offers = Offer.any_in(_id: @ground.accepted_link_offers_ids).accepted
 				add_crumb 'Одобренные офферы'
 			when :denied
-				@offers = Offer.find(@ground.denied_link_offers_ids)
+				@offers = Offer.any_in(_id: @ground.denied_link_offers_ids).accepted
 				add_crumb 'Отвергнутые офферы'
 			when :pending
-				@offers = Offer.find(@ground.pending_link_offers_ids)
+				@offers = Offer.any_in(_id: @ground.pending_link_offers_ids).accepted
 				add_crumb 'Ожидающие одобрения офферы'
 		end
 	end
