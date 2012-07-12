@@ -1,6 +1,11 @@
+= content_for :head_etc do
+	= include_imperavi_stylesheet
+	= include_imperavi_javascript
+
 - auto_mode = @offer.auto_accept_grounds
 = simple_form_for([@user.becomes(User), @offer], :html => {:class => 'form-horizontal' }) do |f|
 	= f.input :title
+	=	f.input :description, :as => :text, :input_html => { :class => 'span7' }
 	= f.input :cookie_time, :as => :integer
 	= f.input :logo, :as => :file
 	= f.input :url, :placeholder => 'http://'
@@ -22,3 +27,7 @@
 			auto_mode_fields.find('select').prop('disabled', !auto_mode);
 		});
 	});
+
+= include_imperavi_stylesheet
+= include_imperavi_javascript
+= imperavi :offer_description

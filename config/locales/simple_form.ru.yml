@@ -69,9 +69,10 @@ ru:
       offer:
         category_id: 'Категория'
         title: 'Название'
+        description: 'Описание'
         logo: 'Логотип'
         url: 'Ссылка'
-        cookie_time: 'Период учёта'
+        cookie_time: 'Период учёта действий (дней)'
         category: 'Категория'
         auto_accept_grounds: 'Автоматически принимать площадки'
         excepted_categories: 'Отклонять площадки следующих категорий'

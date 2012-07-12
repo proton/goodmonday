@@ -13,6 +13,7 @@ class Offer
 
 	field :title, type: String
 	field :url, type: String, default: ''
+	field :description, type: String, default: ''
 
 	field :cookie_time, type: Integer, default: 90
 

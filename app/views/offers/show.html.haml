@@ -4,7 +4,10 @@
 	.span9
 		%h2= @offer.title
 		= link_to @offer.url, @offer.url
+- unless @offer.description.empty?
+	%p= @offer.description.html_safe
 %br
+%hr
 %b Категория:
 = @offer.category.title
 %br
