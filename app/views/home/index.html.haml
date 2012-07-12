@@ -82,7 +82,8 @@
 		.inner
 			- @offers.each do |offer|
 				.elem
-					= image_tag offer.logo if offer.logo.present? 
+					- if offer.logo.present? 
+						= link_to image_tag(offer.logo), offer_path(offer)
 					%p
 						%h6= link_to offer.title, offers_path(offer)
 						= offer.category.title
