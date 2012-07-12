@@ -17,7 +17,7 @@
 					- if offer.logo.present?
 						%ul.thumbnails
 							%li
-								.thumbnail= link_to offer_path(offer), image_tag(offer.logo)
+								.thumbnail= image_tag(offer.logo), link_to offer_path(offer) 
 				%td
 					= offer.title
 					- if !offer.url.empty? && offer.url.start_with?('http')
