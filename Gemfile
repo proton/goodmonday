@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
 
-gem 'thin'
-gem 'unicorn'
-
 gem 'mongoid'
 gem 'bson_ext'
 
@@ -55,9 +52,14 @@ gem 'agent_orange'
 gem 'rb-inotify' #for sass
 
 group :development, :test do
-   gem 'rnotify'
-	 gem 'ruby_parser'
-   gem 'capistrano'
+	gem 'rnotify'
+	gem 'ruby_parser'
+	gem 'capistrano'
+	gem 'thin'
+end
+
+group :production do
+	gem 'unicorn'
 end
 
 gem 'hpricot' #for task achievements:confirm

@@ -44,12 +44,12 @@ role :db,  domain, :primary => true
 
 namespace :deploy do
   task :start do
-    sudo "/etc/init.d/thin.#{application} start"
+    sudo "/etc/init.d/unicorn.#{application} start"
   end
   task :stop do
-    sudo "/etc/init.d/thin.#{application} stop"
+    sudo "/etc/init.d/unicorn.#{application} stop"
   end
   task :restart do
-    sudo "/etc/init.d/thin.#{application} reload"
+    sudo "/etc/init.d/unicorn.#{application} reload"
   end
 end
