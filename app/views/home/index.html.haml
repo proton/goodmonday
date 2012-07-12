@@ -77,19 +77,21 @@
 	-#			%p
 	-#				%h6= link_to 'Компания ArtGold', '#'
 	-#				Системы управления контентом
-	-#.top_block
-	-#	%h4 Топ компаний
-	-#	.inner
-	-#		.elem
-	-#			= image_tag 'tmp/top3.png'
-	-#			%p
-	-#				%h6= link_to 'Компания ArtGold', '#'
-	-#				Системы управления контентом
-	-#		.elem
-	-#			= image_tag 'tmp/top4.jpg'
-	-#			%p
-	-#				%h6= link_to 'Компания ArtGold', '#'
-	-#				Системы управления контентом
+	.top_block
+		%h4 Топ офферов
+		.inner
+			- @offers.each do |offer|
+				.elem
+					= image_tag offer.logo if offer.logo.present? 
+					%p
+						%h6= link_to offer.title, offers_path(offer)
+						= offer.category.title
+						%br
+						EPC:
+						= number_to_rubles offer.epc
+						%br
+						Выплаты:
+						= number_to_rubles offer.payments
 #partners_block
 	-#%h5 Наши партнеры
 	-#%hr
