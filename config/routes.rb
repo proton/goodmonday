@@ -84,6 +84,7 @@ Cpa::Application.routes.draw do
           #
         end
         resource :profile
+				resources :achievements
 			end
       resources :articles
       resources :news

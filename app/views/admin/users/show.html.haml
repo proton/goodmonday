@@ -16,6 +16,9 @@
 		= link_to user_offers_path(@user), :class => 'btn btn-small' do
 			%i.icon-inbox
 			= 'Офферы'
+		= link_to user_achievements_path(@user), :class => 'btn btn-small' do
+			%i.icon-gift
+			= 'Достижения целей'
 	- when Webmaster
 		= link_to user_profile_path(@user), :class => 'btn btn-small' do
 			%i.icon-user
@@ -26,6 +29,9 @@
 		= link_to user_grounds_path(@user), :class => 'btn btn-small' do
 			%i.icon-road
 			= 'Площадки'
+		= link_to user_achievements_path(@user), :class => 'btn btn-small' do
+			%i.icon-gift
+			= 'Достижения целей'
 %hr
 %b Действия:
 = link_to edit_user_path(@user), :class => 'btn btn-small' do
