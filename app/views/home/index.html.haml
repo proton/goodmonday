@@ -85,7 +85,7 @@
 					- if offer.logo.present? 
 						= link_to image_tag(offer.logo), offer_path(offer)
 					%p
-						%h6= link_to offer.title, offers_path(offer)
+						.title= link_to offer.title, offers_path(offer)
 						= offer.category.title
 						%br
 						EPC:
