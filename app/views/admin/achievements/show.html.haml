@@ -1,0 +1,74 @@
+- offer = @achievement.offer
+- target = offer.targets.find(@achievement.target_id)
+- ground =  @achievement.ground
+- visitor =  @achievement.visitor
+- user_agent = AgentOrange::UserAgent.new(visitor.user_agent).device
+- price = case current_user.class
+- when 'Webmaster'
+	- achievement.webmaster_amount
+- when 'Advertiser'
+	- achievement.advertiser_amount
+
+%h3= 'Основная информация'
+%b= 'Оффер:'
+= offer.title
+%br
+%b= 'Цель:'
+= target.title
+%br
+%b= 'Площадка:'
+= "#{ground.title} (#{ground.url})"
+%br
+%b= 'Дата взятия:'
+= @achievement.created_at
+%br
+%b= 'Стоимость:'
+- if price
+	= number_to_currency price
+- else
+	= 'нет данных'
+%br
+%b= 'Статус:'
+= t(@achievement.state)
+%br
+%br
+
+%h3= 'Информация о посетителе'
+%b= 'Браузер:'
+- case user_agent.engine.browser.name
+	- when 'Internet Explorer'
+		= image_tag 'browsers/ie.png'
+	- when 'Firefox'
+		= image_tag 'browsers/firefox.png'
+	- when 'Chrome'
+		= image_tag 'browsers/chrome.png'
+	- when 'Opera'
+		= image_tag 'browsers/opera.png'
+	- when 'Safari'
+		= image_tag 'browsers/safari.png'
+= user_agent.engine.browser
+%br
+%b= 'Операционная система:'
+= user_agent.operating_system
+%br
+%b= 'Страница взятия цели:'
+= @achievement.page
+%br
+%b= 'IP-Адрес:'
+= @achievement.ip
+%br
+%br
+
+%h3= 'Статистика'
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Страница'
+			%th= 'IP-Адрес'
+			%th= 'Дата и время'
+	%tbody
+		- visitor.page_visits.each do |visit|
+			%tr
+				%td= visit.page
+				%td= visit.ip
+				%td= visit.created_at
