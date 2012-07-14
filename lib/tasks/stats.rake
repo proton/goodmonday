@@ -7,10 +7,10 @@ namespace :stats do
 				total_time =  Time.utc(0)
 				cond = {:date => total_time, :offer_id => offer.id, :ground_id => ground_offer.ground_id}
 				click_func = "function(obj,prev) { prev.click_count += obj.clicks}"
-				click_h = {key: :date, cond: click_cond, initial: {click_count: 0}, reduce: click_func}
+				click_h = {key: :date, cond: cond, initial: {click_count: 0}, reduce: click_func}
 				click_stats = StatClickCounter.collection.group(click_h)
 				target_func = "function(obj,prev) { prev.income_count += obj.income}"
-				target_h = {key: :date, cond: target_cond, initial: {income_count: 0}, reduce: target_func}
+				target_h = {key: :date, cond: cond, initial: {income_count: 0}, reduce: target_func}
 				target_stats = StatTargetCounter.collection.group(target_h)
 
 				unless click_stats.empty?
@@ -27,7 +27,7 @@ namespace :stats do
 					ground_offer.payments = income
 				end
 
-				unless click_stats.empty? || unless target_stats.empty?
+				unless click_stats.empty? || target_stats.empty?
 					epc = income.to_f / clicks
 					ground_offer.epc = epc
 				end
