@@ -8,6 +8,8 @@ class Target
 	has_many :achievements
 
 	field :title, type: String
+  field :repeatable, type: Boolean, default: false
+  
   field :fixed_price, type: Integer, default: 0
   field :fixed_prices_bronze, type: Integer, default: 0
   field :fixed_prices_silver, type: Integer, default: 0
@@ -17,6 +19,12 @@ class Target
   field :prc_prices_bronze, type: Integer, default: 0
   field :prc_prices_silver, type: Integer, default: 0
   field :prc_prices_gold, type: Integer, default: 0
+
+	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
+	field :confirm_url, type: String
+  field :hold, type: Integer, default: 20
+
+  validates :hold, presence: true
 
   def webmaster_price(price = nil)
     if price && self.confirm_mode==:manual
@@ -33,12 +41,6 @@ class Target
       self.fixed_price
     end
   end
-
-	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
-	field :confirm_url, type: String
-  field :hold, type: Integer, default: 20
-
-  validates :hold, presence: true
 
   def nullify_nil_prices
     self.fixed_price = 0 unless self.fixed_price

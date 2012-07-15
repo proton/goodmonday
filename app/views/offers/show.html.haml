@@ -46,10 +46,12 @@
 		%tr
 			%th= 'Цель'
 			%th= 'Стоимость'
+			%th= 'Повторяемая'
 			%th= 'Холд'
 	%tbody
 		- @offer.targets.each do |target|
 			%tr
 				%td= target.title
 				%td= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
+				%td= target.repeatable ? 'Да' : 'Нет'
 				%td= "#{target.hold} дней"

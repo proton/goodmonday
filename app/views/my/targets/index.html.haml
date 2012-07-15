@@ -5,14 +5,16 @@
 			%th= 'Статус'
 			%th= 'Способ подтверждения'
 			%th= 'Стоимость'
+			%th= 'Повторяемая'
 			%th= 'Действия'
 	%tbody
 		- @targets.each do |target|
 			%tr{:class => target.is_accepted? ? '' : 'muted'}
 				%td= target.title
 				%td= state_label(target.moderated_state)
-				%td= t(target.confirm_mode)
+				%td=t "common.mode.#{target.confirm_mode}"
 				%td= show_target_price(target.prc_price, target.fixed_price)
+				%td=t target.repeatable.to_s
 				%td
 					= link_to offer_target_path(@offer, target), :class => 'btn btn-small' do
 						%i.icon-edit

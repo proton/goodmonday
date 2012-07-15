@@ -81,6 +81,7 @@ ru:
         is_doubtful: 'Сомнительная'
       target:
         title: 'Название'
+        repeatable: 'Повторяемая'
         confirm_mode: 'Режим подтверждения'
         confirm_url: 'Url для подтверждения'
         fixed_price: 'Стоимость (руб.)'

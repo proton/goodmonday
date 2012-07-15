@@ -151,7 +151,7 @@ class RobotController < ApplicationController
 						target_id = params[:target_id]
 						target = offer.targets.find(target_id)
 						if target
-							if Achievement.where(:visitor_id => visitor_id, :target_id => target_id).size==0 #запрещаем двойное взятие цели
+							if target.repeatable || Achievement.where(:visitor_id => visitor_id, :target_id => target_id).size==0 #запрещаем двойное взятие цели
 								achievement = Achievement.new
 								achievement.webmaster = visitor.ground.webmaster
 								achievement.advertiser = offer.advertiser
