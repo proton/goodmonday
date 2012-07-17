@@ -16,7 +16,7 @@ gem 'mongoid_denormalize'
 gem 'mongoid_slug'
 gem 'mongoid-eager-loading'
 
-gem 'money-rails'
+gem 'mongoid_money_field'
 
 gem 'simple_form'
 gem 'bootstrap-sass'

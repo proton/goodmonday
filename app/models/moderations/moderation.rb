@@ -26,7 +26,7 @@ class Moderation
 		m_obj = moderated_object
 		if edit_fields && !edit_fields.empty?
 			edit_fields.each do |key, value|
-				m_obj.write_attribute(key, value)
+				m_obj.send("#{key}=", value)
 			end
 		end
 		m_obj.write_attribute(:moderated_state, state)

@@ -12,21 +12,13 @@ class Admin::TargetsController < Admin::BaseController
 	end
 
 	def create
-    attrs = params[:target]
-    [:fixed_price, :fixed_prices_bronze, :fixed_prices_silver, :fixed_prices_gold].each do |price|
-      attrs[price]=attrs[price].to_i*100 if attrs[price]
-    end
-		@target = @offer.targets.new(attrs)
+		@target = @offer.targets.new(params[:target])
 		flash[:notice] = 'Цель добавлена.' if @target.save
 		respond_with(@target, :location => user_offer_targets_path(@user, @offer))
 	end
 
 	def update
-    attrs = params[:target]
-    [:fixed_price, :fixed_prices_bronze, :fixed_prices_silver, :fixed_prices_gold].each do |price|
-      attrs[price]=attrs[price].to_i*100
-    end
-		flash[:notice] = 'Цель обновлена.' if @target.update_attributes(attrs)
+		flash[:notice] = 'Цель обновлена.' if @target.update_attributes(params[:target])
 		respond_with(@target, :location => user_offer_targets_path(@user, @offer))
 	end
 

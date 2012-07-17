@@ -1,17 +1,18 @@
 class Member < User
+  include Mongoid::MoneyField
+
 	has_many :offers
 	has_many :achievements
 
-  field :balance, type: Integer, default: 0
-  field :hold_balance, type: Integer, default: 0
-  field :overdraft, type: Integer, default: 0
-  field :total_payments, type: Integer, default: 0
+  money_field :balance
+  money_field :hold_balance
+  money_field :overdraft
+  money_field :total_payments
   embeds_many :payments #, cascade_callbacks: true
 
   #referal system
   field :referal_count, type: Integer, default: 0
-  field :referal_hold_balance, type: Integer, default: 0
-  field :referal_total_payments, type: Integer, default: 0
+  money_field :referal_total_payments
 
   def can_pay? sum
     (self.balance+self.overdraft) > sum

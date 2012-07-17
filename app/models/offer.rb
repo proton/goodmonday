@@ -1,5 +1,6 @@
 class Offer
 	include Mongoid::Document
+  include Mongoid::MoneyField
 
 	belongs_to :advertiser
 	#field :advertiser_id, type: Fields::Serializable::ForeignKeys::Object, default: lambda{current_user.id}
@@ -18,8 +19,8 @@ class Offer
 	field :cookie_time, type: Integer, default: 90
 
 	field :clicks, type: Integer, default: 0
-	field :payments, type: Integer, default: 0
-	field :epc, type: Float, default: 0.0
+  money_field :payments
+	money_field :epc
 
 	field :is_adult, type: Boolean, default: false
 	field :is_doubtful, type: Boolean, default: false

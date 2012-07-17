@@ -16,12 +16,6 @@ module ApplicationHelper
 		"<li#{active ? " class='active'": ''}><a href='#{url}'>#{icon_raw}#{text}</a></li>".html_safe
   end
 
-  def number_to_rubles(x)
-    sum = x/100.0
-    sum = 0 if sum.nan?
-    number_to_currency(sum)
-  end
-
   def safe_image_tag(source, options = {})
     source ||= "rails.png"
     image_tag(source, options)

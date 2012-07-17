@@ -13,9 +13,7 @@ class Admin::PaymentsController < Admin::BaseController
   end
 
   def create
-    attrs = params[:payment]
-    attrs[:amount]=attrs[:amount].to_i*100
-    @payment = @user.payments.new(attrs)
+    @payment = @user.payments.new(params[:payment])
  		flash[:notice] = 'Платёж добавлен.' if @payment.save
  		respond_with(@payment, :location => user_payments_path(@user))
   end

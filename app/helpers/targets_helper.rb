@@ -5,7 +5,7 @@ module TargetsHelper
     s = ''
     s+="#{prc_price} %" if prc_price_exists
     s+=" + " if prc_price_exists && fixed_price_exists
-    s+=number_to_rubles(fixed_price) if fixed_price_exists
+    s+=number_to_currency(fixed_price) if fixed_price_exists
     s
   end
 end

@@ -36,9 +36,9 @@
 								%td= target.title
 								%td= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
 								%td= "#{target.hold} дней"
-				%td= number_to_rubles offer.payments
-				%td= number_to_rubles offer.epc
-				%td= number_to_rubles (offer.epc*1000)
+				%td= number_to_currency offer.payments
+				%td= number_to_currency offer.epc
+				%td= number_to_currency (offer.epc*1000)
 				%td= "#{offer.cookie_time} дней"
 				%td
 					= link_to offer_path(offer), :class => 'btn btn-small' do

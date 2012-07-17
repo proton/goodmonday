@@ -1,10 +1,10 @@
 .row
 	.span9{:style => 'text-align:right'}
 		%b Текущий баланс:
-		= number_to_rubles @user.balance
+		= number_to_currency @user.balance
 		%br
 		%b Ожидаемый баланс:
-		= number_to_rubles @user.hold_balance
+		= number_to_currency @user.hold_balance
 %br
 %table.table.table-bordered.table-striped
 	%thead
@@ -24,7 +24,7 @@
 					- else
 						%i.icon-minus-sign
 						= 'Списание'
-				%td= number_to_rubles payment.amount
+				%td= number_to_currency payment.amount
 				%td= payment.description
 %br
 %h5 Пополнение счёта

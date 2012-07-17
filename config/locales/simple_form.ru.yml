@@ -85,6 +85,7 @@ ru:
         confirm_mode: 'Режим подтверждения'
         confirm_url: 'Url для подтверждения'
         fixed_price: 'Стоимость (руб.)'
+        fixed_price_cents: 'Стоимость (руб.)'
         fixed_prices_bronze: 'Стоимость фиксированная (Бронза)'
         fixed_prices_silver: 'Стоимость фиксированная (Серебро)'
         fixed_prices_gold: 'Стоимость фиксированная (Золото)'

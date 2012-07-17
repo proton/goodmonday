@@ -31,11 +31,11 @@
 				%tr
 					- subject = :income
 					%th Доход
-					%td= number_to_rubles @common_stat[subject][:today]
-					%td= number_to_rubles @common_stat[subject][:yesterday]
-					%td= number_to_rubles @common_stat[subject][:week]
-					%td= number_to_rubles @common_stat[subject][:month]
-					%td= number_to_rubles @common_stat[subject][:total]
+					%td= number_to_currency(@common_stat[subject][:today]*100)
+					%td= number_to_currency(@common_stat[subject][:yesterday]*100)
+					%td= number_to_currency(@common_stat[subject][:week]*100)
+					%td= number_to_currency(@common_stat[subject][:month]*100)
+					%td= number_to_currency(@common_stat[subject][:total]*100)
 
 		- if @current_user.is_a? Webmaster
 			%h5 Ваша реферальная ссылка
@@ -54,24 +54,24 @@
 			%h6 Баланс
 			%br
 			%b Доступно:
-			= number_to_rubles @current_user.balance
+			= number_to_currency @current_user.balance
 			%br
 			%b Ожидается:
-			= number_to_rubles @current_user.hold_balance
+			= number_to_currency @current_user.hold_balance
 			%br
 			- if @current_user.class==Advertiser && @current_user.overdraft>0
 				%b Допустимый кредит:
-				= number_to_rubles @current_user.overdraft
+				= number_to_currency @current_user.overdraft
 				%br
 			%b Всего выплат:
-			= number_to_rubles @current_user.total_payments
+			= number_to_currency @current_user.total_payments
 			%br
 			- if @current_user.is_a? Webmaster
 				%hr
 				%h6 Статистика рефералов
 				%br
 				%b Начислено:
-				= number_to_rubles @current_user.referal_total_payments
+				= number_to_currency @current_user.referal_total_payments
 				%br
 				%b Количество рефералов:
 				= @current_user.referal_count

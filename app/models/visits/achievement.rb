@@ -4,6 +4,7 @@ class Achievement
 	include Mongoid::Document
 	include Mongoid::Timestamps
 	include Mongoid::Symbolize
+  include Mongoid::MoneyField
 
   symbolize :state, :in => [:pending, :accepted, :denied], :default => :pending, :scopes => true
   symbolize :payment_state, :in => [:unpaid, :paid], :default => :unpaid, :scopes => true
@@ -21,8 +22,8 @@ class Achievement
 
   field :sub_id, type: String
 
-  field :webmaster_amount, type: Integer
-  field :advertiser_amount, type: Integer
+  money_field :webmaster_amount
+  money_field :advertiser_amount
 
 	field :order_id, type: String #optional for manual confirmation
 
@@ -56,7 +57,13 @@ class Achievement
       advertiser.save!
       #
       affiliator = webmaster.affiliator
-      affiliator.inc(:referal_total_payments, webmaster_amount*0.05) if affiliator
+      if affiliator
+        affiliator_amount = webmaster_amount*0.05
+        affiliator.payments.new(amout: affiliator_amount, description: 'Перечисление средств по реферальной программе')
+        advertiser.balance += affiliator_amount
+        affiliator.referal_total_payments += affiliator_amount
+        affiliator.save!
+      end
       #
       self.payment_state = :paid
       self.save!
@@ -77,6 +84,9 @@ class Achievement
     self.hold_date = Date.today + target.hold.days
     self.prepay
 
+    offer.payments += webmaster_amount
+    offer.save
+
     #collecting statistic:
     webmaster_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
     advertiser_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: advertiser_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
@@ -86,9 +96,9 @@ class Achievement
     advertiser_today_stat.inc(:targets, 1)
     webmaster_total_stat.inc(:targets, 1)
     advertiser_total_stat.inc(:targets, 1)
-    webmaster_today_stat.inc(:income, self.webmaster_amount)
-    advertiser_today_stat.inc(:income, self.advertiser_amount)
-    webmaster_total_stat.inc(:income, self.webmaster_amount)
-    advertiser_total_stat.inc(:income, self.advertiser_amount)
+    webmaster_today_stat.inc(:income, self.webmaster_amount.cents)
+    advertiser_today_stat.inc(:income, self.advertiser_amount.cents)
+    webmaster_total_stat.inc(:income, self.webmaster_amount.cents)
+    advertiser_total_stat.inc(:income, self.advertiser_amount.cents)
   end
 end

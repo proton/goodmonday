@@ -54,13 +54,13 @@
 													= changed_value
 													%br
 													- show_method = attr_info[:show_method] ? attr_info[:show_method] : key
-													- img = moderated_object.method(show_method).call
+													- img = moderated_object.send(show_method)
 													- if img.present?
 														= image_tag(img)
 													- else
 														= '-'
-												- when :currency
-													= number_to_rubles changed_value
+												- when :money
+													= number_to_currency Money.new(changed_value)
 												- else
 													= changed_value
 									%td
@@ -68,8 +68,8 @@
 											- case type
 												- when :association
 													= klass.find(accepted_value).title
-												- when :currency
-													= number_to_rubles accepted_value
+												- when :money
+													= number_to_currency Money.new(accepted_value)
 												- else
 													= accepted_value
 
@@ -79,16 +79,20 @@
 							- moderated_class::MODERATED_EDIT_FIELDS.each do |key|
 								.span4
 									=t "simple_form.labels.#{@moderation.moderated_type.to_s.downcase}.#{key.to_s}"
-									- options = moderated_class.fields[key.to_s].options
 									- field_name = "moderated_edit[#{key.to_s}]"
-									- value = moderated_object.read_attribute(key)
-									- case options[:type].to_s
-										- when 'Boolean'
-											= check_box_tag field_name, 1, value
-										- when 'Integer'
-											= number_field_tag field_name, value, :class => 'span2'
-										- else
-											= ''
+									- if moderated_class.fields[key.to_s]
+										- value = moderated_object.read_attribute(key)
+										- options = moderated_class.fields[key.to_s].options
+										- case options[:type].to_s
+											- when 'Boolean'
+												= check_box_tag field_name, 1, value
+											- when 'Integer'
+												= number_field_tag field_name, value, :class => 'span2'
+											- else
+												= ''
+									- else
+										- value = moderated_object.send(key)
+										= text_field_tag field_name, value, :class => 'span2'
 							%br
 							%br
 						= button_tag :class => 'btn btn-success' do

@@ -12,13 +12,13 @@
 = @offer.category.title
 %br
 %b Выплачено:
-= number_to_rubles @offer.payments
+= number_to_currency @offer.payments
 %br
 %b EPC:
-= number_to_rubles @offer.epc
+= number_to_currency @offer.epc
 %br
 %b eEPC:
-= number_to_rubles (@offer.epc*1000)
+= number_to_currency (@offer.epc*1000)
 %br
 %b Категория:
 = "#{@offer.cookie_time} дней"
