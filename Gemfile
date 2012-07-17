@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
 
-gem 'mongoid'
+gem 'mongoid', '~> 2.4.12'
 gem 'bson_ext'
 
 gem 'symbolize', :require => 'symbolize/mongoid'
@@ -16,6 +16,8 @@ gem 'mongoid_denormalize'
 gem 'mongoid_slug'
 gem 'mongoid-eager-loading'
 
+gem 'money-rails'
+
 gem 'simple_form'
 gem 'bootstrap-sass'
 
@@ -24,7 +26,7 @@ gem 'mini_magick'
 gem "fog", "~> 1.3.1"
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails', '~> 3.2.3'
   gem 'compass-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
