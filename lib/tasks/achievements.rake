@@ -22,7 +22,7 @@ namespace :achievements do
 				id = item.at('id').inner_text
 				if id==order_id
 					status = item.at('status').inner_text.to_i
-					price = item.at('price').inner_text.to_f*100 #переводим в копейки
+					price = item.at('price').inner_text.to_f
 
           #1 - :accepted
           #2 - :pending

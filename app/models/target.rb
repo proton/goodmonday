@@ -23,7 +23,7 @@ class Target
 
   def webmaster_price(price = nil)
     if price && self.confirm_mode==:manual
-      self.fixed_prices_bronze + self.prc_prices_bronze*price/100
+      self.fixed_prices_bronze + Money.new(self.prc_prices_bronze*price) #тут умножаем на сто (приводим к копейкам) и делим на сто (ибо проценты)
     else
       self.fixed_prices_bronze
     end
@@ -31,7 +31,7 @@ class Target
 
   def advertiser_price(price = nil)
     if price && self.confirm_mode==:manual
-      self.fixed_price + self.prc_price*price/100
+      self.fixed_price + Money.new(self.prc_price*price) #тут умножаем на сто (приводим к копейкам) и делим на сто (ибо проценты)
     else
       self.fixed_price
     end
