@@ -24,9 +24,9 @@
 						- target = offer.targets.find(achievement.target_id)
 						- ground = achievement.ground
 						- price = case current_user.class
-						- when 'Webmaster'
+						- when Webmaster
 							- achievement.webmaster_amount
-						- when 'Advertiser'
+						- when Advertiser
 							- achievement.advertiser_amount
 						%tr{:class => achievement.is_accepted? ? '' : 'muted'}
 							%td= offer.title
