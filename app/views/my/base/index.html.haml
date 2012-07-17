@@ -31,11 +31,11 @@
 				%tr
 					- subject = :income
 					%th Доход
-					%td= number_to_currency(@common_stat[subject][:today]*100)
-					%td= number_to_currency(@common_stat[subject][:yesterday]*100)
-					%td= number_to_currency(@common_stat[subject][:week]*100)
-					%td= number_to_currency(@common_stat[subject][:month]*100)
-					%td= number_to_currency(@common_stat[subject][:total]*100)
+					%td= number_to_currency(@common_stat[subject][:today]/100)
+					%td= number_to_currency(@common_stat[subject][:yesterday]/100)
+					%td= number_to_currency(@common_stat[subject][:week]/100)
+					%td= number_to_currency(@common_stat[subject][:month]/100)
+					%td= number_to_currency(@common_stat[subject][:total]/100)
 
 		- if @current_user.is_a? Webmaster
 			%h5 Ваша реферальная ссылка
