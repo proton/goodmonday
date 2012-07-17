@@ -31,7 +31,7 @@
 								%th= 'Цель'
 								%th= 'Стоимость'
 								%th= 'Холд'
-						- offer.targets.each do |target|
+						- offer.targets.accepted.each do |target|
 							%tr
 								%td= target.title
 								%td= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
