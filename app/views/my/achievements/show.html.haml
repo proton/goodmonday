@@ -5,9 +5,9 @@
 - user_agent = AgentOrange::UserAgent.new(visitor.user_agent).device
 - price = case current_user.class
 - when Webmaster
-	- achievement.webmaster_amount
+	- @achievement.webmaster_amount
 - when Advertiser
-	- achievement.advertiser_amount
+	- @achievement.advertiser_amount
 
 %h3= 'Основная информация'
 %b= 'Оффер:'
