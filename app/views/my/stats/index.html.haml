@@ -31,7 +31,7 @@
 							- else
 								= '0'
 						%td= number_to_currency(target_stat['income_count']/100) if target_stat
-						%td= target_stat['target_count']/click_stat['click_count'] if click_stat && target_stat
+						%td= "%.5f" % (target_stat['target_count']/click_stat['click_count']) if click_stat && target_stat
 						%td= number_to_currency(target_stat['income_count'].to_f/100/click_stat['click_count']) if click_stat && target_stat
 	.span3
 		.well

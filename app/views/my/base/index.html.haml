@@ -17,12 +17,12 @@
 					- subject = :click
 					%th Клики
 					- periods.each do |period|
-						%td= @common_stat[subject][period]
+						%td= @common_stat[subject][period].to_i
 				%tr
 					- subject = :target
 					%th Цели
 					- periods.each do |period|
-						%td= @common_stat[subject][period]
+						%td= @common_stat[subject][period].to_i
 				%tr
 					- subject = :income
 					%th
