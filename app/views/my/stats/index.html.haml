@@ -6,7 +6,12 @@
 					%th Дата
 					%th Клики
 					%th Цели
-					%th Доход
+					%th
+						- case current_user.class
+							- when Webmaster
+								= 'Доход'
+							- when Advertiser
+								= 'Расход'
 					%th PPC
 					%th CPC
 			%tbody
