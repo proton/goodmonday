@@ -34,8 +34,13 @@ class Achievement
   end
 
   def prepay
-    self.webmaster.inc(:hold_balance, self.webmaster_amount)
-    self.advertiser.inc(:hold_balance, -self.advertiser_amount)
+    webmaster = self.webmaster
+    webmaster.hold_balance += self.webmaster_amount
+    webmaster.save!
+    #
+    advertiser = self.advertiser
+    advertiser.hold_balance -= self.advertiser_amount
+    advertiser.save!
   end
 
   def pay
@@ -46,20 +51,23 @@ class Achievement
       webmaster.balance += webmaster_amount
       webmaster.hold_balance -= webmaster_amount
       webmaster.total_payments += webmaster_amount
-      webmaster.payments.new(amout: webmaster_amount, description: 'Перечисление средств за цель')
+      p = webmaster.payments.new(description: 'Перечисление средств за цель')
+      p.amount = webmaster_amount
       webmaster.save!
       #
       advertiser = self.advertiser
       advertiser.balance -= advertiser_amount
       advertiser.hold_balance += advertiser_amount
       advertiser.total_payments += advertiser_amount
-      advertiser.payments.new(amout: -advertiser_amount, description: 'Перечисление средств за цель')
+      p = advertiser.payments.new(description: 'Перечисление средств за цель')
+      p.amount = -advertiser_amount
       advertiser.save!
       #
       affiliator = webmaster.affiliator
       if affiliator
         affiliator_amount = webmaster_amount*0.05
-        affiliator.payments.new(amout: affiliator_amount, description: 'Перечисление средств по реферальной программе')
+        p = affiliator.payments.new(description: 'Перечисление средств по реферальной программе')
+        p.amount = affiliator_amount
         advertiser.balance += affiliator_amount
         affiliator.referal_total_payments += affiliator_amount
         affiliator.save!
