@@ -23,7 +23,7 @@
 = @achievement.created_at
 %br
 %b= 'Стоимость:'
-- if price
+- if @achievement.state==:accepted && price
 	= number_to_currency price
 - else
 	= 'нет данных'

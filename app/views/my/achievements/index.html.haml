@@ -33,7 +33,7 @@
 							%td= target.title
 							%td= "#{ground.title} (#{ground.url})"
 							%td
-								- if price
+								- if achievement.state==:accepted && price
 									= number_to_currency(price)
 								- else
 									= 'н/д'
