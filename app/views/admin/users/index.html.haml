@@ -18,15 +18,17 @@
 	%thead
 		%tr
 			%th= 'E-mail'
-			%th= 'Тип'
+			- if type.empty?
+				%th= 'Тип'
 			%th= 'Его'
 			%th= 'Действия'
 	%tbody
 		- @users.each do |user|
 			%tr
 				%td= user.email
-				%td
-					%span.label=t "model.#{user.class.to_s}"
+				- if type.empty?
+					%td
+						%span.label=t "model.#{user.class.to_s}"
 				%td
 					- if [Advertiser, Webmaster].include? user.class
 						= link_to user_profile_path(user), :class => 'btn btn-small' do
@@ -48,6 +50,9 @@
 								= 'Достижения'
 								
 				%td
+					= link_to user_path(user), :class => 'btn btn-small' do
+						%i.icon-cog
+						= 'Открыть'
 					= link_to edit_user_path(user), :class => 'btn btn-small' do
 						%i.icon-pencil
 						= 'Редактировать'
