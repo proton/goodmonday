@@ -3,7 +3,7 @@ class StatClickCounter
 
   belongs_to :ground, index: true
   belongs_to :offer, index: true
-  belongs_to :adversiter, index: true
+  belongs_to :advertiser, index: true
   belongs_to :webmaster, index: true
 
   field :date, type: Date
@@ -16,4 +16,9 @@ class StatClickCounter
 
   index({ webmaster_id: 1, date: 1 })
   index({ adversiter_id: 1, date: 1 })
+
+  self.register_click(ground, offer, sub_id)
+    StatClickCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertiser.id, webmaster_id: ground.webmaster.id, date: Date.today, sub_id: sub_id).inc(:clicks, 1)
+    StatClickCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertiser.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id).inc(:clicks, 1)
+  end
 end
