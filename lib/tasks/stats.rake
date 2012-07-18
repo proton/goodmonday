@@ -29,7 +29,7 @@ namespace :stats do
 
 				unless click_stats.empty? || target_stats.empty?
 					epc = income.to_f / clicks
-					ground_offer.epc = Money.new(epc)
+					ground_offer.epc = Money.new(epc) unless epc.nan?
 				end
 
 				ground_offer.save
@@ -37,7 +37,7 @@ namespace :stats do
 			total_epc = total_income.to_f / total_clicks
 			offer.clicks = total_clicks
 			offer.payments = Money.new(total_income)
-			offer.epc = Money.new(total_epc)
+			offer.epc = Money.new(total_epc) unless total_epc.nan?
 			offer.save
 		end
 	end
