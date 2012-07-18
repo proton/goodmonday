@@ -4,8 +4,8 @@ namespace :stats do
 			total_clicks = 0
 			total_income = 0
 			offer.ground_offers.each do |ground_offer|
-				total_time =  Time.utc(0)
-				cond = {:date => total_time, :offer_id => offer.id, :ground_id => ground_offer.ground_id}
+				total_time = Time.utc(0)
+				cond = {:date => total_time, :offer_id => offer.id, :ground_id => ground_offer.ground_id, :user_id => {'$ne' => offer.advertiser_id}}
 				click_func = "function(obj,prev) { prev.click_count += obj.clicks}"
 				click_h = {key: :date, cond: cond, initial: {click_count: 0}, reduce: click_func}
 				click_stats = StatClickCounter.collection.group(click_h)
@@ -15,14 +15,14 @@ namespace :stats do
 
 				unless click_stats.empty?
 					stat = click_stats.first
-					clicks = stat[:click_count].to_i
+					clicks = stat['click_count'].to_i
 					total_clicks += clicks
 					ground_offer.clicks = clicks
 				end
 
 				unless target_stats.empty?
 					stat = target_stats.first
-					income = stat[:income_count].to_i
+					income = stat['income_count'].to_i
 					total_income += income
 					ground_offer.payments = Money.new(income)
 				end
