@@ -149,5 +149,5 @@
 									%td=t "common.state.#{change.state.to_s}"
 									%td
 										- user = change.user
-										= link_to user.email, user if user
+										= link_to user.email, user_path(user) if user
 									%td= change.edit_fields
