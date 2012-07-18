@@ -1,8 +1,25 @@
 %section
 	.page-header
 		%h1= "Проверка"
+		- unless @moderation.moderated_path.empty?
+			- parent_object = eval(@moderation.moderated_path.split(".")[0..1].join('.'))
+		- else
+			- parent_object.moderated_object
+
+		- if [Ground, Offer].include? parent_object.class
+			- user = case parent_object.class
+				- when Ground
+					- parent_object.webmaster
+				- when Offer
+					- parent_object.advertiser
+			- user = user.becomes(User)
+			%br
+			Принадлежит пользователю:
+			= link_to user.email, user
+			%br
+			Принадлежит объекту:
+			= link_to t("model.#{parent_object.class.to_s}"), [user, parent_object]
 	.row
-		-#= @moderation.moderated.inspect
 		- moderated_class = @moderation.moderated_type.constantize
 		- moderated_object = @moderation.moderated_object
 		.span9
