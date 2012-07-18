@@ -1,7 +1,7 @@
 %section
 	.page-header
 		%h1= "Проверка"
-		- if @moderation.moderated_path && @moderation.moderated_path.empty?
+		- if @moderation.moderated_path && !@moderation.moderated_path.empty?
 			- parent_object = eval(@moderation.moderated_path.split(".")[0..1].join('.'))
 		- else
 			- @moderation.moderated_object
