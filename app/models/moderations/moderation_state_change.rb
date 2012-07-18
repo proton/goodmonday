@@ -10,5 +10,5 @@ class ModerationStateChange
 	symbolize :reason, :in => [:created, :updated, :checked]
 	field :edit_fields, type: Hash
 
-	belongs_to :operator
+	belongs_to :user
 end

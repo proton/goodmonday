@@ -130,5 +130,7 @@
 								%tr
 									%td= change.created_at
 									%td=t "common.state.#{change.state.to_s}"
-									%td= change.operator_id
+									%td
+										- user = change.user
+										= link_to user.email, user if user
 									%td= change.edit_fields
