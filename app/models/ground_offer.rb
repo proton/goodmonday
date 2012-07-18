@@ -1,6 +1,7 @@
 class GroundOffer
   include Mongoid::Document
 	include Mongoid::Symbolize
+  include Mongoid::MoneyField
 
 	before_update{ @changed_attrs = changes.clone }
 	after_update :update_offers_state
@@ -12,8 +13,8 @@ class GroundOffer
 	symbolize :state, :in => [:accepted, :denied, :pending], :default => :pending
 
 	field :clicks, type: Integer, default: 0
-	field :payments, type: Integer, default: 0
-	field :epc, type: Float, default: 0.0
+  money_field :payments
+	money_field :epc
 
 	def update_offers_state
 		if @changed_attrs.has_key? :state

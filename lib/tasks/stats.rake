@@ -24,20 +24,20 @@ namespace :stats do
 					stat = target_stats.first
 					income = stat[:income_count].to_i
 					total_income += income
-					ground_offer.payments = income
+					ground_offer.payments = Money.new(income)
 				end
 
 				unless click_stats.empty? || target_stats.empty?
 					epc = income.to_f / clicks
-					ground_offer.epc = epc
+					ground_offer.epc = Money.new(epc)
 				end
 
 				ground_offer.save
 			end
 			total_epc = total_income.to_f / total_clicks
 			offer.clicks = total_clicks
-			offer.payments = total_income
-			offer.epc = total_epc
+			offer.payments = Money.new(total_income)
+			offer.epc = Money.new(total_epc)
 			offer.save
 		end
 	end

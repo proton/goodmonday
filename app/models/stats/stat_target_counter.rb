@@ -10,7 +10,7 @@ class StatTargetCounter
   field :target_id, type: BSON::ObjectId
 
   field :targets, type: Integer, default: 0
-  field :income, type: Integer, default: 0
+  field :income, type: Integer, default: 0 #в копейках (cents), ибо проще считать
 
   index :date
   index :sub_id
