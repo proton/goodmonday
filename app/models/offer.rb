@@ -13,7 +13,8 @@ class Offer
 	belongs_to :category
 
 	field :title, type: String
-	field :url, type: String, default: ''
+  field :url, type: String, default: ''
+  field :landing_url, type: String, default: ''
 	field :description, type: String, default: ''
 
 	field :cookie_time, type: Integer, default: 90
@@ -24,6 +25,9 @@ class Offer
 
 	field :is_adult, type: Boolean, default: false
 	field :is_doubtful, type: Boolean, default: false
+
+  field :redirect_options, type: String
+  field :accept_custom_urls, type: Boolean, default: true
 
 	field :auto_accept_grounds, type: Boolean, default: true
   field :excepted_categories_ids, type: Array, default: []
@@ -46,7 +50,7 @@ class Offer
 		self.save
 	end
 
-	MODERATED_ATTRS = %w[title url category_id logo]
+	MODERATED_ATTRS = %w[title url landing_url category_id logo]
   MODERATED_ATTRS_INFO = {'logo' => {:type => :carrierwave_image} }
 	MODERATED_EDIT_FIELDS = [:is_adult, :is_doubtful]
 	include IsModerated

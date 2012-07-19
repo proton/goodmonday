@@ -74,10 +74,14 @@ class RobotController < ApplicationController
       advert = 'c'
     end
 
-    if params[:url] && !params[:url].empty? && params[:url].starts_with?('http')
+    if offer.accept_custom_urls && params[:url] && !params[:url].empty? && params[:url].starts_with?('http')
       url = params[:url]
-    elsif ground
-      url = ((defined? advert) && advert) ? advert.url : offer.url
+    elsif (defined? advert) && advert && !advert.url.empty?
+      url = advert.url
+    elsif !offer.landing_url.empty?
+      url = offer.landing_url
+    elsif !offer.url.empty?
+      url = offer.url
     end
 
  		ip = request.remote_ip
@@ -118,6 +122,8 @@ class RobotController < ApplicationController
 
     #collecting statistic:
     StatClickCounter.register_click(ground, offer, sub_id)
+
+    url = add_url_options(url, offer.redirect_options) if offer.redirect_options && !offer.redirect_options.empty?
 
  		redirect_to url
  	end
@@ -188,6 +194,15 @@ class RobotController < ApplicationController
 	def set_access_control_headers
 		headers['Access-Control-Allow-Origin'] = '*'
 		headers['Access-Control-Request-Method'] = '*'
-	end
+  end
+
+  def add_url_options(url, options)
+    if url.include? '?'
+      url = "#{url}&#{options}"
+    else
+      url = "#{url}?#{options}"
+    end
+    url
+  end
 
 end

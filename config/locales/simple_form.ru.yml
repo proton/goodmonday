@@ -72,6 +72,7 @@ ru:
         description: 'Описание'
         logo: 'Логотип'
         url: 'Ссылка'
+        landing_url: 'Посадочная страница (landing page)'
         cookie_time: 'Период учёта действий (дней)'
         category: 'Категория'
         auto_accept_grounds: 'Автоматически принимать площадки'
@@ -79,6 +80,8 @@ ru:
         excepted_ground_types: 'Отклонять площадки следующих видов'
         is_adult: 'Для взрослых'
         is_doubtful: 'Сомнительная'
+        redirect_options: 'Опции редиректа'
+        accept_custom_urls: 'Позволить вебмастерам указывать свои url в ссылках'
       target:
         title: 'Название'
         repeatable: 'Повторяемая'
@@ -89,7 +92,6 @@ ru:
         fixed_prices_bronze: 'Стоимость фиксированная (Бронза)'
         fixed_prices_silver: 'Стоимость фиксированная (Серебро)'
         fixed_prices_gold: 'Стоимость фиксированная (Золото)'
-
         prc_price: 'Стоимость (процент от продажи)'
         prc_prices_bronze: 'Стоимость процентная (Бронза)'
         prc_prices_silver: 'Стоимость процентная (Серебро)'

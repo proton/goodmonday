@@ -26,38 +26,39 @@
 	= content_tag(:span, 'Текст ссылки', :class => "atn")
 	= "</a>"
 
-%b= 'Если вы желаете, чтобы при нажитии на ссылку посетитель переходил на другой (отличающийся от указанного рекламодателем) адрес, укажите его в параметре ссылки url:'
-%br
-%br
-Внимание: не забудьте указать префиксы
-%code= 'http://'
-или
-%code= 'https://'
-в начале ссылок.
-%br
-%br
-%pre.prettyprint
-	= "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}?url="
-	= content_tag(:span, 'желаемый_url', :class => "str")
-	= "'>"
-	= content_tag(:span, 'Текст ссылки', :class => "atn")
-	= "</a>"
+- if @offer.accept_custom_urls
+	%b= 'Если вы желаете, чтобы при нажитии на ссылку посетитель переходил на другой (отличающийся от указанного рекламодателем) адрес, укажите его в параметре ссылки url:'
+	%br
+	%br
+	Внимание: не забудьте указать префиксы
+	%code= 'http://'
+	или
+	%code= 'https://'
+	в начале ссылок.
+	%br
+	%br
+	%pre.prettyprint
+		= "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}?url="
+		= content_tag(:span, 'желаемый_url', :class => "str")
+		= "'>"
+		= content_tag(:span, 'Текст ссылки', :class => "atn")
+		= "</a>"
 
-%b= 'Пример кода с использованием параметров sub_id и url:'
-%br
-%br
-%pre.prettyprint
-	= "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}?"
-	= content_tag(:span, 'sub_id', :class => "lit")
-	= '='
-	= content_tag(:span, 'group7', :class => "str")
-	= '&'
-	= content_tag(:span, 'url', :class => "lit")
-	= '='
-	= content_tag(:span, 'http://goodmonday.ru/offers', :class => "str")
-	= "'>"
-	= content_tag(:span, 'Офферы GoodMonday.ru', :class => "atn")
-	= "</a>"
+	%b= 'Пример кода с использованием параметров sub_id и url:'
+	%br
+	%br
+	%pre.prettyprint
+		= "<a href='http://r.goodmonday.ru/#{@ground.id}/goto/#{@offer.id}?"
+		= content_tag(:span, 'sub_id', :class => "lit")
+		= '='
+		= content_tag(:span, 'group7', :class => "str")
+		= '&'
+		= content_tag(:span, 'url', :class => "lit")
+		= '='
+		= content_tag(:span, 'http://goodmonday.ru/offers', :class => "str")
+		= "'>"
+		= content_tag(:span, 'Офферы GoodMonday.ru', :class => "atn")
+		= "</a>"
 
 %h5 Промо-материалы
 При использовании кода для промо-материалов также можно использовать параметры
