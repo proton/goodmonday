@@ -11,7 +11,8 @@ class Suspicion
 	field :reason_text, type: String
 
 	def block(period = nil)
-		black_ip = BlackIp.new(self.ip)
+		black_ip = BlackIp.new
+    black_ip.ip = self.ip
 		if period
 			black_ip.discard_at = DateTime.now+period
 		end

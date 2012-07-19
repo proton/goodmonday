@@ -16,8 +16,4 @@ class BlackIp
 	def self.exclude(ip)
 		BlackIp.where(:ip => ip).size==0
 	end
-
-	def initialize(ip)
-		self.ip = ip
-	end
 end
