@@ -4,8 +4,8 @@
 	= f.input :confirm_mode, :required => true, :as => :select, :collection => Target.get_confirm_mode_values, :input_html => { :class => "span6" }
 	.manual_mode_fields{:style => auto_mode ? 'display:none' : 'display:block'}
 		= f.input :confirm_url, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-		= f.input :prc_price, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-		= f.input :prc_prices_bronze, :required => true, :as => :decimal, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
+		= f.input :prc_price, :required => true, :as => :float, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
+		= f.input :prc_prices_bronze, :required => true, :as => :float, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
 	= f.input :fixed_price, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_price }
 	= f.input :fixed_prices_bronze, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_prices_bronze }
 	= f.input :repeatable, :as => :boolean
