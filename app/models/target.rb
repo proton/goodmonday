@@ -12,7 +12,7 @@ class Target
   money_field :fixed_price
   money_field :fixed_prices_bronze
 
-  field :prc_price, type: Integer, default: 0
+  field :prc_price, type: Float, default: 0.0
   field :prc_prices_bronze, type: Float, default: 0.0
 
 	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
