@@ -105,6 +105,8 @@
 												= check_box_tag field_name, 1, value
 											- when 'Integer'
 												= number_field_tag field_name, value, :class => 'span2'
+											- when 'Float'
+												= number_field_tag field_name, value, :class => 'span2', :step => 'any'
 											- else
 												= ''
 									- else
