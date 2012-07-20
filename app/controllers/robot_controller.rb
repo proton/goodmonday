@@ -123,7 +123,11 @@ class RobotController < ApplicationController
     #collecting statistic:
     StatClickCounter.register_click(ground, offer, sub_id)
 
-    url = add_url_options(url, offer.redirect_options) if offer.redirect_options && !offer.redirect_options.empty?
+    if offer.redirect_options && !offer.redirect_options.empty?
+      redirect_options = offer.redirect_options
+      redirect_options.gsub!('%{visitor_id}', visitor.id) if (defined? visitor) && visitor
+      url = add_url_options(url, redirect_options)
+    end
 
  		redirect_to url
  	end
