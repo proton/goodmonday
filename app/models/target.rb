@@ -19,6 +19,8 @@ class Target
 	field :confirm_url, type: String
   field :hold, type: Integer, default: 20
 
+  field :cookieless_achievement, type: Boolean, default: false
+
   validates :hold, presence: true
 
   def webmaster_price(price = nil)

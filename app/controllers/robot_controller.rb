@@ -147,34 +147,39 @@ class RobotController < ApplicationController
 		if BlackIp.exclude(ip) && check_for_suspicions(request)
 			offer = Offer.find(params[:offer_id])
 			if offer
-				if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
-					visitor_id = cookies[offer.id.to_s]
-					visitor = Visitor.find(visitor_id)
-					if visitor && visitor.offer == offer
-						target_id = params[:target_id]
-						target = offer.targets.find(target_id)
-						if target
-							if target.repeatable || Achievement.where(:visitor_id => visitor_id, :target_id => target_id).size==0 #запрещаем двойное взятие цели
-								achievement = Achievement.new
-								achievement.webmaster = visitor.ground.webmaster
-								achievement.advertiser = offer.advertiser
-                achievement.ground = visitor.ground
-                achievement.sub_id = visitor.sub_id
-								achievement.offer = offer
-								achievement.visitor = visitor
-								achievement.target_id = target_id
-								achievement.ip = ip
-								achievement.page = request.referer
-								if params[:order_id] && !params[:order_id].empty?
-									achievement.order_id = params[:order_id]
-								end
-								if target.confirm_mode == :auto
-									achievement.accept(target.webmaster_price, target.advertiser_price)
-								end
-								achievement.save
-							end
-						end
-					end
+        target_id = params[:target_id]
+        target = offer.targets.find(target_id)
+          if target
+            if (cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?)
+              visitor_id = cookies[offer.id.to_s]
+            elsif target.cookieless_achievement && params[:visitor] && !params[:visitor].empty?
+              visitor_id = params[:visitor]
+            end
+            if (defined? visitor_id) && visitor_id && !visitor_id.empty?
+              visitor = Visitor.find(visitor_id)
+              if visitor && visitor.offer == offer
+                if target.repeatable || Achievement.where(:visitor_id => visitor_id, :target_id => target_id).size==0 #запрещаем двойное взятие цели
+                  achievement = Achievement.new
+                  achievement.webmaster = visitor.ground.webmaster
+                  achievement.advertiser = offer.advertiser
+                  achievement.ground = visitor.ground
+                  achievement.sub_id = visitor.sub_id
+                  achievement.offer = offer
+                  achievement.visitor = visitor
+                  achievement.target_id = target_id
+                  achievement.ip = ip
+                  achievement.page = request.referer
+                  if params[:order_id] && !params[:order_id].empty?
+                    achievement.order_id = params[:order_id]
+                  end
+                  if target.confirm_mode == :auto
+                    achievement.accept(target.webmaster_price, target.advertiser_price)
+                  end
+                  achievement.save
+                end
+              end
+            end
+          end
 				end
 			end
 		end

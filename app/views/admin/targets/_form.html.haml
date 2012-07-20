@@ -10,6 +10,8 @@
 	= f.input :fixed_prices_bronze, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_prices_bronze }
 	= f.input :repeatable, :as => :boolean
 	= f.input :hold, :input_html => { :class => "span6" }
+	%hr
+	= f.input :cookieless_achievement, :as => :boolean
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Отмена', user_offer_targets_path(@user, @offer), :class => "btn btn-danger"
 
