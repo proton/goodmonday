@@ -37,6 +37,9 @@
 		= @offer.excepted_ground_types.reject! {|t| t.empty?}.collect{|t| t("mongoid.symbolizes.ground.type.#{t.to_str}")}.to_sentence
 - else
 	Отбирает площадки вручную.
+- if @offer.accept_custom_urls
+	%br
+	Позволяет использовать свои url
 %br
 %hr
 %h5 Цели:
