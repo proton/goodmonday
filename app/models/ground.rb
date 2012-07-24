@@ -136,6 +136,14 @@ class Ground
 		offers.accepted
 	end
 
+	def change_webmaster!(new_webmaster)
+		old_webmaster_id = self.webmaster_id
+		self.webmaster = new_webmaster
+		self.save!
+		StatClickCounter.where(:ground_id => self.id, :webmaster_id => old_webmaster_id).update(webmaster_id: new_webmaster.id)
+		StatTargetCounter.where(:ground_id => self.id, :user_id => old_webmaster_id).update(user_id: new_webmaster.id)
+	end
+
 	#validates :url, :uniqueness => true
 
 	MODERATED_ATTRS = %w[title url type category_id]
