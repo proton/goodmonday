@@ -50,12 +50,14 @@
 %br
 %b= 'Операционная система:'
 = user_agent.operating_system
-%br
-%b= 'Страница взятия цели:'
-= @achievement.page
-%br
-%b= 'IP-Адрес:'
-= @achievement.ip
+- if @achievement.page && !@achievement.page.empty?
+	%br
+	%b= 'Страница взятия цели:'
+	= @achievement.page
+- if @achievement.ip && !@achievement.ip.empty?
+	%br
+	%b= 'IP-Адрес:'
+	= @achievement.ip
 %br
 %br
 

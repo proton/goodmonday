@@ -164,13 +164,7 @@ class RobotController < ApplicationController
             if visitor && visitor.offer == offer
               if target.repeatable || Achievement.where(:visitor_id => visitor_id, :target_id => target_id).size==0 #запрещаем двойное взятие цели
                 achievement = Achievement.new
-                achievement.webmaster = visitor.ground.webmaster
-                achievement.advertiser = offer.advertiser
-                achievement.ground = visitor.ground
-                achievement.sub_id = visitor.sub_id
-                achievement.offer = offer
-                achievement.visitor = visitor
-                achievement.target_id = target_id
+                achievement.build_prototype(offer, visitor, target_id)
                 achievement.ip = ip
                 achievement.page = request.referer
                 if params[:order_id] && !params[:order_id].empty?

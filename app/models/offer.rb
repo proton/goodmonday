@@ -29,6 +29,9 @@ class Offer
   field :redirect_options, type: String
   field :accept_custom_urls, type: Boolean, default: true
 
+  field :achievement_task_marker, type: String
+  index({ achievement_task_marker: 1 }, { unique: true })
+
 	field :auto_accept_grounds, type: Boolean, default: true
   field :excepted_categories_ids, type: Array, default: []
   field :excepted_ground_types, type: Array, default: []

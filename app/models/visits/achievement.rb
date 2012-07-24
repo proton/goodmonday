@@ -33,6 +33,16 @@ class Achievement
 		self.state==:accepted
   end
 
+  def build_prototype(offer, visitor, target_id)
+    self.webmaster = visitor.ground.webmaster
+    self.advertiser = offer.advertiser
+    self.ground = visitor.ground
+    self.sub_id = visitor.sub_id
+    self.offer = offer
+    self.visitor = visitor
+    self.target_id = target_id
+  end
+
   def prepay
     webmaster = self.webmaster
     webmaster.hold_balance += self.webmaster_amount

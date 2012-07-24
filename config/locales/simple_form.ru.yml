@@ -82,6 +82,7 @@ ru:
         is_doubtful: 'Сомнительная'
         redirect_options: 'Опции редиректа'
         accept_custom_urls: 'Позволить вебмастерам указывать свои url в ссылках'
+        achievement_task_marker: 'Идетификатор для задачи для сбора достижений целей'
       target:
         title: 'Название'
         repeatable: 'Повторяемая'
@@ -98,6 +99,7 @@ ru:
         prc_prices_gold: 'Стоимость процентная (Золото)'
         hold: 'Холд (дней)'
         cookieless_achievement: 'Достижение целей без использования cookie'
+        achievement_task_marker: 'Идетификатор для задачи для сбора достижений целей'
       article:
         title: 'Название'
         content: 'Содержимое'
