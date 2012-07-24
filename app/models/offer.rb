@@ -53,6 +53,14 @@ class Offer
 		self.save
 	end
 
+	def change_advertiser!(new_advertiser)
+		old_advertiser_id = self.advertiser_id
+		self.advertiser = new_advertiser
+		self.save
+		StatClickCounter.where(:offer_id => self.id, :advertiser_id => old_advertiser_id).update(advertiser_id: new_advertiser.id)
+		StatTargetCounter.where(:offer_id => self.id, :user_id => old_advertiser_id).update(user_id: new_advertiser.id)
+	end
+
 	MODERATED_ATTRS = %w[title url landing_url category_id logo]
   MODERATED_ATTRS_INFO = {'logo' => {:type => :carrierwave_image} }
 	MODERATED_EDIT_FIELDS = [:is_adult, :is_doubtful]
