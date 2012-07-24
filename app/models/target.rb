@@ -20,6 +20,7 @@ class Target
   field :hold, type: Integer, default: 20
 
   field :cookieless_achievement, type: Boolean, default: false
+  field :achievement_task_marker, type: String
 
   validates :hold, presence: true
 
