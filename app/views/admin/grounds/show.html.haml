@@ -20,3 +20,8 @@
 			auto_mode_fields.find('input').prop('disabled', !auto_mode);
 		});
 	});
+
+%hr
+= simple_form_for(update_webmaster_path(@user, @offer), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
+	= f.input :new_user_id, :collection => Webmaster.all, :label_method => :email, :selected => lambda { |v| v.id == f.object.webmaster_id }
+	= f.submit

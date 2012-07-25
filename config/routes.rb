@@ -70,6 +70,7 @@ Cpa::Application.routes.draw do
 			end
 			resources :users do
 				resources :offers do
+					post :update_adveriser
 					resources :targets
 					resources :adverts do
 						resources :banner_images
@@ -79,7 +80,9 @@ Cpa::Application.routes.draw do
 						get :deny
 					end
 				end
-				resources :grounds
+				resources :grounds do
+					post :update_webmaster
+				end
         resources :payments do
           #
         end

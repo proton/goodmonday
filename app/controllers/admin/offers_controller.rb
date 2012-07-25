@@ -33,6 +33,12 @@ class Admin::OffersController < Admin::BaseController
 		add_crumb "Новая рекламная кампания"
 	end
 
+	def update_advertiser
+		@new_user = User.find(params[:offer][:new_user_id])
+		flash[:notice] = 'Рекламодатель изменён.' if @offer.change_advertiser!(@new_user)
+		respond_with(@offer, :location => user_offer_path(@new_user, @offer))
+	end
+
 	protected
 
 	def find_nested_objects

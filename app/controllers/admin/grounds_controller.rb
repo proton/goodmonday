@@ -1,4 +1,4 @@
-# coding: utf-8
+	# coding: utf-8
 
 class Admin::GroundsController < Admin::BaseController
 	before_filter :find_nested_objects
@@ -40,10 +40,16 @@ class Admin::GroundsController < Admin::BaseController
 		respond_with(@ground, :location => user_grounds_path(@user))
 	end
 
+	def update_webmaster
+		@new_user = User.find(params[:new_user_id])
+		flash[:notice] = 'Вебмастер изменён.' if @offer.change_webmaster!(@new_user)
+		respond_with(@offer, :location => user_offer_path(@new_user, @offer))
+	end
+
 	protected
 
 	def find_nested_objects
-		@user = User.find(params[:user_id])
+		@user = User.find(params[:ground][:user_id])
 	end
 
 	def and_nested_crumbs
