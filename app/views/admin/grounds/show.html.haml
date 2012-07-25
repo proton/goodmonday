@@ -22,6 +22,6 @@
 	});
 
 %hr
-= simple_form_for(update_webmaster_path(@user, @offer), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
+= simple_form_for(@ground, :url => user_ground_update_webmaster_path(@user, @ground), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
 	= f.input :new_user_id, :collection => Webmaster.all, :label_method => :email, :selected => lambda { |v| v.id == f.object.webmaster_id }
 	= f.submit

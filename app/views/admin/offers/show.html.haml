@@ -21,6 +21,6 @@
 	%i.icon-cog
 	= 'Настройки'
 %hr
-= simple_form_for(update_advertiser_path(@user, @offer), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
+= simple_form_for(@offer, :url => user_offer_update_adveriser_path(@user, @offer), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
 	= f.input :new_user_id, :collection => Advertiser.all, :label_method => :email, :selected => lambda { |v| v.id == f.object.advertiser_id }
 	= f.submit
