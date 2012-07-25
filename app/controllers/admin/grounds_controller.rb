@@ -41,7 +41,8 @@ class Admin::GroundsController < Admin::BaseController
 	end
 
 	def update_webmaster
-		@new_user = User.find(params[:ground][:new_user_id])
+    @ground = @user.grounds.find(params[:ground_id])
+		@new_user = User.find(params[:new_user_id])
 		flash[:notice] = 'Вебмастер изменён.' if @offer.change_webmaster!(@new_user)
 		respond_with(@offer, :location => user_offer_path(@new_user, @offer))
 	end

@@ -70,7 +70,7 @@ Cpa::Application.routes.draw do
 			end
 			resources :users do
 				resources :offers do
-					post :update_adveriser
+					post :update_advertiser
 					resources :targets
 					resources :adverts do
 						resources :banner_images

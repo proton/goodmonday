@@ -34,7 +34,8 @@ class Admin::OffersController < Admin::BaseController
 	end
 
 	def update_advertiser
-		@new_user = User.find(params[:offer][:new_user_id])
+    @offer = @user.offers.find(params[:offer_id])
+		@new_user = User.find(params[:new_user_id])
 		flash[:notice] = 'Рекламодатель изменён.' if @offer.change_advertiser!(@new_user)
 		respond_with(@offer, :location => user_offer_path(@new_user, @offer))
 	end

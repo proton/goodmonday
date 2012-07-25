@@ -21,6 +21,7 @@
 	%i.icon-cog
 	= 'Настройки'
 %hr
-= simple_form_for(@offer, :url => user_offer_update_adveriser_path(@user, @offer), :method => :post, :html => {:class => 'form-horizontal' }) do |f|
-	= f.input :new_user_id, :collection => Advertiser.all, :label_method => :email, :selected => lambda { |v| v.id == f.object.advertiser_id }
-	= f.submit
+= form_tag(user_offer_update_advertiser_path(@user, @offer), :method => :post) do
+	Смена пользователя:
+	= select_tag :new_user_id, options_from_collection_for_select(Advertiser.all, "id", "email", @offer.advertiser_id)
+	= submit_tag 'Сменить!'
