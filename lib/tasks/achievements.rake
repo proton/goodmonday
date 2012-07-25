@@ -52,7 +52,51 @@ namespace :achievements do
       end
     end
 
-    task :all => [:aviasales]
+    task :topshop => :environment do
+      offer = find_marked_offer('topshop')
+      next unless offer
+      target = find_marked_target(offer, 'topshop_order')
+      next unless target
+
+      require 'hpricot'
+      require 'open-uri'
+
+      url = "http://www.top-shop.ru/affiliates/report/23916/7e22c6e6976eab5018024fb2a11e9c6d"
+
+      doc = Hpricot(open(url))
+      (doc/:payment_list/:payment).each do |item|
+        #
+        order_id = item.at('order_id').inner_text
+        marker = item.at('key').inner_text
+        state = item.at('status').inner_text
+        achievement = offer.achievements.where(:order_id => order_id).first
+        if achievement
+          #next if achievement.is_accepted?
+          #if state=='paid' && achievement.state!=:accepted
+          #  #price = item.at('price').inner_text.to_f
+          #  #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+          #  #achievement.save
+          #end
+        else
+          visitor_id = marker.split('?visitor=').second
+          next unless visitor_id
+          visitor = Visitor.find(visitor_id)
+          achievement = Achievement.new
+          achievement.build_prototype(offer, visitor, target.id)
+          achievement.order_id = order_id
+          if state=='20'
+            #price = item.at('price').inner_text.to_f
+            #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+          elsif state=='30'
+            achievement.state = :denied
+          end
+          achievement.created_at = DateTime.parse(item.at('date').inner_text+' +0400')
+          achievement.save
+        end
+      end
+    end
+
+    task :all => [:aviasales, :topshop]
   end
 
 	task :confirm => :environment do
