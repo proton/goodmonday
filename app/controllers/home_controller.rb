@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   def index
     @news = News.order_by(:created_at)
     # @offers = Offer.accepted.where(is_adult: false).order_by([:epc, :desc]).limit(3)
-    @offers = Offer.accepted.order_by([:epc, :desc]).limit(3)
+    @offers = Offer.accepted.order_by([:epc_cents, :desc]).limit(3)
   end
 
   protected
