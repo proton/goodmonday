@@ -58,19 +58,25 @@
 	%br
 	%b= 'IP-Адрес:'
 	= @achievement.ip
-%br
-%br
 
-%h3= 'Статистика'
-%table.table.table-bordered.table-striped
-	%thead
-		%tr
-			%th= 'Страница'
-			%th= 'IP-Адрес'
-			%th= 'Дата и время'
-	%tbody
-		- visitor.page_visits.each do |visit|
+- if visitor
+	- if visitor.initial_page && !visitor.initial_page.empty?
+		%br
+		%b= 'Источник:'
+		= visitor.initial_page
+	%br
+	%br
+
+	%h3= 'Статистика'
+	%table.table.table-bordered.table-striped
+		%thead
 			%tr
-				%td= visit.page
-				%td= visit.ip
-				%td= visit.created_at
+				%th= 'Страница'
+				%th= 'IP-Адрес'
+				%th= 'Дата и время'
+		%tbody
+			- visitor.page_visits.each do |visit|
+				%tr
+					%td= visit.page
+					%td= visit.ip
+					%td= visit.created_at
