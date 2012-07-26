@@ -14,6 +14,7 @@
 	= f.input :auto_accept_grounds, :as => :boolean
 	.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
 		= f.input :excepted_categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6"}
+		= f.input :excepted_ground_types, :collection => Ground.get_type_values, :input_html => { :multiple => true, :class => "span6"}
 
 	%hr
 
