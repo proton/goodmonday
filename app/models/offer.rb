@@ -59,6 +59,7 @@ class Offer
 		self.save!
 		StatClickCounter.where(:offer_id => self.id, :advertiser_id => old_advertiser_id).update(advertiser_id: new_advertiser.id)
 		StatTargetCounter.where(:offer_id => self.id, :user_id => old_advertiser_id).update(user_id: new_advertiser.id)
+    self.achievements.update(advertiser_id: new_advertiser.id)
 	end
 
 	MODERATED_ATTRS = %w[title url landing_url category_id logo]

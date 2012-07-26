@@ -142,6 +142,7 @@ class Ground
 		self.save!
 		StatClickCounter.where(:ground_id => self.id, :webmaster_id => old_webmaster_id).update(webmaster_id: new_webmaster.id)
 		StatTargetCounter.where(:ground_id => self.id, :user_id => old_webmaster_id).update(user_id: new_webmaster.id)
+    self.achievements.update(webmaster_id: new_webmaster.id)
 	end
 
 	#validates :url, :uniqueness => true
