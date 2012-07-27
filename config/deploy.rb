@@ -11,8 +11,9 @@ set :port, 2323
 set :deploy_to, "/var/www/rails/#{application}"
 set :use_sudo, false
 
-set :rvm_ruby_string, '1.9.3-p125' # Это указание на то, какой Ruby интерпретатор мы будем использовать.
-set :rvm_type, :user # Указывает на то, что мы будем использовать rvm, установленный у пользователя, от которого происходит деплой, а не системный rvm.
+#set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
+set :rvm_ruby_string, :local
+set :rvm_type, :user
 
 set :scm, :git # Используем git. Можно, конечно, использовать что-нибудь другое - svn, например, но общая рекомендация для всех кто не использует git - используйте git.
 set :repository,  "git@bitbucket.org:proton/cpa.git"
@@ -22,6 +23,10 @@ set :deploy_via, :remote_cache # Указание на то, что стоит �
 role :web, domain
 role :app, domain
 role :db,  domain, :primary => true
+
+before 'deploy:setup', 'rvm:install_rvm'   # install RVM
+before 'deploy:setup', 'rvm:install_ruby'  # install Ruby and create gemset, or:
+#before 'deploy:setup', 'rvm:create_gemset' # only create gemset
 
 #after 'deploy:update_code', :roles => :app do
 #	# Здесь для примера вставлен только один конфиг с приватными данными - database.yml. Обычно для таких вещей создают папку /srv/myapp/shared/config и кладут файлы туда. При каждом деплое создаются ссылки на них в нужные места приложения.

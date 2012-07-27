@@ -56,7 +56,8 @@ gem 'rb-inotify' #for sass
 group :development, :test do
 	gem 'rnotify'
 	gem 'ruby_parser'
-	gem 'capistrano'
+  gem 'capistrano'
+  gem 'rvm-capistrano'
 	gem 'thin'
 end
 
