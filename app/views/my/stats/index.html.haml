@@ -41,8 +41,12 @@
 			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'span2' } } do |f|
 				= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker span2' }
 				= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker span2' }
-				-#= f.input :ground
-				-#= f.input :offer
-				-#= f.input :sub_id
-				-#= f.input :target
+				- case current_user.class
+					- when Webmaster
+						= f.input :ground, :collection => current_user.grounds, :selected => lambda { |v| v.id == @ground_id }
+						= f.input :sub_id, :collection => current_user.sub_ids, :selected => lambda { |v| v == @sub_id }
+					- when Advertiser
+						= f.input :offer, :collection => current_user.offers, :selected => lambda { |v| v.id == @offer_id }
+						-#= f.input :target
+
 				= f.submit 'Фильтровать', :class => 'btn'

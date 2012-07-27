@@ -116,6 +116,9 @@ ru:
       filter:
         date_start: 'От'
         date_stop: 'До'
+        offer: 'Оффер'
+        ground: 'Площадка'
+        sub_id: 'Sub id'
       payment:
         amount: 'Сумма'
         description: 'Описание'

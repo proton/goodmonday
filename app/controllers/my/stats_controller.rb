@@ -7,6 +7,10 @@ class My::StatsController < My::BaseController
 
     @date_start = Date.today-2.weeks
     @date_stop = Date.today
+    @offer_id = nil
+    @ground_id = nil
+    @sub_id = nil
+
     if params[:filter]
       if params[:filter][:date_start]
         @date_start = Date.parse(params[:filter][:date_start])
@@ -14,11 +18,23 @@ class My::StatsController < My::BaseController
       if params[:filter][:date_stop]
         @date_stop = Date.parse(params[:filter][:date_stop])
       end
+      if params[:filter][:offer] && !params[:filter][:offer].empty?
+        @offer_id = params[:filter][:offer]
+      end
+      if params[:filter][:ground] && !params[:filter][:ground].empty?
+        @ground_id = params[:filter][:ground]
+      end
+      if params[:filter][:sub_id] && !params[:filter][:sub_id].empty?
+        @sub_id = params[:filter][:sub_id]
+      end
     end
     t_start =  Time.utc(@date_start.year,@date_start.month,@date_start.day)
     t_stop =  Time.utc(@date_stop.year,@date_stop.month,@date_stop.day)
 
     base_cond = {:date => {'$gte' => t_start, '$lte' => t_stop}}
+    base_cond[:offer_id] = @offer_id if @offer_id
+    base_cond[:ground_id] = @ground_id if @ground_id
+    base_cond[:sub_id] = @sub_id if @sub_id
     click_cond = base_cond.clone
     target_cond = base_cond.clone
 
@@ -27,7 +43,7 @@ class My::StatsController < My::BaseController
     else
       click_cond[:advertiser_id] = current_user.id
     end
-   target_cond[:user_id] = current_user.id
+    target_cond[:user_id] = current_user.id
 
     click_func = "function(obj,prev) { prev.click_count += obj.clicks}"
     click_h = {key: :date, cond: click_cond, initial: {click_count: 0}, reduce: click_func}
