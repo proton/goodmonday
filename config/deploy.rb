@@ -11,8 +11,8 @@ set :port, 2323
 set :deploy_to, "/var/www/rails/#{application}"
 set :use_sudo, false
 
-#set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
-set :rvm_ruby_string, :local
+set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
+#set :rvm_ruby_string, :local
 set :rvm_type, :user
 
 set :scm, :git # Используем git. Можно, конечно, использовать что-нибудь другое - svn, например, но общая рекомендация для всех кто не использует git - используйте git.
