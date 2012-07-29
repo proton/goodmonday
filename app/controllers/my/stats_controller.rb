@@ -19,13 +19,13 @@ class My::StatsController < My::BaseController
         @date_stop = Date.parse(params[:filter][:date_stop])
       end
       if params[:filter][:offer] && !params[:filter][:offer].empty?
-        @offer_id = params[:filter][:offer]
+        @offer_id = BSON::ObjectId(params[:filter][:offer])
       end
       if params[:filter][:ground] && !params[:filter][:ground].empty?
-        @ground_id = params[:filter][:ground]
+        @ground_id = BSON::ObjectId(params[:filter][:ground])
       end
       if params[:filter][:sub_id] && !params[:filter][:sub_id].empty?
-        @sub_id = params[:filter][:sub_id]
+        @sub_id = BSON::ObjectId(params[:filter][:sub_id])
       end
     end
     t_start =  Time.utc(@date_start.year,@date_start.month,@date_start.day)
