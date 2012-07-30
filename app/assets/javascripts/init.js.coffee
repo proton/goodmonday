@@ -13,4 +13,4 @@ $ ->
   $(".typeahead").typeahead()
   $("a[rel=tooltip]").tooltip()
   #chosen
-  $('select').data("placeholder","Выберите элементы из списка...").chosen()
+  $('select').attr("data-placeholder","Выберите элементы из списка...").chosen(allow_single_deselect: true)
