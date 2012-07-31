@@ -31,7 +31,7 @@ class Admin::AchievementsController < Admin::BaseController
 	def and_crumbs
 		add_crumb "Пользователи", users_path
 		add_crumb "Пользователь «#{@user.email}»", user_path(@user)
-		add_crumb "Достижения целей", achievements_path(@user)
+		add_crumb "Достижения целей", user_achievements_path(@user)
 	end
 
 end
