@@ -15,6 +15,12 @@ class Admin::AchievementsController < Admin::BaseController
 		@achievement = @user.achievements.find(params[:id])
 		add_crumb "Достижение"
 	end
+
+	def cancel
+		@achievement = @user.achievements.find(params[:achievement_id])
+		flash[:notice] = 'Достижение отменено.' if @achievement.cancel!
+		espond_with(@achievement, :location => user_achievement_path(@user, @achievement))
+	end
 	
 	protected
 
