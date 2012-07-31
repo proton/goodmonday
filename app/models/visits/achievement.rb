@@ -125,16 +125,12 @@ class Achievement
   end
 
   def cancel!
-    case self.state
-    when :pending
-      self.state = :denied
-    when :accepted
+    if self.state==:accepted
       offer = self.offer
       ground = self.ground
       target_id = self.target_id
-      target = offer.targets.find(target_id)
-      advertiser_id = offer.advertiser.id
-      webmaster_id = ground.webmaster.id
+      advertiser_id = offer.advertiser_id
+      webmaster_id = ground.webmaster_id
       webmaster = self.webmaster
       advertiser = self.advertiser
       webmaster_amount = self.webmaster_amount
@@ -158,36 +154,42 @@ class Achievement
 
       case self.payment_state
       when :unpaid
-        webmaster.hold_balance -= self.webmaster_amount
-        webmaster.save!
-        advertiser.hold_balance += self.advertiser_amount
-        advertiser.save!
+        if webmaster
+          webmaster.hold_balance -= self.webmaster_amount
+          webmaster.save!
+        end
+        if advertiser
+          advertiser.hold_balance += self.advertiser_amount
+          advertiser.save!
+        end
       when :paid
-        webmaster.balance -= webmaster_amount
-        webmaster.total_payments -= webmaster_amount
-        p = webmaster.payments.find(self.webmaster_payment_id)
-        p.delete
-        webmaster.save!
-        #
-        advertiser.balance += advertiser_amount
-        advertiser.total_payments += advertiser_amount
-        p = advertiser.payments.find(self.advertiser_payment_id)
-        p.delete
-        advertiser.save!
-        #
-        affiliator = webmaster.affiliator
-        if affiliator && self.affiliator_payment_id
-          p = advertiser.payments.find(self.affiliator_payment_id)
-          affiliator_amount = p.amount
+        if webmaster
+          webmaster.balance -= webmaster_amount
+          webmaster.total_payments -= webmaster_amount
+          p = webmaster.payments.find(self.webmaster_payment_id)
           p.delete
-          advertiser.balance -= affiliator_amount
-          affiliator.referal_total_payments -= affiliator_amount
-          affiliator.save!
+          webmaster.save!
+          #
+          affiliator = webmaster.affiliator
+          if affiliator && self.affiliator_payment_id
+            p = advertiser.payments.find(self.affiliator_payment_id)
+            affiliator_amount = p.amount
+            p.delete
+            advertiser.balance -= affiliator_amount
+            affiliator.referal_total_payments -= affiliator_amount
+            affiliator.save!
+          end
+        end
+        if advertiser
+          advertiser.balance += advertiser_amount
+          advertiser.total_payments += advertiser_amount
+          p = advertiser.payments.find(self.advertiser_payment_id)
+          p.delete
+          advertiser.save!
         end
       end
-    when :denied
-      #do nothing
     end
+    self.state = :denied
     self.save!
   end
 end

@@ -31,7 +31,7 @@
 %b= 'Статус:'
 = state_label @achievement.state
 - unless @achievement.state==:denied
-	= link_to 'Отменить', user_achievement_cancel_path(@user, @achievement), :class => "btn btn-danger"
+	= link_to 'Отменить', user_achievement_cancel_path(@user, @achievement), :class => "btn btn-danger btn-mini"
 %br
 %br
 

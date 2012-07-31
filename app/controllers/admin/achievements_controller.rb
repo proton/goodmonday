@@ -19,7 +19,7 @@ class Admin::AchievementsController < Admin::BaseController
 	def cancel
 		@achievement = @user.achievements.find(params[:achievement_id])
 		flash[:notice] = 'Достижение отменено.' if @achievement.cancel!
-		espond_with(@achievement, :location => user_achievement_path(@user, @achievement))
+    redirect_to user_achievement_path(@user, @achievement)
 	end
 	
 	protected
