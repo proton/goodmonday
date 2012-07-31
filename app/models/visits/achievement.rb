@@ -184,6 +184,7 @@ class Achievement
           affiliator.referal_total_payments -= affiliator_amount
           affiliator.save!
         end
+      end
     when :denied
       #do nothing
     end
