@@ -47,7 +47,7 @@ class Achievement
   end
 
   def pay
-    return false if self.state!=:accepted || self.payment_state!=unpaid #TODO: advanced check for state
+    return false if self.state!=:accepted || self.payment_state!=:unpaid #TODO: advanced check for state
     webmaster_amount = self.webmaster_amount
     advertiser_amount = self.advertiser_amount
     if self.advertiser.can_pay? advertiser_amount
