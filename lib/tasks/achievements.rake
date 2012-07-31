@@ -88,7 +88,7 @@ namespace :achievements do
             #price = item.at('price').inner_text.to_f
             #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
           elsif state=='30'
-            achievement.state = :denied
+            achievement.cancel!
           end
           achievement.created_at = DateTime.parse(item.at('date').inner_text+' +0400')
           achievement.save
@@ -132,7 +132,7 @@ namespace :achievements do
 						if status==1
               achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
 						elsif status==3
-							achievement.state = :denied
+							achievement.cancel!
 						end
 						achievement.save
 					end
