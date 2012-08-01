@@ -3,7 +3,7 @@
 class Admin::DebtorsController < Admin::BaseController
 
 	def index
-    @users = User.collection.find({'$where' => 'this.hold_balance < this.overdraft', '_type' => 'Advertiser'})
+    @users = User.collection.find({'$where' => 'this.hold_balance_cents < this.overdraft_cents', '_type' => 'Advertiser'})
 		add_crumb "Должники"
 	end
 end
