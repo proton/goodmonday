@@ -52,31 +52,31 @@ class Achievement
     advertiser_amount = self.advertiser_amount
     if self.advertiser.can_pay? advertiser_amount
       webmaster = self.webmaster
-      webmaster.balance += webmaster_amount
       webmaster.hold_balance -= webmaster_amount
       webmaster.total_payments += webmaster_amount
+      webmaster.save!
       p = webmaster.payments.new(description: 'Перечисление средств за цель')
       p.amount = webmaster_amount
-      webmaster.save!
+      p.save!
       self.webmaster_payment_id = p.id
       #
       advertiser = self.advertiser
-      advertiser.balance -= advertiser_amount
       advertiser.hold_balance += advertiser_amount
       advertiser.total_payments += advertiser_amount
+      advertiser.save!
       p = advertiser.payments.new(description: 'Перечисление средств за цель')
       p.amount = -advertiser_amount
-      advertiser.save!
+      p.save!
       self.advertiser_payment_id = p.id
       #
       affiliator = webmaster.affiliator
       if affiliator
         affiliator_amount = webmaster_amount*0.05
-        p = affiliator.payments.new(description: 'Перечисление средств по реферальной программе')
-        p.amount = affiliator_amount
-        advertiser.balance += affiliator_amount
         affiliator.referal_total_payments += affiliator_amount
         affiliator.save!
+        p = affiliator.payments.new(description: 'Перечисление средств по реферальной программе')
+        p.amount = affiliator_amount
+        p.save!
         self.affiliator_payment_id = p.id
       end
       #
