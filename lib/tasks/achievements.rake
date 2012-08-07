@@ -1,3 +1,5 @@
+# coding: utf-8
+
 namespace :achievements do
   namespace :collect do
 
@@ -96,7 +98,50 @@ namespace :achievements do
       end
     end
 
-    task :all => [:aviasales, :topshop]
+    task :domadengi => :environment do
+      offer = find_marked_offer('domadengi')
+      next unless offer
+      target = find_marked_target(offer, 'domadengi_order')
+      next unless target
+
+      require 'hpricot'
+      require 'open-uri'
+
+      url = "http://secure.domadengi.ru/partner/xml/5194c858bdf337b3bdb1b4b5fb507d97/report.xml"
+
+      doc = Hpricot(open(url))
+      (doc/:item).each do |item|
+        #
+        order_id = item.at('ID_CRON').inner_text
+        state = item.at('STATUS').inner_text
+        achievement = offer.achievements.where(:order_id => order_id).first
+        #if achievement
+        #  #next if achievement.is_accepted?
+        #  #if state=='paid' && achievement.state!=:accepted
+        #  #  #price = item.at('price').inner_text.to_f
+        #  #  #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+        #  #  #achievement.save
+        #  #end
+        #else
+        #  visitor_id = marker.split('?visitor=').second
+        #  next unless visitor_id
+        #  visitor = Visitor.find(visitor_id)
+        #  achievement = Achievement.new
+        #  achievement.build_prototype(offer, visitor, target.id)
+        #  achievement.order_id = order_id
+        #  if state=='Займ одобрен'
+        #    #price = item.at('price').inner_text.to_f
+        #    #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+        #  elsif state=='Отказ'
+        #    achievement.cancel!
+        #  end
+        #  achievement.created_at = DateTime.parse(item.at('date').inner_text+' +0400')
+        #  achievement.save
+        #end
+      end
+    end
+
+    task :all => [:aviasales, :topshop, :domadengi]
   end
 
 	task :confirm => :environment do
