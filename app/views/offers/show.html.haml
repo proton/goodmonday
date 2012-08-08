@@ -10,15 +10,15 @@
 %hr
 %b Категория:
 = @offer.category.title
-%br
-%b Выплачено:
-= number_to_currency @offer.payments
-%br
-%b EPC:
-= number_to_currency @offer.epc
-%br
-%b eEPC:
-= number_to_currency (@offer.epc*1000)
+-#%br
+-#%b Выплачено:
+-#= number_to_currency @offer.payments
+-#%br
+-#%b EPC:
+-#= number_to_currency @offer.epc
+-#%br
+-#%b eEPC:
+-#= number_to_currency (@offer.epc*1000)
 %br
 %b PostClick:
 = "#{@offer.cookie_time} дней"
