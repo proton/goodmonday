@@ -114,30 +114,34 @@ namespace :achievements do
         #
         order_id = item.at('ID_CRON').inner_text
         state = item.at('STATUS').inner_text
+        price = item.at('PRICE').inner_text.to_f
         achievement = offer.achievements.where(:order_id => order_id).first
-        #if achievement
-        #  #next if achievement.is_accepted?
-        #  #if state=='paid' && achievement.state!=:accepted
-        #  #  #price = item.at('price').inner_text.to_f
-        #  #  #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
-        #  #  #achievement.save
-        #  #end
-        #else
-        #  visitor_id = marker.split('?visitor=').second
-        #  next unless visitor_id
-        #  visitor = Visitor.find(visitor_id)
-        #  achievement = Achievement.new
-        #  achievement.build_prototype(offer, visitor, target.id)
-        #  achievement.order_id = order_id
-        #  if state=='Займ одобрен'
-        #    #price = item.at('price').inner_text.to_f
-        #    #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
-        #  elsif state=='Отказ'
-        #    achievement.cancel!
-        #  end
-        #  achievement.created_at = DateTime.parse(item.at('date').inner_text+' +0400')
-        #  achievement.save
-        #end
+        if achievement [:pending, :accepted, :denied]
+          if state=='Займ одобрен' && achievement.state!=:accepted
+            achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+            achievement.save
+          elsif state=='Отказ' && achievement.state!=:denied
+            achievement.cancel!
+            achievement.save
+          end
+        else
+          visitor_id = item.at('MANAGER_NAME').inner_text
+          next unless visitor_id
+          next if visitor_id.empty?
+          visitor = Visitor.where(:id => visitor_id).first
+          next unless visitor
+          #
+          achievement = Achievement.new
+          achievement.build_prototype(offer, visitor, target.id)
+          achievement.order_id = order_id
+          if state=='Займ одобрен'
+            achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+          elsif state=='Отказ'
+            achievement.cancel!
+          end
+          achievement.created_at = DateTime.parse(item.at('TIMESTAMP_X').inner_text+' +0400')
+          achievement.save
+        end
       end
     end
 
