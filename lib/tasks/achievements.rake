@@ -128,7 +128,7 @@ namespace :achievements do
           visitor_id = item.at('manager_name').inner_text
           next unless visitor_id
           next if visitor_id.empty?
-          visitor = Visitor.where(:id => visitor_id).first
+          visitor = Visitor.where(:_id => visitor_id).first
           next unless visitor
           #
           achievement = Achievement.new
