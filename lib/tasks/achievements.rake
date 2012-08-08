@@ -112,9 +112,9 @@ namespace :achievements do
       doc = Hpricot(open(url))
       (doc/:item).each do |item|
         #
-        order_id = item.at('ID_CRON').inner_text
-        state = item.at('STATUS').inner_text
-        price = item.at('PRICE').inner_text.to_f
+        order_id = item.at('id_cron').inner_text
+        state = item.at('status').inner_text
+        price = item.at('price').inner_text.to_f
         achievement = offer.achievements.where(:order_id => order_id).first
         if achievement [:pending, :accepted, :denied]
           if state=='Займ одобрен' && achievement.state!=:accepted
@@ -125,7 +125,7 @@ namespace :achievements do
             achievement.save
           end
         else
-          visitor_id = item.at('MANAGER_NAME').inner_text
+          visitor_id = item.at('manager_name').inner_text
           next unless visitor_id
           next if visitor_id.empty?
           visitor = Visitor.where(:id => visitor_id).first
@@ -139,7 +139,7 @@ namespace :achievements do
           elsif state=='Отказ'
             achievement.cancel!
           end
-          achievement.created_at = DateTime.parse(item.at('TIMESTAMP_X').inner_text+' +0400')
+          achievement.created_at = DateTime.parse(item.at('timestamp_x').inner_text+' +0400')
           achievement.save
         end
       end
