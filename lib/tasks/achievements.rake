@@ -116,7 +116,7 @@ namespace :achievements do
         state = item.at('status').inner_text
         price = item.at('price').inner_text.to_f
         achievement = offer.achievements.where(:order_id => order_id).first
-        if achievement [:pending, :accepted, :denied]
+        if achievement
           if state=='Займ одобрен' && achievement.state!=:accepted
             achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
             achievement.save
