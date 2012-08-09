@@ -71,14 +71,18 @@ namespace :achievements do
         order_id = item.at('order_id').inner_text
         marker = item.at('key').inner_text
         state = item.at('status').inner_text
+        price = item.at('reward').inner_text.to_f
+        advertiser_price = Money.new(price)
+        webmaster_price = advertiser_price*0.7
         achievement = offer.achievements.where(:order_id => order_id).first
         if achievement
-          #next if achievement.is_accepted?
-          #if state=='paid' && achievement.state!=:accepted
-          #  #price = item.at('price').inner_text.to_f
-          #  #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
-          #  #achievement.save
-          #end
+          if state=='20' && achievement.state!=:accepted
+            achievement.accept(webmaster_price, advertiser_price)
+            achievement.save
+          elsif state=='30' && achievement.state!=:denied
+            achievement.cancel!
+            achievement.save
+          end
         else
           visitor_id = marker.split('?visitor=').second
           next unless visitor_id
@@ -87,8 +91,7 @@ namespace :achievements do
           achievement.build_prototype(offer, visitor, target.id)
           achievement.order_id = order_id
           if state=='20'
-            #price = item.at('price').inner_text.to_f
-            #achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+            achievement.accept(webmaster_price, advertiser_price)
           elsif state=='30'
             achievement.cancel!
           end
