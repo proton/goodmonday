@@ -32,6 +32,11 @@
 = state_label @achievement.state
 %br
 %br
+- if current_user.class==Advertiser && @achievement.order_id && !@achievement.order_id.empty?
+	%b= 'Номер заказа:'
+	= @achievement.order_id
+	%br
+%br
 
 %h3= 'Информация о посетителе'
 %b= 'Браузер:'
