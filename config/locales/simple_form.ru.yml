@@ -97,6 +97,7 @@ ru:
         prc_prices_bronze: 'Стоимость процентная (Бронза)'
         prc_prices_silver: 'Стоимость процентная (Серебро)'
         prc_prices_gold: 'Стоимость процентная (Золото)'
+        price_text: 'Стоимость (текстом)'
         hold: 'Холд (дней)'
         cookieless_achievement: 'Достижение целей без использования cookie'
         achievement_task_marker: 'Идетификатор для задачи для сбора достижений целей'

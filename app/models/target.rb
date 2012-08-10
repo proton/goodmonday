@@ -15,6 +15,8 @@ class Target
   field :prc_price, type: Float, default: 0.0
   field :prc_prices_bronze, type: Float, default: 0.0
 
+  field :price_text, type: String
+
 	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
 	field :confirm_url, type: String
   field :hold, type: Integer, default: 20

@@ -55,6 +55,11 @@
 		- @offer.targets.accepted.each do |target|
 			%tr
 				%td= target.title
-				%td= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
+				%td
+					- if target.price_text && !target.price_text.empty?
+						= target.price_text
+					- else
+						= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
+
 				%td= target.repeatable ? 'Да' : 'Нет'
 				%td= "#{target.hold} дней"
