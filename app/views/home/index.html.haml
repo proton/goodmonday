@@ -89,10 +89,12 @@
 						= offer.category.title
 						%br
 						EPC:
-						= number_to_currency offer.epc
+						-
+						-#= number_to_currency offer.epc
 						%br
 						Выплаты:
-						= number_to_currency offer.payments
+						-
+						-#= number_to_currency offer.payments
 #partners_block
 	-#%h5 Наши партнеры
 	-#%hr
