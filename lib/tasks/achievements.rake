@@ -148,7 +148,51 @@ namespace :achievements do
       end
     end
 
-    task :all => [:aviasales, :topshop, :domadengi]
+    task :nikitaonline => :environment do
+      offer = find_marked_offer('nikitaonline')
+      next unless offer
+      target = find_marked_target(offer, 'nikitaonline_payments')
+      next unless target
+
+      require 'hpricot'
+      require 'open-uri'
+      require 'digest/md5'
+
+      uid = '8504521'
+      pwd = 'j8ti48r'
+      date_from = (Date.today-1.month).to_s
+      date_to = Date.yesterday.to_s
+      hash = Digest::MD5.hexdigest(uid+Digest::MD5.hexdigest(pwd)+date_from+date_to)
+      url = "http://shop.nikitaonline.ru/xml/refstat_partner_xml.php?stat=payments&dfrom=#{date_from}&dto=#{date_to}&pid=all&parent_uid=#{uid}&format=xml&groupby_days=1&groupby_pids=1&md5=#{hash}"
+
+      doc = Hpricot(open(url))
+      (doc/:stats/:stat).each do |item|
+        #
+        visitor_id = item.at('external_key').inner_text
+        day = item.at('day').inner_text
+        sum = item.at('sum').inner_text.to_f
+        order_id = visitor_id.to_s+'='+day
+
+        next if sum==0.0
+
+        achievement = offer.achievements.where(:order_id => order_id).first
+        next if achievement
+
+        next unless visitor_id
+        next if visitor_id.empty?
+        visitor = Visitor.where(:_id => visitor_id).first
+        next unless visitor
+
+        achievement = Achievement.new
+        achievement.build_prototype(offer, visitor, target.id)
+        achievement.order_id = order_id
+        achievement.accept(target.webmaster_price(sum), target.advertiser_price(sum))
+        achievement.created_at = DateTime.parse(day)
+        achievement.save
+      end
+    end
+
+    task :all => [:aviasales, :topshop, :domadengi, :nikitaonline]
   end
 
 	task :confirm => :environment do
