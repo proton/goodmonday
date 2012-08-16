@@ -91,6 +91,7 @@ Cpa::Application.routes.draw do
 					get :cancel
 				end
 			end
+      resources :stats
       resources :articles
       resources :news
       resources :debtors
