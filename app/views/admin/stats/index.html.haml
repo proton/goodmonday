@@ -1,0 +1,42 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Название'
+			%th= 'Категория'
+			%th= 'Цели'
+			%th= 'Достижения целей'
+			%th= 'Выплачено'
+			%th= 'EPC'
+			%th= 'eEPC'
+			%th= 'PostClick'
+	%tbody
+		- @offers.each do |offer|
+			%tr{:class => offer.is_accepted? ? '' : 'muted'}
+				%td
+					= offer.title
+					- if !offer.url.empty? && offer.url.start_with?('http')
+						%br
+						= link_to offer.url, offer.url
+				%td= offer.category.title
+				%td= state_label(offer.moderated_state)
+				%td
+					%table.table.table-bordered.table-condensed
+						%thead
+							%tr
+								%th= 'Цель'
+								%th= 'Стоимость'
+								%th= 'Холд'
+						- offer.targets.accepted.each do |target|
+							%tr
+								%td= target.title
+								%td
+									- if target.price_text && !target.price_text.empty?
+										= target.price_text
+									- else
+										= show_target_price(target.prc_prices_bronze, target.fixed_prices_bronze)
+								%td= "#{target.hold} дней"
+				%td= offer.achievements.size
+				%td= number_to_currency offer.payments
+				%td= number_to_currency offer.epc
+				%td= number_to_currency (offer.epc*1000)
+				%td= "#{offer.cookie_time} дней"
