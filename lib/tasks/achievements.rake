@@ -149,10 +149,21 @@ namespace :achievements do
     end
 
     task :nikitaonline => :environment do
-      offer = find_marked_offer('nikitaonline')
-      next unless offer
-      target = find_marked_target(offer, 'nikitaonline_payments')
-      next unless target
+      offers = {}
+      offers[3] = find_marked_offer('nikitaonline_dom3')
+      offers[9] = find_marked_offer('nikitaonline_sphere')
+      offers[34] = find_marked_offer('nikitaonline_rappelz')
+      offers[40] = find_marked_offer('nikitaonline_4story')
+      offers[42] = find_marked_offer('nikitaonline_dragononline')
+      offers[44] = find_marked_offer('nikitaonline_fantazium')
+      offers[48] = find_marked_offer('nikitaonline_karos')
+      offers[54] = find_marked_offer('nikitaonline_kok')
+      #offers[503] = find_marked_offer('nikitaonline') #Lost Magic
+
+      targets = {}
+      offers.each do |key, offer|
+        targets[key] = find_marked_target(offer, 'nikitaonline_payments') if offer
+      end
 
       require 'hpricot'
       require 'open-uri'
@@ -172,6 +183,12 @@ namespace :achievements do
         day = item.at('day').inner_text
         sum = item.at('sum').inner_text.to_f
         order_id = visitor_id.to_s+'='+day
+        pid = item.at('pid').inner_text.to_i
+
+        offer = offers[pid]
+        next unless offer
+        target = targets[pid]
+        next unless target
 
         next if sum==0.0
 
