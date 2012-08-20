@@ -19,33 +19,25 @@ class Member < User
   end
 
   def common_stats
-    if self.is_a? Webmaster
-      user_click_counters = StatClickCounter.where(:webmaster_id => self.id)
-      user_target_counters = StatTargetCounter.where(:webmaster_id => self.id)
-    elsif self.is_a? Advertiser
-      user_click_counters = StatClickCounter.where(:advertiser_id => self.id)
-      user_target_counters = StatTargetCounter.where(:advertiser_id => self.id)
-    end
+    user_counters = case current_user.class
+      when Webmaster
+        StatCounter.where(:webmaster_id => self.id)
+      when Advertiser
+        StatCounter.where(:advertiser_id => self.id)
+      end
     #
-    click_counters = {}
-    click_counters[:today] = user_click_counters.where(:date => Date.today)
-    click_counters[:yesterday] = user_click_counters.where(:date => Date.yesterday)
-    click_counters[:week] = user_click_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.week)
-    click_counters[:month] = user_click_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.month)
-    click_counters[:total] = user_click_counters.where(:date => Date.new(0))
-    #
-    target_counters = {}
-    target_counters[:today] = user_target_counters.where(:date => Date.today)
-    target_counters[:yesterday] = user_target_counters.where(:date => Date.yesterday)
-    target_counters[:week] = user_target_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.week)
-    target_counters[:month] = user_target_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.month)
-    target_counters[:total] = user_target_counters.where(:date => Date.new(0))
+    counters = {}
+    counters[:today] = user_counters.where(:date => Date.today)
+    counters[:yesterday] = user_counters.where(:date => Date.yesterday)
+    counters[:week] = user_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.week)
+    counters[:month] = user_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.month)
+    counters[:total] = user_counters.where(:date => Date.new(0))
     #
     stat = {:click => {}, :target => {}, :income => {}}
     for time in [:today, :yesterday, :week, :month, :total] do
-      stat[:click][time] = click_counters[time].sum(:clicks)
-      stat[:target][time] = target_counters[time].sum(:targets)
-      stat[:income][time] = target_counters[time].sum(:income)
+      stat[:click][time] = counters[time].sum(:clicks)
+      stat[:target][time] = counters[time].sum(:targets)
+      stat[:income][time] = counters[time].sum(:income)
       for subj in [:click, :target, :income]
         stat[subj][time] = 0 unless stat[subj][time]
       end

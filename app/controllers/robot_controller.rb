@@ -121,7 +121,7 @@ class RobotController < ApplicationController
  		end
 
     #collecting statistic:
-    StatClickCounter.register_click(ground, offer, sub_id)
+    StatCounter.register_click(ground, offer, sub_id)
 
     if offer.redirect_options && !offer.redirect_options.empty?
       redirect_options = offer.redirect_options

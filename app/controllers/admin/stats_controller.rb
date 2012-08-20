@@ -42,23 +42,19 @@ class Admin::StatsController < Admin::BaseController
       cond[:advertiser_id] = current_user.id
     end
 
-    click_func = "function(obj,prev) { prev.click_count += obj.clicks}"
-    click_h = {key: :date, cond: cond, initial: {click_count: 0}, reduce: click_func}
+    click_func = "function(obj,prev) { }"
+    click_h = {key: :date, cond: cond, initial: {}, reduce: click_func}
     click_stats = StatClickCounter.collection.group(click_h)
-    target_func = "function(obj,prev) { prev.target_count += obj.targets; prev.income_count += obj.income}"
-    target_h = {key: :date, cond: cond, initial: {target_count: 0, income_count: 0}, reduce: target_func}
-    target_stats = StatTargetCounter.collection.group(target_h)
 
-    @click_stat_hash = {}
-    click_stats.each do |stat|
-      @click_stat_hash[stat['date']] = stat
-    end
-    @target_stat_hash = {}
-    target_stats.each do |stat|
-      @target_stat_hash[stat['date']] = stat
-    end
-
-    @dates = @click_stat_hash.keys | @target_stat_hash.keys
+    func = "function(obj,prev) { "
+    func += "prev.target_count += obj.targets; "
+    func += "prev.income_count += obj.income; "
+    func += "prev.expenditure_count += obj.expenditure; "
+    func += "prev.click_count += obj.clicks}"
+    initial_params = {target_count: 0, income_count: 0, expenditure_count: 0¸ click_count: 0}
+    h = {key: :date, cond: cond, initial: initial_params, reduce: target_func}
+    
+    @stats = StatCounter.collection.group(h)
   end
   
 end

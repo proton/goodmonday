@@ -24,12 +24,13 @@
 					- periods.each do |period|
 						%td= @common_stat[subject][period].to_i
 				%tr
-					- subject = :income
 					%th
 						- case current_user.class
 							- when Webmaster
+								- subject = :income
 								= 'Доход'
 							- when Advertiser
+								- subject = :expenditure
 								= 'Расход'
 					- periods.each do |period|
 						%td= number_to_currency(@common_stat[subject][period]/100)

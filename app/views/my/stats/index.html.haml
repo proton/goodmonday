@@ -15,24 +15,21 @@
 					%th PPC
 					%th CPC
 			%tbody
-				- @dates.each do |date|
-				- click_stat = @click_stat_hash[date]
-				- target_stat = @target_stat_hash[date]
+				- @stats.each do |date, stat|
+					- income = case current_user.class
+						- when Webmaster
+							stat['income_count'].to_i
+						- when Advertiser
+							stat['expenditure_count'].to_i
+					- clicks = stat['click_count'].to_i
+					- targets = stat['target_count'].to_i
 					%tr
 						%td= date.strftime('%d/%m/%Y')
-						%td
-							- if click_stat
-								= click_stat['click_count'].to_i
-							- else
-								= '0'
-						%td
-							- if target_stat
-								= target_stat['target_count'].to_i
-							- else
-								= '0'
-						%td= number_to_currency(target_stat['income_count']/100) if target_stat
-						%td= "%.5f" % (target_stat['target_count']/click_stat['click_count']) if click_stat && target_stat
-						%td= number_to_currency(target_stat['income_count'].to_f/100/click_stat['click_count']) if click_stat && target_stat
+						%td= clicks
+						%td= targets
+						%td= number_to_currency(income/100)
+						%td= "%.5f" % (targets.to_f/clicks)
+						%td= number_to_currency(income.to_f/100/clicks)
 	.span3
 		.well
 			%b Фильтрация
