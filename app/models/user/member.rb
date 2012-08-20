@@ -21,10 +21,11 @@ class Member < User
   def common_stats
     if self.is_a? Webmaster
       user_click_counters = StatClickCounter.where(:webmaster_id => self.id)
+      user_target_counters = StatTargetCounter.where(:webmaster_id => self.id)
     elsif self.is_a? Advertiser
       user_click_counters = StatClickCounter.where(:advertiser_id => self.id)
+      user_target_counters = StatTargetCounter.where(:advertiser_id => self.id)
     end
-    user_target_counters = StatTargetCounter.where(:user_id => self.id)
     #
     click_counters = {}
     click_counters[:today] = user_click_counters.where(:date => Date.today)

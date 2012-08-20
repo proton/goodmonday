@@ -110,10 +110,10 @@ class Achievement
     offer.save
 
     #collecting statistic:
-    webmaster_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
-    advertiser_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: advertiser_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
-    webmaster_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
-    advertiser_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: advertiser_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
+    webmaster_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, webmaster_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
+    advertiser_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
+    webmaster_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
+    advertiser_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
     webmaster_today_stat.inc(:targets, 1)
     advertiser_today_stat.inc(:targets, 1)
     webmaster_total_stat.inc(:targets, 1)
@@ -139,10 +139,10 @@ class Achievement
       offer.payments -= webmaster_amount
       offer.save
 
-      webmaster_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
-      advertiser_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: advertiser_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
-      webmaster_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
-      advertiser_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, user_id: advertiser_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
+      webmaster_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, webmaster_id: webmaster_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
+      advertiser_today_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, date: Date.today, sub_id: self.sub_id, target_id: target_id)
+      webmaster_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
+      advertiser_total_stat = StatTargetCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
       webmaster_today_stat.inc(:targets, -1)
       advertiser_today_stat.inc(:targets, -1)
       webmaster_total_stat.inc(:targets, -1)

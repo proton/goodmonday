@@ -4,6 +4,8 @@ class StatTargetCounter
   belongs_to :ground, index: true
   belongs_to :offer, index: true
   belongs_to :user, index: true
+  belongs_to :advertiser, index: true
+  belongs_to :webmaster, index: true
 
   field :date, type: Date
   field :sub_id, type: String
