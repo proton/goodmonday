@@ -15,7 +15,7 @@
 					%th PPC
 					%th CPC
 			%tbody
-				- @stats.each do |date, stat|
+				- @stats.each do |stat|
 					- income = case current_user.class
 						- when Webmaster
 							stat['income_count'].to_i
@@ -24,7 +24,7 @@
 					- clicks = stat['click_count'].to_i
 					- targets = stat['target_count'].to_i
 					%tr
-						%td= date.strftime('%d/%m/%Y')
+						%td= stat.date.strftime('%d/%m/%Y')
 						%td= clicks
 						%td= targets
 						%td= number_to_currency(income/100)
