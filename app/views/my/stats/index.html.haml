@@ -35,9 +35,9 @@
 			%b Фильтрация
 			%br
 			%br
-			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'span2' } } do |f|
-				= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker span2' }
-				= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker span2' }
+			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'spanm' } } do |f|
+				= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker spanm' }
+				= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker spanm' }
 				- case current_user.class
 					- when Webmaster
 						= f.input :ground, :collection => current_user.grounds, :include_blank => true, :selected => @ground_id
