@@ -36,7 +36,7 @@ class Admin::StatsController < Admin::BaseController
     func += "prev.expenditure_count += obj.expenditure; "
     func += "prev.clicks_count += obj.clicks}"
     initial_params = {targets_count: 0, income_count: 0, expenditure_count: 0, clicks_count: 0}
-    h = {key: :date, cond: cond, initial: initial_params, reduce: func}
+    h = {key: @group_by, cond: cond, initial: initial_params, reduce: func}
 
     @stats = StatCounter.collection.group(h)
   end
