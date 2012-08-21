@@ -27,9 +27,10 @@
 						%td= stat['date'].strftime('%d/%m/%Y')
 						%td= clicks
 						%td= targets
-						%td= number_to_currency(income/100)
+						%td= income
+						-#%td= number_to_currency(income/100)
 						%td= "%.5f" % (targets.to_f/clicks)
-						%td= number_to_currency(income.to_f/100/clicks)
+						-#%td= number_to_currency(income.to_f/100/clicks)
 	.span3
 		.well
 			%b Фильтрация

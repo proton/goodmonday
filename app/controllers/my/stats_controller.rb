@@ -43,10 +43,10 @@ class My::StatsController < My::BaseController
     end
 
     func = "function(obj,prev) { "
-    func += "prev.target_count += obj.targets; "
+    func += "prev.targets_count += obj.targets; "
     func += "prev.income_count += obj.income; "
     func += "prev.expenditure_count += obj.expenditure; "
-    func += "prev.click_count += obj.clicks}"
+    func += "prev.clicks_count += obj.clicks}"
     initial_params = {targets_count: 0, income_count: 0, expenditure_count: 0, clicks_count: 0}
     h = {key: :date, cond: cond, initial: initial_params, reduce: func}
     
