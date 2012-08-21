@@ -22,7 +22,7 @@
 								- when :date
 									= stat['date'].strftime('%d/%m/%Y')
 								- else
-									= @group_by.to_s.camelcase.constantize.find(stat[@group_by.to_s])
+									= @group_by.to_s.camelcase.constantize.find(stat[@group_by.to_s]).title
 						%td= clicks
 						%td= targets
 						%td= number_to_currency(income/100)
