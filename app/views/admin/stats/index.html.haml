@@ -29,9 +29,9 @@
 									- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat[@group_by.to_s])
 									- if [:advertiser_id, :webmaster_id].include? (@group_by)
 										= link_to obj.title, user_path(obj)
-									- elseif @group_by==:ground_id
+									- elsif @group_by==:ground_id
 										= link_to obj.title, user_ground_path(obj.webmaster, obj)
-									- elseif @group_by==:offer_id
+									- elsif @group_by==:offer_id
 										= link_to obj.title, user_offer_path(obj.advertiser, obj)
 									- else
 										= obj.title
