@@ -42,17 +42,13 @@ class Admin::StatsController < Admin::BaseController
       cond[:advertiser_id] = current_user.id
     end
 
-    click_func = "function(obj,prev) { }"
-    click_h = {key: :date, cond: cond, initial: {}, reduce: click_func}
-    click_stats = StatClickCounter.collection.group(click_h)
-
     func = "function(obj,prev) { "
     func += "prev.target_count += obj.targets; "
     func += "prev.income_count += obj.income; "
     func += "prev.expenditure_count += obj.expenditure; "
     func += "prev.click_count += obj.clicks}"
-    initial_params = {target_count: 0, income_count: 0, expenditure_count: 0¸ click_count: 0}
-    h = {key: :date, cond: cond, initial: initial_params, reduce: target_func}
+    initial_params = {target_count: 0, income_count: 0, expenditure_count: 0, click_count: 0}
+    h = {key: :date, cond: cond, initial: initial_params, reduce: func}
     
     @stats = StatCounter.collection.group(h)
   end
