@@ -21,10 +21,10 @@
 							stat['income_count'].to_i
 						- when Advertiser
 							stat['expenditure_count'].to_i
-					- clicks = stat['click_count'].to_i
-					- targets = stat['target_count'].to_i
+					- clicks = stat['clicks_count'].to_i
+					- targets = stat['targets_count'].to_i
 					%tr
-						%td= stat.date.strftime('%d/%m/%Y')
+						%td= stat['date'].strftime('%d/%m/%Y')
 						%td= clicks
 						%td= targets
 						%td= number_to_currency(income/100)
