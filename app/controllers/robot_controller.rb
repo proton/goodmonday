@@ -70,9 +70,7 @@ class RobotController < ApplicationController
 
  		ground = Ground.find(ground_id)
     offer = Offer.find(offer_id)
-    if false
-      advert = 'c'
-    end
+    webmaster = ground.webmaster
 
     if offer.accept_custom_urls && params[:url] && !params[:url].empty? && params[:url].starts_with?('http')
       url = params[:url]
@@ -102,7 +100,6 @@ class RobotController < ApplicationController
  				if params[:sub_id] && !params[:sub_id].empty?
  					sub_id = params[:sub_id]
  					if sub_id && !sub_id.empty?
- 						webmaster = ground.webmaster
  						unless webmaster.sub_ids.include? sub_id
  							webmaster.sub_ids << sub_id
  							webmaster.save
