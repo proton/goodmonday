@@ -20,11 +20,10 @@
 						%td
 							- case @group_by
 								- when :date
-									- date_str = stat['date'].strftime('%d/%m/%Y')
-									- if date_str=='06/06/1905' #null date
+									- if @date_total
 										= 'Все'
 									- else
-										= date_str
+										= stat['date'].strftime('%d/%m/%Y')
 								- else
 									- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat[@group_by.to_s])
 									- if [:advertiser_id, :webmaster_id].include? (@group_by)
@@ -48,8 +47,9 @@
 			%br
 			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'spanm' } } do |f|
 				= f.input :date_total, :as => :select, :input_html => { :value => @date_total }, :selected => @date_total
-				= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker spanm' }
-				= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker spanm' }
+				.date_not_total{:class =>  @date_total ? 'muted' : ''}
+					= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker spanm', :disabled => @date_total}
+					= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker spanm', :disabled => @date_total}
 				= f.input :webmaster, :collection => Webmaster.all, :include_blank => true, :selected => @webmaster_id
 				= f.input :advertiser, :collection => Advertiser.all, :include_blank => true, :selected => @advertiser_id
 				= f.input :ground, :collection => Ground.all, :include_blank => true, :selected => @ground_id
@@ -57,3 +57,12 @@
 				= f.input :group_by, :collection => [:date, :webmaster_id, :advertiser_id, :offer_id, :ground_id], :selected => @group_by
 
 				= f.submit 'Фильтровать', :class => 'btn'
+
+:javascript
+	$(document).ready(function() {
+		$('#filter_date_total').change(function () {
+			var is_total = ($(this).val()=='true');
+			$('.date_not_total').toggleClass('muted', is_total);
+			$('.date_not_total input').prop('disabled', is_total);
+		});
+	});
