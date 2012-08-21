@@ -115,14 +115,27 @@ ru:
       banner:
         url: 'Ссылка'
       filter:
+        date_total: 'За весь период'
         date_start: 'От'
         date_stop: 'До'
+        webmaster: 'Вемастер'
+        advertiser: 'Рекламодатель'
         offer: 'Оффер'
         ground: 'Площадка'
         sub_id: 'Sub id'
+        group_by: 'Группировать по'
       payment:
         amount: 'Сумма'
         description: 'Описание'
+    options:
+      filter:
+        group_by:
+          date: 'Дата'
+          webmaster_id: 'Вемастер'
+          advertiser_id: 'Рекламодатель'
+          offer_id: 'Оффер'
+          ground_id: 'Площадка'
+
     hints:
       ground:
         ground_rotator_config:

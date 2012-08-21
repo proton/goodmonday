@@ -3,50 +3,45 @@
 		%table.table.table-striped.table-bordered.table-condensed
 			%thead
 				%tr
-					%th Дата
+					%th= t("simple_form.options.filter.group_by.#{@group_by}")
 					%th Клики
 					%th Цели
-					%th
-						- case current_user.class
-							- when Webmaster
-								= 'Доход'
-							- when Advertiser
-								= 'Расход'
+					%th Доход
+					%th Расход
 					%th PPC
 					%th CPC
 			%tbody
-				- @dates.each do |date|
-				- click_stat = @click_stat_hash[date]
-				- target_stat = @target_stat_hash[date]
+				- @stats.each do |stat|
+					- income = stat['income_count'].to_i
+					- expenditure = stat['expenditure_count'].to_i
+					- clicks = stat['clicks_count'].to_i
+					- targets = stat['targets_count'].to_i
 					%tr
-						%td= date.strftime('%d/%m/%Y')
 						%td
-							- if click_stat
-								= click_stat['click_count'].to_i
-							- else
-								= '0'
-						%td
-							- if target_stat
-								= target_stat['target_count'].to_i
-							- else
-								= '0'
-						%td= number_to_currency(target_stat['income_count']/100) if target_stat
-						%td= "%.5f" % (target_stat['target_count']/click_stat['click_count']) if click_stat && target_stat
-						%td= number_to_currency(target_stat['income_count'].to_f/100/click_stat['click_count']) if click_stat && target_stat
+							- case @group_by
+								- when :date
+									= stat['date'].strftime('%d/%m/%Y')
+								- else
+									= @group_by.to_s.camelcase.constantize.find(stat[@group_by.to_s])
+						%td= clicks
+						%td= targets
+						%td= number_to_currency(income/100)
+						%td= number_to_currency(expenditure/100)
+						%td= "%.5f" % (targets.to_f/clicks)
+						%td= number_to_currency(income.to_f/100/clicks)
 	.span3
 		.well
 			%b Фильтрация
 			%br
 			%br
-			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'span2' } } do |f|
-				= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker span2' }
-				= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker span2' }
-				- case current_user.class
-					- when Webmaster
-						= f.input :ground, :collection => current_user.grounds, :include_blank => true, :selected => @ground_id
-						= f.input :sub_id, :collection => current_user.sub_ids, :include_blank => true, :selected => @sub_id
-					- when Advertiser
-						= f.input :offer, :collection => current_user.offers, :include_blank => true, :selected => @offer_id
-						-#= f.input :target
+			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'spanm' } } do |f|
+				= f.input :date_total, :as => :select, :input_html => { :value => @date_total }, :selected => @date_total
+				= f.input :date_start, :input_html => { :value => @date_start, :class => 'date_picker spanm' }
+				= f.input :date_stop, :input_html => { :value => @date_stop, :class => 'date_picker spanm' }
+				= f.input :webmaster, :collection => Webmaster.all, :include_blank => true, :selected => @webmaster_id
+				= f.input :advertiser, :collection => Advertiser.all, :include_blank => true, :selected => @advertiser_id
+				= f.input :ground, :collection => Ground.all, :include_blank => true, :selected => @ground_id
+				= f.input :offer, :collection => Offer.all, :include_blank => true, :selected => @offer_id
+				= f.input :group_by, :collection => [:date, :webmaster_id, :advertiser_id, :offer_id, :ground_id], :selected => @group_by
 
 				= f.submit 'Фильтровать', :class => 'btn'

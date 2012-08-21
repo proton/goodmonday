@@ -14,6 +14,10 @@ class Member < User
   field :referal_count, type: Integer, default: 0
   money_field :referal_total_payments
 
+  def title
+    self.email
+  end
+
   def can_pay? sum
     (self.balance+self.overdraft) > sum
   end
