@@ -38,7 +38,7 @@ class My::StatsController < My::BaseController
     
     if current_user.class==Webmaster
       cond[:webmaster_id] = current_user.id
-    else
+    elsif current_user.class==Advertiser
       cond[:advertiser_id] = current_user.id
     end
 
@@ -51,6 +51,12 @@ class My::StatsController < My::BaseController
     h = {key: :date, cond: cond, initial: initial_params, reduce: func}
     
     @stats = StatCounter.collection.group(h)
+
+    if current_user.class==Webmaster
+      @user_offers = current_user.accepted_offers
+    elsif current_user.class==Advertiser
+      @user_offers = current_user.offers
+    end
   end
   
 end
