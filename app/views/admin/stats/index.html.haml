@@ -20,11 +20,11 @@
 						%td
 							- case @group_by
 								- when :date
-									- date = stat['date']
-									- if date==Date.parse('06/06/1905') #null date
+									- date_str = stat['date'].strftime('%d/%m/%Y')
+									- if date_str=='06/06/1905' #null date
 										= 'Все'
 									- else
-										= date.strftime('%d/%m/%Y')
+										= date_str
 								- else
 									- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat[@group_by.to_s])
 									- if [:advertiser_id, :webmaster_id].include? (@group_by)
