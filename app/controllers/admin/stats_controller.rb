@@ -5,17 +5,16 @@ class Admin::StatsController < Admin::BaseController
   def index
     add_crumb "Статистика"
 
-    if params[:filter]
-      @date_total = set_filter_param(true, :date_total, :boolean)
-      @date_start = set_filter_param(Date.today-2.weeks, :date_start, :date)
-      @date_stop = set_filter_param(Date.today, :date_stop, :date)
-      @webmaster_id = set_filter_param(nil, :webmaster, :id)
-      @advertiser_id = set_filter_param(nil, :advertiser, :id)
-      @ground_id = set_filter_param(nil, :ground, :id)
-      @offer_id = set_filter_param(nil, :offer, :id)
-      @sub_id = set_filter_param(nil, :sub_id, :text)
-      @group_by = set_filter_param(:offer_id, :group_by, :symbol)
-    end
+    @date_total = set_filter_param(true, :date_total, :boolean)
+    @date_start = set_filter_param(Date.today-2.weeks, :date_start, :date)
+    @date_stop = set_filter_param(Date.today, :date_stop, :date)
+    @webmaster_id = set_filter_param(nil, :webmaster, :id)
+    @advertiser_id = set_filter_param(nil, :advertiser, :id)
+    @ground_id = set_filter_param(nil, :ground, :id)
+    @offer_id = set_filter_param(nil, :offer, :id)
+    @sub_id = set_filter_param(nil, :sub_id, :text)
+    @group_by = set_filter_param(:offer_id, :group_by, :symbol)
+
     t_start =  Time.utc(@date_start.year,@date_start.month,@date_start.day)
     t_stop =  Time.utc(@date_stop.year,@date_stop.month,@date_stop.day)
 
