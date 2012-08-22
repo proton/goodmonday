@@ -23,7 +23,7 @@ class Member < User
   end
 
   def common_stats
-    user_counters = case current_user.class
+    user_counters = case self.class
       when Webmaster
         StatCounter.where(:webmaster_id => self.id)
       when Advertiser
