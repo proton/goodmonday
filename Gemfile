@@ -65,6 +65,8 @@ group :production do
 	gem 'unicorn'
 end
 
-gem 'hpricot' #for task achievements:confirm
+#for task achievements:confirm
+gem 'hpricot', :require => false
+gem 'mechanize', :require => false
 
 gem 'cucumber' #хз зачем, но без него не стартует ( O_o )

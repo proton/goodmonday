@@ -72,7 +72,7 @@ namespace :achievements do
         marker = item.at('key').inner_text
         state = item.at('status').inner_text
         price = item.at('reward').inner_text.to_f
-        advertiser_price = Money.new(price)
+        advertiser_price = Money.new(price*100) #переводим в копейки
         webmaster_price = advertiser_price*0.7
         achievement = offer.achievements.where(:order_id => order_id).first
         if achievement
@@ -143,6 +143,54 @@ namespace :achievements do
             achievement.cancel!
           end
           achievement.created_at = DateTime.parse(item.at('timestamp_x').inner_text+' +0400')
+          achievement.save
+        end
+      end
+    end
+
+    task :aforex => :environment do
+      offer = find_marked_offer('aforex')
+      next unless offer
+      target = find_marked_target(offer, 'aforex_record')
+      next unless target
+
+      require 'hpricot'
+      require 'mechanize'
+
+      agent = Mechanize.new
+      url = 'https://www.aforex.ru/sign_in'
+      agent.get(url)
+      form = agent.page.forms.first
+      form["session[email]"] = 'psavichev@gmail.com'
+      form["session[password]"] = 'Tk36KX7A'
+      form.submit
+
+      date_from = (Date.today-2.month).to_s
+      date_to = Date.tomorrow.to_s
+      url = "https://www.aforex.ru/partner/rewards/index.xml?aggregator=1&from=#{date_from}&to=#{date_to}"
+
+      doc = Hpricot(agent.get_file(url))
+      (doc/:records/:record).each do |item|
+        #
+        client_login = item.at('client-login').inner_text
+        #order_id = item.at('id_cron').inner_text  #TODO: хз, откуда брать
+        price = item.at('reward').inner_text.to_f
+        achievement = offer.achievements.where(:order_id => order_id).first
+        unless achievement
+          visitor_id = item.at('manager_name').inner_text #TODO: название колонки?
+          next unless visitor_id
+          next if visitor_id.empty?
+          visitor = Visitor.where(:_id => visitor_id).first
+          next unless visitor
+          #
+          achievement = Achievement.new
+          achievement.build_prototype(offer, visitor, target.id)
+          achievement.order_id = order_id
+          achievement.additional_info = item
+          advertiser_price = Money.new(price*100) #TODO: вознаграждение в долларах?
+          webmaster_price = advertiser_price*0.7
+          achievement.accept(webmaster_price, advertiser_price)
+          #
           achievement.save
         end
       end

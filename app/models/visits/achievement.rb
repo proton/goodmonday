@@ -29,6 +29,7 @@ class Achievement
   money_field :advertiser_amount
 
 	field :order_id, type: String #optional for manual confirmation
+  field :additional_info, type: String
 
   field :hold_date, type: Date
 
