@@ -304,7 +304,7 @@ namespace :achievements do
 
   task :pay => :environment do
     Achievement.accepted.unpaid.where(:hold_date.lte => Date.today).each do |achievement|
-      achievement.pay
+      achievement.pay unless achievement.webmaster.blocked
     end
 
   end

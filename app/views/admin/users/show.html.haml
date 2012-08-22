@@ -1,5 +1,18 @@
 .row
 	.span6
+		- if @user.is_a? Webmaster
+			Пользователь
+			- if @user.blocked
+				заблокирован
+				= link_to user_block_path(@user, :unblock => true), :class => 'btn btn-small btn-success' do
+					%i.icon-ok-circle.icon-white
+					= 'Разблокировать'
+			- else
+				активен
+				= link_to user_block_path(@user), :class => 'btn btn-small btn-danger' do
+					%i.icon-ban-circle.icon-white
+					= 'Заблокировать'
+			%hr
 		%b Его:
 		%br
 		%br

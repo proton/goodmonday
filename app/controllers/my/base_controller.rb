@@ -2,7 +2,8 @@
 
 class My::BaseController < ApplicationController
 	respond_to :html
-	before_filter :authenticate_user!
+  before_filter :authenticate_user!
+  before_filter :check_for_block
 	before_filter :get_user_status
 	layout 'my'
 
@@ -21,7 +22,15 @@ class My::BaseController < ApplicationController
 
 	def forbid
 		render :status => :forbidden, :text => "Forbidden access"
-	end
+  end
+
+  def check_for_block
+    return if self.controller_name == 'base' && self.action_name == 'index'
+    if current_user.class==Webmaster && current_user.blocked
+      flash[:error] = 'Аккаунт заблокирован'
+      redirect_to root_path
+    end
+  end
 
 	def get_user_status
 		@is_operator = (current_user.class==Operator)

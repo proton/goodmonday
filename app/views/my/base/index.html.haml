@@ -1,5 +1,9 @@
 .row
 	.span6
+		- if @current_user.blocked
+			.label.label-important
+				Аккаунт временно заблокирован для проверки
+			%br
 		%h5 Сводная информация
 		%br
 		%table.table.table-striped.table-bordered

@@ -69,6 +69,8 @@ Cpa::Application.routes.draw do
 				put :close
 			end
 			resources :users do
+        get :block
+
 				resources :offers do
 					post :update_advertiser
 					resources :targets

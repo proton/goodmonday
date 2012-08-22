@@ -14,6 +14,8 @@ class Member < User
   field :referal_count, type: Integer, default: 0
   money_field :referal_total_payments
 
+  field :blocked, type: Boolean, default: false
+
   def title
     self.email
   end
