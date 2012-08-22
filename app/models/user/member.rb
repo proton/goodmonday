@@ -37,12 +37,13 @@ class Member < User
     counters[:month] = user_counters.where(:date.lte => Date.today, :date.gt => Date.today-1.month)
     counters[:total] = user_counters.where(:date => Date.new(0))
     #
-    stat = {:click => {}, :target => {}, :income => {}}
+    stat = {:click => {}, :target => {}, :income => {}, :expenditure => {}}
     for time in [:today, :yesterday, :week, :month, :total] do
       stat[:click][time] = counters[time].sum(:clicks)
       stat[:target][time] = counters[time].sum(:targets)
       stat[:income][time] = counters[time].sum(:income)
-      for subj in [:click, :target, :income]
+      stat[:expenditure][time] = counters[time].sum(:expenditure)
+      for subj in [:click, :target, :income, :expenditure]
         stat[subj][time] = 0 unless stat[subj][time]
       end
     end
