@@ -145,13 +145,6 @@ class Achievement
       total_stat.inc(:income, -self.webmaster_amount.cents)
       total_stat.inc(:expenditure, -self.advertiser_amount.cents)
 
-      today_stat.inc(:targets, 1)
-      total_stat.inc(:targets, 1)
-      today_stat.inc(:income, self.webmaster_amount.cents)
-      today_stat.inc(:expenditure, self.advertiser_amount.cents)
-      total_stat.inc(:income, self.webmaster_amount.cents)
-      total_stat.inc(:expenditure, self.advertiser_amount.cents)
-
       case self.payment_state
       when :unpaid
         if webmaster
