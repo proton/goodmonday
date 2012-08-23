@@ -165,33 +165,33 @@ namespace :achievements do
       form["session[password]"] = 'Tk36KX7A'
       form.submit
 
-      date_from = (Date.today-2.month).to_s
-      date_to = Date.tomorrow.to_s
-      url = "https://www.aforex.ru/partner/rewards/index.xml?aggregator=1&from=#{date_from}&to=#{date_to}"
+      (1..14).each do |d|
+        date = (Date.yesterday-d.days).to_s
+        url = "https://www.aforex.ru/partner/rewards/index.xml?aggregator=1&from=#{date}&to=#{date}"
 
-      doc = Hpricot(agent.get_file(url))
-      (doc/:records/:record).each do |item|
-        #
-        client_login = item.at('client-login').inner_text
-        #order_id = item.at('id_cron').inner_text  #TODO: хз, откуда брать
-        price = item.at('reward').inner_text.to_f
-        achievement = offer.achievements.where(:order_id => order_id).first
-        unless achievement
-          visitor_id = item.at('manager_name').inner_text #TODO: название колонки?
-          next unless visitor_id
-          next if visitor_id.empty?
-          visitor = Visitor.where(:_id => visitor_id).first
-          next unless visitor
-          #
-          achievement = Achievement.new
-          achievement.build_prototype(offer, visitor, target.id)
-          achievement.order_id = order_id
-          achievement.additional_info = item
-          advertiser_price = Money.new(price*100) #TODO: вознаграждение в долларах?
-          webmaster_price = advertiser_price*0.7
-          achievement.accept(webmaster_price, advertiser_price)
-          #
-          achievement.save
+        doc = Hpricot(agent.get_file(url))
+        (doc/:records/:record).each do |item|
+          client_login = item.at('client-login').inner_text
+          order_id = "#{client_login}_#{date}"
+          price = item.at('reward').inner_text.to_f
+          achievement = offer.achievements.where(:order_id => order_id).first
+          unless achievement
+            visitor_id = item.at('utmcct').inner_text
+            next unless visitor_id
+            next if visitor_id.empty?
+            visitor = Visitor.where(:_id => visitor_id).first
+            next unless visitor
+            #
+            achievement = Achievement.new
+            achievement.build_prototype(offer, visitor, target.id)
+            achievement.order_id = order_id
+            achievement.additional_info = item
+            advertiser_price = Money.new(price*100*29) #переводим из долларов в центы, а из центов - в копейки (по курсу 29) #TODO: исправить фиксированный курс валюты
+            webmaster_price = advertiser_price*0.7
+            achievement.accept(webmaster_price, advertiser_price)
+            #
+            achievement.save
+          end
         end
       end
     end
@@ -257,7 +257,7 @@ namespace :achievements do
       end
     end
 
-    task :all => [:aviasales, :topshop, :domadengi, :nikitaonline]
+    task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex]
   end
 
 	task :confirm => :environment do
