@@ -26,6 +26,21 @@ class StatCounter
     StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertiser.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id).inc(:clicks, 1)
   end
 
+  def group_by(fields, group_field, cond)
+    initial_params = {}
+    func = "function(obj,prev) { "
+    fields.each do |field|
+      field = field.to_s
+      sum_field = "#{field}_count"
+      func += "prev.#{sum_field} += obj.#{field}; "
+      initial_params[sum_field.to_sym] = 0
+    end
+    func += "}"
+    h = {key: group_field, cond: cond, initial: initial_params, reduce: func}
+
+    StatCounter.collection.group(h)
+  end
+
   def self.inst()
   end
 end

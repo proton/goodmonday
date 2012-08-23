@@ -30,17 +30,7 @@ class Admin::StatsController < Admin::BaseController
     cond[:ground_id] = @ground_id if @ground_id
     cond[:sub_id] = @sub_id if @sub_id
 
-    initial_params = {}
-    func = "function(obj,prev) { "
-    %w[targets income expenditure clicks].each do |v|
-      vc = "#{v}_count"
-      func += "prev.#{vc} += obj.#{v}; "
-      initial_params[vc.to_sym] = 0
-    end
-    func += "}"
-    h = {key: @group_by, cond: cond, initial: initial_params, reduce: func}
-
-    @stats = StatCounter.collection.group(h)
+    @stats = StatCounter.group_by(%w[targets income expenditure clicks], @group_by, cond)
   end
 
   private
