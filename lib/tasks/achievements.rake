@@ -174,6 +174,7 @@ namespace :achievements do
           client_login = item.at('client-login').inner_text
           order_id = "#{client_login}_#{date}"
           price = item.at('reward').inner_text.to_f
+          next if price==0
           achievement = offer.achievements.where(:order_id => order_id).first
           unless achievement
             visitor_id = item.at('utmcct').inner_text
