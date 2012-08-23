@@ -26,7 +26,7 @@ class StatCounter
     StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: offer.advertiser.id, webmaster_id: ground.webmaster.id, date: Date.new(0), sub_id: sub_id).inc(:clicks, 1)
   end
 
-  def group_by(fields, group_field, cond)
+  def self.group_by(fields, group_field, cond)
     initial_params = {}
     func = "function(obj,prev) { "
     fields.each do |field|
