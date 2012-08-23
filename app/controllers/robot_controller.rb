@@ -122,8 +122,10 @@ class RobotController < ApplicationController
 
     if offer.redirect_options && !offer.redirect_options.empty?
       redirect_options = offer.redirect_options
-      redirect_options.gsub!('%{visitor_id}', visitor.id.to_s) if (defined? visitor) && visitor
-      redirect_options.gsub!('%{visitor_ind}', visitor.id.to_s.to_i(16).to_s) if (defined? visitor) && visitor
+      if (defined? visitor) && visitor
+        redirect_options.gsub!('%{visitor_id}', visitor.id.to_s)
+        redirect_options.gsub!('%{visitor_idn}', visitor.id.to_s.to_i(16).to_s)
+      end
       redirect_options.gsub!('%{webmaster_id}', webmaster.id.to_s) if (defined? webmaster) && webmaster
       url = add_url_options(url, redirect_options)
     end
