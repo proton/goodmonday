@@ -56,5 +56,6 @@ class User
 	#	end
 	#end
 
-	has_many :discussions
+  has_many :discussions
+  has_many :payment_requests
 end
