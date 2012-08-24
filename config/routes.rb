@@ -50,6 +50,7 @@ Cpa::Application.routes.draw do
 				put :close
       end
       resource :profile
+      resources :payment_requests
 	  end
 	end
 

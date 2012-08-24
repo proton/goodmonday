@@ -19,15 +19,15 @@
 				%tbody
 					- @payment_requests[state].each do |payment_request|
 						- user = payment_request.user 
-						%tr{:class => achievement.is_accepted? ? '' : 'muted'}
-							%td= user.email
+						%tr
+							%td= link_to user.email, user_path(user)
 							%td= number_to_currency(user.balance)
 							%td= payment_request.created_at
 							%td= payment_request.wallet
 							%td
 								- if payment_request.state==:unpaid
-									= link_to payment_requests_pay_path(@user, achievement), :class => 'btn btn-small' do
+									= link_to payment_request_pay_path(payment_request), :class => 'btn btn-small' do
 										%i.icon-ok
 										= 'Перевести в оплаченные'
-									= link_to payment_requests_cancel_path(@user, achievement), :class => 'btn btn-danger btn-small' do
-										= 'Отменить'
+									= link_to payment_request_cancel_path(payment_request), :class => 'btn btn-danger btn-small' do
+										= 'Отклонить'

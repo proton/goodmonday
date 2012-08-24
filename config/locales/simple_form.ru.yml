@@ -127,6 +127,8 @@ ru:
       payment:
         amount: 'Сумма'
         description: 'Описание'
+      payment_request:
+        wallet: 'Номер кошелька WEBMONEY'
     options:
       filter:
         group_by:

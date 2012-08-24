@@ -58,6 +58,14 @@
 			%b Доступно:
 			= number_to_currency @current_user.balance
 			%br
+			- if @current_user.class==Webmaster && @current_user.balance>100
+				- if @current_user.payment_requests.where(state: :unpaid).count>0
+					%span.label.label-info
+						ожидаются к выводу
+					%br
+				- else
+					= link_to 'Вывести', new_payment_request_path, :class => 'btn btn-mini btn-primary'
+				%br
 			%b Ожидается:
 			= number_to_currency @current_user.hold_balance
 			%br
