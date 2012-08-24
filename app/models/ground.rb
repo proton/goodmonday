@@ -11,6 +11,9 @@ class Ground
 	field :title, type: String, default: ''
 	field :url, type: String, default: ''
 
+  auto_increment :alternative_id
+  index :alternative_id
+
 	symbolize :type, :in => [:website, :doorway, :socialnet, :context, :email, :etc], :default => :website
 
 	symbolize :rotator_mode, :in => [:manual, :auto], :default => :manual

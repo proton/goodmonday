@@ -129,7 +129,7 @@ class RobotController < ApplicationController
       redirect_options.gsub!('%{webmaster_id}', webmaster.id.to_s) if (defined? webmaster) && webmaster
       if (defined? ground) && ground
         redirect_options.gsub!('%{ground_id}', ground.id.to_s)
-        #redirect_options.gsub!('%{ground_alt}', ground.alternative_id.to_s)
+        redirect_options.gsub!('%{ground_alt}', ground.alternative_id.to_s)
       end
       url = add_url_options(url, redirect_options)
     end
