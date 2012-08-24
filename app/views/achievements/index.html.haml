@@ -1,0 +1,41 @@
+%ul.nav.nav-tabs
+	%li.active
+		%a{"data-toggle" => "tab", :href => "#pending"}= "Ожидающие подтверждения (#{@achievements[:pending].size})"
+	%li
+		%a{"data-toggle" => "tab", :href => "#accepted"}= "Одобренные (#{@achievements[:accepted].size})"
+	%li
+		%a{"data-toggle" => "tab", :href => "#denied"}= "Отклонённые (#{@achievements[:denied].size})"
+.tab-content
+	- @achievements.each_key do |state|
+		.tab-pane.fade{:id => state.to_s, :class => state==:pending ? 'active in' : ''}
+			%table.table.table-bordered.table-striped
+				%thead
+					%tr
+						%th= 'Оффер'
+						%th= 'Цель'
+						%th= 'Площадка'
+						%th= 'Стоимость'
+						%th= 'Состояние'
+						%th= 'Дата'
+						%th= 'Действия'
+				%tbody
+					- @achievements[state].each do |achievement|
+						- offer = achievement.offer
+						- target = offer.targets.find(achievement.target_id)
+						- ground = achievement.ground
+						- price = achievement.advertiser_amount
+						%tr{:class => achievement.is_accepted? ? '' : 'muted'}
+							%td= offer.title
+							%td= target.title
+							%td= "#{ground.title} (#{ground.url})"
+							%td
+								- if achievement.state==:accepted && price
+									= number_to_currency(price)
+								- else
+									= 'н/д'
+							%td= state_label achievement.state
+							%td= achievement.created_at
+							%td
+								= link_to user_achievement_path(@user, achievement), :class => 'btn btn-small' do
+									%i.icon-cog
+									= 'Открыть'

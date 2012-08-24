@@ -1,0 +1,33 @@
+%ul.nav.nav-tabs
+	%li.active
+		%a{"data-toggle" => "tab", :href => "#unpaid"}= "Неоплаченные (#{@payment_requests[:unpaid].size})"
+	%li
+		%a{"data-toggle" => "tab", :href => "#paid"}= "Оплаченные (#{@payment_requests[:paid].size})"
+	%li
+		%a{"data-toggle" => "tab", :href => "#canceled"}= "Отклонённые (#{@payment_requests[:canceled].size})"
+.tab-content
+	- @payment_requests.each_key do |state|
+		.tab-pane.fade{:id => state.to_s, :class => state==:unpaid ? 'active in' : ''}
+			%table.table.table-bordered.table-striped
+				%thead
+					%tr
+						%th= 'Пользователь'
+						%th= 'Сумма'
+						%th= 'Дата'
+						%th= 'Кошелёк'
+						%th= 'Действия'
+				%tbody
+					- @payment_requests[state].each do |payment_request|
+						- user = payment_request.user 
+						%tr{:class => achievement.is_accepted? ? '' : 'muted'}
+							%td= user.email
+							%td= number_to_currency(user.balance)
+							%td= payment_request.created_at
+							%td= payment_request.wallet
+							%td
+								- if payment_request.state==:unpaid
+									= link_to payment_requests_pay_path(@user, achievement), :class => 'btn btn-small' do
+										%i.icon-ok
+										= 'Перевести в оплаченные'
+									= link_to payment_requests_cancel_path(@user, achievement), :class => 'btn btn-danger btn-small' do
+										= 'Отменить'
