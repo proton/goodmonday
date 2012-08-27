@@ -264,15 +264,18 @@ namespace :achievements do
 
       require 'hpricot'
       require 'open-uri'
+      require 'net/http'
 
       target.achievements.pending.each do |achievement|
     			next unless achievement.order_id
     			order_id = achievement.order_id
 
-          xml_param = "<?xml version="1.0"?><items><item>#{order_id}</item></items>"
-          url = "http://www.sapato.ru/rest/marketing/?partner=goodmonday&xml=#{xml_param}"
+          params = {'xml' => "<?xml version='1.0'?><items><item>#{order_id}</item></items>"}
+          url = "http://www.sapato.ru/rest/marketing/?partner=goodmonday"
+          uri = URI.parse(url)
+          resp, data = Net::HTTP.post_form(uri, params)
 
-    			doc = Hpricot(open(url))
+    			doc = Hpricot(data)
 
     			(doc/:items/:item).each do |item|
     				id = item.at('id').inner_text
