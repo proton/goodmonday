@@ -20,6 +20,8 @@ ru:
       accepted: 'Одобрено'
       denied: 'Отклонено'
       pending: 'Ожидание'
+      success: 'Успех'
+      error: 'Ошибка'
     mode:
       auto: 'Автоматический'
       manual: 'Ручной'

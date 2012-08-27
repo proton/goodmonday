@@ -98,6 +98,7 @@ Cpa::Application.routes.draw do
       resources :articles
       resources :news
       resources :debtors
+      resources :achievement_collection_statuses
       resources :payment_requests do
       	get :pay
       	get :cancel

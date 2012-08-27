@@ -260,7 +260,9 @@ namespace :achievements do
 
     task :sapato => :environment do
       offer = find_marked_offer('sapato')
+      next unless offer
       target = find_marked_target(offer, 'sapato_order')
+      next unless target
 
       require 'hpricot'
       require 'open-uri'
@@ -306,10 +308,21 @@ namespace :achievements do
     				end
     			end
     		end
+        puts 'aaa'
+      end
+
+    #task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex, :sapato]
+    task :all => :environment do
+      [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex].each do |t|
+        collection_status =  AchievementCollectionStatus.new(:idn => t.to_s)
+        begin
+          Rake::Task["achievements:collect:#{t.to_s}"].execute
+        rescue
+          collection_status.message = $!.inspect
+        end
+        collection_status.save
       end
     end
-
-    task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex, :sapato]
   end
 
 	task :confirm => :environment do

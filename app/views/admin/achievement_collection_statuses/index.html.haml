@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-striped
+	%thead
+		%tr
+			%th= 'Задача'
+			%th= 'Статус'
+			%th= 'Сообщение'
+			%th= 'Дата'
+	%tbody
+		- @achievement_collection_statuses.each do |achievement_collection_status|
+			%tr
+				%td= achievement_collection_status.idn
+				%td= state_label achievement_collection_status.state
+				%td= achievement_collection_status.message
+				%td= achievement_collection_status.created_at

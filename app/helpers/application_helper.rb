@@ -1,9 +1,9 @@
 module ApplicationHelper
 	def state_label(state)
 		klass = case state
-			when :accepted, :open
+			when :accepted, :open, :success
 				'label-success'
-			when :denied, :closed
+			when :denied, :closed, :error
 				'label-important'
 		end
 		"<span class='label #{klass}'>#{t(("common.state."+state.to_s).to_sym)}</span>".html_safe
