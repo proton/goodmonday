@@ -258,49 +258,97 @@ namespace :achievements do
       end
     end
 
-    task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex]
+    task :sapato => :environment do
+      offer = find_marked_offer('sapato')
+      target = find_marked_target(offer, 'sapato_order')
+
+      require 'hpricot'
+      require 'open-uri'
+
+      target.achievements.pending.each do |achievement|
+    			next unless achievement.order_id
+    			order_id = achievement.order_id
+
+          xml_param = "<?xml version="1.0"?><items><item>#{order_id}</item></items>"
+          url = "http://www.sapato.ru/rest/marketing/?partner=goodmonday&xml=#{xml_param}"
+
+    			doc = Hpricot(open(url))
+
+    			(doc/:items/:item).each do |item|
+    				id = item.at('id').inner_text
+    				if id==order_id
+    					status = item.at('status').inner_text.to_i
+    					price = item.at('price').inner_text.to_f
+              comission = item.at('comission').inner_text.to_f
+              currency = item.at('currency').inner_text
+
+              next unless currency=='RUR'
+
+              #https://docs.google.com/document/d/1S_Nuyb9-qCsoCJazcEYWCujSP90wHs7tZPGD7kiv0rw/edit?pli=1#
+
+              #done-a (заказ оплачен / до 900р.),
+              #done-b (заказ оплачен / более 900р.),
+              #wait (заказ в обработке),
+              #cancel (заказ отменен),
+              #new (заказ не обработан)
+
+              #if [1,3].include? status
+    						#if status==1
+              #    achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+    						#elsif status==3
+    						#	achievement.cancel!
+    						#end
+    						#achievement.save
+              #end
+    				end
+    			end
+    		end
+      end
+    end
+
+    task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex, :sapato]
   end
 
 	task :confirm => :environment do
 		require 'hpricot'
 	 	require 'open-uri'
 
-		Achievement.pending.each do |achievement|
-			unless achievement.order_id
-				#exception
-			end
-			order_id = achievement.order_id
-			offer = achievement.offer
-			target = offer.targets.find(achievement.target_id)
-			url = target.confirm_url
-      next if !url || url.empty?
-			if url.include? '?'
-				url = "#{url}&targets=#{order_id}"
-			else
-				url = "#{url}?targets=#{order_id}"
-			end
-			doc = Hpricot(open(url))
+    Achievement.pending.each do |achievement|
+  			unless achievement.order_id
+  				#exception
+  			end
+  			order_id = achievement.order_id
+  			offer = achievement.offer
+  			target = offer.targets.find(achievement.target_id)
+  			url = target.confirm_url
+        next if !url || url.empty?
+  			if url.include? '?'
+  				url = "#{url}&targets=#{order_id}"
+  			else
+  				url = "#{url}?targets=#{order_id}"
+  			end
+  			doc = Hpricot(open(url))
 
-			(doc/:items/:item).each do |item|
-				id = item.at('id').inner_text
-				if id==order_id
-					status = item.at('status').inner_text.to_i
-					price = item.at('price').inner_text.to_f
+  			(doc/:items/:item).each do |item|
+  				id = item.at('id').inner_text
+  				if id==order_id
+  					status = item.at('status').inner_text.to_i
+  					price = item.at('price').inner_text.to_f
 
-          #1 - :accepted
-          #2 - :pending
-          #3 - :denied
-					if [1,3].include? status
-						if status==1
-              achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
-						elsif status==3
-							achievement.cancel!
-						end
-						achievement.save
-					end
-				end
-			end
-		end
+            #1 - :accepted
+            #2 - :pending
+            #3 - :denied
+  					if [1,3].include? status
+  						if status==1
+                achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+  						elsif status==3
+  							achievement.cancel!
+  						end
+  						achievement.save
+  					end
+  				end
+  			end
+  		end
   end
 
   task :pay => :environment do
