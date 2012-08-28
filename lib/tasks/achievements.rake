@@ -289,22 +289,33 @@ namespace :achievements do
 
               next unless currency=='RUR'
 
-              #https://docs.google.com/document/d/1S_Nuyb9-qCsoCJazcEYWCujSP90wHs7tZPGD7kiv0rw/edit?pli=1#
+              #1. Сумма оплаченного заказа от 1501 руб. -  вознаграждение 1300 рублей
+              #2. Сумма оплаченного заказа  1001 руб. - 1500руб  -  вознаграждение 400 рублей
+              #3. Сумма оплаченного заказа от 501 до 1000 руб. -  вознаграждение 200 рублей
+              #4. Сумма оплаченного заказа до 500 рублей - вознаграждение 50 рублей. 
+              #Ваше вознаграждение - 20% от суммы выплаты веб-мастеру. 
 
-              #done-a (заказ оплачен / до 900р.),
-              #done-b (заказ оплачен / более 900р.),
-              #wait (заказ в обработке),
-              #cancel (заказ отменен),
-              #new (заказ не обработан)
+              #https://docs.google.com/document/d/1IF0P6BIBj29j0GOqzfhO_DDQA_y7bJ7rCDEr5ss88X4/edit
 
-              #if [1,3].include? status
-    						#if status==1
-              #    achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
-    						#elsif status==3
-    						#	achievement.cancel!
-    						#end
-    						#achievement.save
-              #end
+              if %w[done-a done-b done-c done-d cancel].include? status
+    						if status=='cancel'
+                  achievement.cancel!
+                else
+                  webmaster_price = case status
+                    when 'done-a'
+                      Money.new(50*100)
+                    when 'done-b'
+                      Money.new(200*100)
+                    when 'done-c'
+                      Money.new(400*100)
+                    when 'done-d'
+                      Money.new(1300*100)
+                    end
+                  advertiser_price = webmaster_price*1.2
+                  achievement.accept(webmaster_price, advertiser_price)
+    						end
+    						achievement.save
+              end
     				end
     			end
     		end
@@ -313,10 +324,11 @@ namespace :achievements do
 
     #task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex, :sapato]
     task :all => :environment do
-      [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex].each do |t|
-        collection_status =  AchievementCollectionStatus.new(:idn => t.to_s)
+      offers = %w[aviasales topshop domadengi nikitaonline aforex sapato]
+      offers.each do |t|
+        collection_status =  AchievementCollectionStatus.new(:idn => t)
         begin
-          Rake::Task["achievements:collect:#{t.to_s}"].execute
+          Rake::Task["achievements:collect:#{t}"].execute
         rescue
           collection_status.message = $!.inspect
         end
