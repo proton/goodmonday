@@ -275,9 +275,8 @@ namespace :achievements do
           params = {'xml' => "<?xml version='1.0'?><items><item>#{order_id}</item></items>"}
           url = "http://www.sapato.ru/rest/marketing/?partner=goodmonday"
           uri = URI.parse(url)
-          resp, data = Net::HTTP.post_form(uri, params)
-
-    			doc = Hpricot(data)
+          resp = Net::HTTP.post_form(uri, params)
+    			doc = Hpricot(resp.body)
 
     			(doc/:items/:item).each do |item|
     				id = item.at('id').inner_text
@@ -331,6 +330,7 @@ namespace :achievements do
           Rake::Task["achievements:collect:#{t}"].execute
         rescue
           collection_status.message = $!.inspect
+          collection_status.state = :error
         end
         collection_status.save
       end
