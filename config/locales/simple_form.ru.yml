@@ -109,6 +109,7 @@ ru:
       news:
         title: 'Название'
         content: 'Содержимое'
+        mini_content: 'Короткое содержимое'
       discussion:
         subject: 'Тема'
         text: 'Текст'

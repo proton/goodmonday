@@ -2,6 +2,7 @@
 	%thead
 		%tr
 			%th.first= 'Название'
+			%th= 'Содержимое'
 			%th= 'Добавлена'
 			%th= 'Изменена'
 			%th.last
@@ -9,6 +10,7 @@
 		- @news.each do |news|
 			%tr
 				%td= news.title
+				%td= news.mini_content
 				%td= news.created_at
 				%td= news.updated_at
 				%td
