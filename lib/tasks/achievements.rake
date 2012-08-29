@@ -382,8 +382,7 @@ namespace :achievements do
       collection_status.message = $!.inspect
       collection_status.state = :error
     end
-      collection_status.save
-    end
+    collection_status.save
   end
 
   task :pay => :environment do
@@ -392,5 +391,4 @@ namespace :achievements do
     end
 
   end
-
 end
