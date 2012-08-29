@@ -341,42 +341,50 @@ namespace :achievements do
 		require 'hpricot'
 	 	require 'open-uri'
 
-    Achievement.pending.each do |achievement|
-  			unless achievement.order_id
-  				#exception
-  			end
-  			order_id = achievement.order_id
-  			offer = achievement.offer
-  			target = offer.targets.find(achievement.target_id)
-  			url = target.confirm_url
+    collection_status =  AchievementCollectionStatus.new(:idn => 'achievements:confirm')
+    begin
+      Achievement.pending.each do |achievement|
+        unless achievement.order_id
+          #exception
+        end
+        order_id = achievement.order_id
+        offer = achievement.offer
+        target = offer.targets.find(achievement.target_id)
+        url = target.confirm_url
         next if !url || url.empty?
-  			if url.include? '?'
-  				url = "#{url}&targets=#{order_id}"
-  			else
-  				url = "#{url}?targets=#{order_id}"
-  			end
-  			doc = Hpricot(open(url))
+        if url.include? '?'
+          url = "#{url}&targets=#{order_id}"
+        else
+          url = "#{url}?targets=#{order_id}"
+        end
+        doc = Hpricot(open(url))
 
-  			(doc/:items/:item).each do |item|
-  				id = item.at('id').inner_text.strip
-  				if id==order_id
-  					status = item.at('status').inner_text.strip.to_i
-  					price = item.at('price').inner_text.strip.to_f
+        (doc/:items/:item).each do |item|
+          id = item.at('id').inner_text.strip
+          if id==order_id
+            status = item.at('status').inner_text.strip.to_i
+            price = item.at('price').inner_text.strip.to_f
 
             #1 - :accepted
             #2 - :pending
             #3 - :denied
-  					if [1,3].include? status
-  						if status==1
+            if [1,3].include? status
+              if status==1
                 achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
-  						elsif status==3
-  							achievement.cancel!
-  						end
-  						achievement.save
-  					end
-  				end
-  			end
-  		end
+              elsif status==3
+                achievement.cancel!
+              end
+              achievement.save
+            end
+          end
+        end
+      end
+    rescue
+      collection_status.message = $!.inspect
+      collection_status.state = :error
+    end
+      collection_status.save
+    end
   end
 
   task :pay => :environment do
