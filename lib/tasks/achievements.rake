@@ -318,7 +318,6 @@ namespace :achievements do
     				end
     			end
     		end
-        puts 'aaa'
       end
 
     #task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex, :sapato]
