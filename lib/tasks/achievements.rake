@@ -282,8 +282,8 @@ namespace :achievements do
     				id = item.at('id').inner_text
     				if id==order_id
     					status = item.at('status').inner_text.to_i
-    					price = item.at('price').inner_text.to_f
-              comission = item.at('comission').inner_text.to_f
+    					#price = item.at('price').inner_text.to_f
+              #comission = item.at('comission').inner_text.to_f
               currency = item.at('currency').inner_text
 
               next unless currency=='RUR'
