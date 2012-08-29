@@ -16,7 +16,9 @@
 						%th= 'Площадка'
 						%th= 'Стоимость'
 						%th= 'Состояние'
-						%th= 'Дата'
+						%th= 'Дата взятия'
+						- if state==:accepted
+							%th= 'Дата подтверждения'
 						%th= 'Действия'
 				%tbody
 					- @achievements[state].each do |achievement|
@@ -39,6 +41,8 @@
 									= 'н/д'
 							%td= state_label achievement.state
 							%td= achievement.created_at
+							- if state==:accepted
+								%td= achievement.accepted_at if achievement.accepted_at
 							%td
 								= link_to achievement_path(achievement), :class => 'btn btn-small' do
 									%i.icon-cog

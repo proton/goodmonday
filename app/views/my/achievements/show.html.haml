@@ -22,6 +22,10 @@
 %b= 'Дата взятия:'
 = @achievement.created_at
 %br
+- if @achievement.state==:accepted
+	%b= 'Дата подтверждения:'
+	= @achievement.accepted_at
+	%br
 %b= 'Стоимость:'
 - if @achievement.state==:accepted && price
 	= number_to_currency price

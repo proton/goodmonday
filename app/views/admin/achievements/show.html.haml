@@ -19,6 +19,10 @@
 %b= 'Дата взятия:'
 = @achievement.created_at
 %br
+- if @achievement.state==:accepted
+	%b= 'Дата подтверждения:'
+	= @achievement.accepted_at
+	%br
 %b= 'Стоимость (для вебмастера):'
 - if @achievement.state==:accepted && webmaster_price
 	= number_to_currency webmaster_price

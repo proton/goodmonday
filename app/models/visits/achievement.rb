@@ -14,10 +14,13 @@ class Achievement
 	belongs_to :ground
 	belongs_to :offer
 	belongs_to :visitor
+
   field :target_id, type: BSON::ObjectId
   field :webmaster_payment_id, type: BSON::ObjectId
   field :advertiser_payment_id, type: BSON::ObjectId
   field :affiliator_payment_id, type: BSON::ObjectId
+
+  field :accepted_at, type: DateTime
 
 	field :page, type: String
 	field :ip, type: String
@@ -95,6 +98,7 @@ class Achievement
     webmaster_id = ground.webmaster.id
     #
     self.state = :accepted
+    self.accepted_at = Time.now
     self.webmaster_amount = webmaster_amount
     self.advertiser_amount = advertiser_amount
     self.hold_date = Date.today + target.hold.days
@@ -123,6 +127,7 @@ class Achievement
 
   def cancel!
     if self.state==:accepted
+      self.accepted_at = nil
       offer = self.offer
       ground = self.ground
       target_id = self.target_id
