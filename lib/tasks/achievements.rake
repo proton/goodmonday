@@ -358,10 +358,10 @@ namespace :achievements do
   			doc = Hpricot(open(url))
 
   			(doc/:items/:item).each do |item|
-  				id = item.at('id').inner_text
+  				id = item.at('id').inner_text.strip
   				if id==order_id
-  					status = item.at('status').inner_text.to_i
-  					price = item.at('price').inner_text.to_f
+  					status = item.at('status').inner_text.strip.to_i
+  					price = item.at('price').inner_text.strip.to_f
 
             #1 - :accepted
             #2 - :pending
