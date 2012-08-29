@@ -281,7 +281,7 @@ namespace :achievements do
     			(doc/:items/:item).each do |item|
     				id = item.at('id').inner_text
     				if id==order_id
-    					status = item.at('status').inner_text.to_i
+    					status = item.at('status').inner_text
     					#price = item.at('price').inner_text.to_f
               #comission = item.at('comission').inner_text.to_f
               currency = item.at('currency').inner_text
