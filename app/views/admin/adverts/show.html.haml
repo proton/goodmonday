@@ -33,7 +33,7 @@
 						%td
 							= 'Создано автоматически' if banner_image.auto_generated
 						%td
-							= link_to offer_advert_banner_image_path(@offer, @advert, banner_image), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
+							= link_to user_offer_advert_banner_image_path(@user, @offer, @advert, banner_image), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
 								%i.icon-trash.icon-white
 								= 'Удалить'
 		%h3= 'Новое изображение'
