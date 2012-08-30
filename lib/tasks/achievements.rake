@@ -385,8 +385,8 @@ namespace :achievements do
       end
     rescue
       message = ''
-      message += achievement.id.to_s+' ' if (defined? achievement) && achievement
-      message += offer.title+': ' if (defined? offer) && offer
+      message += (achievement.id.to_s+' ') if (defined? achievement) && achievement
+      message += (offer.title+': ') if (defined? offer) && offer && !offer.title.empty?
       collection_status.message += $!.inspect
       collection_status.message = message
       collection_status.state = :error
