@@ -384,7 +384,11 @@ namespace :achievements do
         end
       end
     rescue
-      collection_status.message = $!.inspect
+      if offer
+        collection_status.message = offer.title+': '+$!.inspect
+      else
+        collection_status.message = $!.inspect
+      end
       collection_status.state = :error
     end
     collection_status.save
