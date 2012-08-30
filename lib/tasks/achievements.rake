@@ -387,7 +387,7 @@ namespace :achievements do
       message = ''
       message += (achievement.id.to_s+' ') if (defined? achievement) && achievement
       message += (offer.title+': ') if (defined? offer) && offer && !offer.title.empty?
-      collection_status.message += $!.inspect
+      message += $!.inspect
       collection_status.message = message
       collection_status.state = :error
     end
