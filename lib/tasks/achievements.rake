@@ -356,7 +356,12 @@ namespace :achievements do
         else
           url = "#{url}?targets=#{order_id}"
         end
-        doc = Hpricot(open(url))
+        if target.confirm_needs_auth
+          file = open(url, :http_basic_authentication => [target.confirm_auth_username, target.confirm_auth_password])
+        else
+          file = open(url)
+        end
+        doc = Hpricot(file)
 
         (doc/:items/:item).each do |item|
           id = item.at('id').inner_text.strip

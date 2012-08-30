@@ -19,6 +19,11 @@ class Target
 
 	symbolize :confirm_mode, :in => [:auto, :manual], :default => :auto
 	field :confirm_url, type: String
+  field :confirm_needs_auth, type: Boolean, default: false
+  field :confirm_auth_username, type: String
+  field :confirm_auth_password, type: String
+
+
   field :hold, type: Integer, default: 20
 
   field :cookieless_achievement, type: Boolean, default: false

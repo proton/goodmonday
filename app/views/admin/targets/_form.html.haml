@@ -1,11 +1,17 @@
 - auto_mode = (@target.confirm_mode==:auto)
+- needs_auth = !auto_mode && @target.confirm_needs_auth
 = simple_form_for([@user.becomes(User), @offer, @target], :html => {:class => 'form-horizontal' }) do |f|
 	= f.input :title, :input_html => { :class => "span6" }
 	= f.input :confirm_mode, :required => true, :as => :select, :collection => Target.get_confirm_mode_values, :input_html => { :class => "span6" }
 	.manual_mode_fields{:style => auto_mode ? 'display:none' : 'display:block'}
-		= f.input :confirm_url, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-		= f.input :prc_price, :required => true, :as => :float, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
-		= f.input :prc_prices_bronze, :required => true, :as => :float, :input_html => { :class => "span6 manual_mode_input" }, :disabled => auto_mode
+		.well.well-small
+			= f.input :confirm_url, :input_html => { :class => "span6" }, :disabled => auto_mode, :placeholder => 'http://'
+			= f.input :confirm_needs_auth, :as => :boolean, :input_html => { :class => "span6" }, :disabled => auto_mode, :hint => 'Используется basic access authentication'
+			.needs_auth_fields
+				= f.input :confirm_auth_username, :input_html => { :class => "span6" }, :disabled => !needs_auth
+				= f.input :confirm_auth_password, :input_html => { :class => "span6" }, :disabled => !needs_auth
+		= f.input :prc_price, :required => true, :as => :float, :input_html => { :class => "span6" }, :disabled => auto_mode
+		= f.input :prc_prices_bronze, :required => true, :as => :float, :input_html => { :class => "span6" }, :disabled => auto_mode
 	= f.input :fixed_price, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_price }
 	= f.input :fixed_prices_bronze, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_prices_bronze }
 	= f.input :price_text, :input_html => { :class => "span6" }
@@ -18,13 +24,23 @@
 	= link_to 'Отмена', user_offer_targets_path(@user, @offer), :class => "btn btn-danger"
 
 :javascript
+	function toggle_form_elements()
+	{
+		var confirm_mode = $('#target_confirm_mode').val();
+		var auto_mode = (confirm_mode=='auto')
+		var needs_auth = !auto_mode && $('#target_confirm_needs_auth').prop("checked");
+
+		var form = $('form.simple_form.form-horizontal');
+		var manual_mode_fields = form.find('.manual_mode_fields');
+		var needs_auth_fields = form.find('.needs_auth_fields');
+
+		manual_mode_fields.toggle(!auto_mode);
+		manual_mode_fields.find('input').prop('disabled', auto_mode);
+		needs_auth_fields.find('input').prop('disabled', !needs_auth);
+	}
+
 	$(document).ready(function() {
-		$('#target_confirm_mode').change(function () {
-			var confirm_mode = $(this).val();
-			var auto_mode = (confirm_mode=='auto')
-			var form = $(this).closest("form");
-			var manual_mode_fields = form.find('.manual_mode_fields');
-			manual_mode_fields.toggle(!auto_mode);
-			manual_mode_fields.find('input').prop('disabled', auto_mode);
-		});
+		toggle_form_elements();
+		$('#target_confirm_mode').change(function() {toggle_form_elements();});
+		$('#target_confirm_needs_auth').change(function() {toggle_form_elements();});
 	});
