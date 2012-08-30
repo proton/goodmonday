@@ -343,14 +343,12 @@ namespace :achievements do
     collection_status =  AchievementCollectionStatus.new(:idn => 'achievements:confirm')
     begin
       Achievement.pending.each do |achievement|
-        unless achievement.order_id
-          #exception
-        end
+        raise "Empty order_id (#{achievement.id.to_s})" unless achievement.order_id
         order_id = achievement.order_id
         offer = achievement.offer
         target = offer.targets.find(achievement.target_id)
         url = target.confirm_url
-        next if !url || url.empty?
+        raise "Empty url (#{achievement.id.to_s})" if !url || url.empty?
         if url.include? '?'
           url = "#{url}&targets=#{order_id}"
         else
@@ -384,11 +382,7 @@ namespace :achievements do
         end
       end
     rescue
-      message = ''
-      message += (achievement.id.to_s+' ') if (defined? achievement) && achievement
-      message += (offer.title+': ') if (defined? offer) && offer && !offer.title.empty?
-      message += $!.inspect
-      collection_status.message = message
+      collection_status.message = $!.inspect
       collection_status.state = :error
     end
     collection_status.save
