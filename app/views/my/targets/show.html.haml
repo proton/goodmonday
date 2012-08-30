@@ -1,11 +1,56 @@
 %p= 'Пожалуйста, добавьте отображение данного кода при достижении цели.'
 - if @target.confirm_mode==:auto
-	%pre.prettyprint
-		= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}'>"
+	- if @target.set_price_on_achievement
+		%pre.prettyprint
+			= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}/"
+			= content_tag(:span, 'ORDER_ID', :class => "atn")
+			= "&amount="
+			= content_tag(:span, 'AMOUNT', :class => "atn")
+			= "&chk="
+			= content_tag(:span, 'HASH', :class => "atn")
+			= "'>"
+		%p
+			= "Где:"
+			%br
+			%br
+			%code= 'ORDER_ID'
+			= "- идентификатор совершённого действия (номер заказа)."
+			%br
+			%br
+			%code= 'AMOUNT'
+			= "- сумма в рублях с двумя цифрами после точки (1000.00)."
+			%br
+			%br
+			%code= 'HASH'
+			= "- хэш-функция MD5:"
+			%pre.prettyprint
+				= "md5('#{@offer.id}/target/#{@target.id}/"
+				= content_tag(:span, 'ORDER_ID', :class => "atn")
+				= "/"
+				= content_tag(:span, 'AMOUNT', :class => "atn")
+				= "/"
+				= @target.hash_key
+				= "')"
+			%br
+			%code= @target.hash_key
+			= "- ключ хэш функции, заданный вами в"
+			= link_to 'настройках цели', edit_offer_target_path(@offer, @target)
+			= '.'
+	- else
+		%pre.prettyprint
+			= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}'>"
+		%br
+		Вы также можете добавить в пиксел идентификатор совершённого действия (номер заказа/id пользователя и т.д.):
+		%pre.prettyprint
+			= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}/"
+			= content_tag(:span, 'ORDER_ID', :class => "atn")
+			= "'>"
 - else
 	%pre.prettyprint
-		= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}/order_id'>"
+		= "<img src='http://r.goodmonday.ru/#{@offer.id}/target/#{@target.id}/"
+		= content_tag(:span, 'ORDER_ID', :class => "atn")
+		= "'>"
 	%p
 		= "Где"
-		%code= 'order_id'
+		%code= 'ORDER_ID'
 		= "- номер заказа, который будет опрашивать наша система."

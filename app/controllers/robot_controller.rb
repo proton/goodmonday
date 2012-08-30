@@ -176,7 +176,19 @@ class RobotController < ApplicationController
                   achievement.order_id = params[:order_id]
                 end
                 if target.confirm_mode == :auto
-                  achievement.accept(target.webmaster_price, target.advertiser_price)
+                  if target.set_price_on_achievement && achievement.order_id && params[:amount] && !params[:amount].empty? && params[:chk] && !params[:chk].empty?
+                    amount = params[:amount].to_f
+                    chk = params[:chk].to_s.downcase
+                    chk_string = "#{offer.id.to_s}/target/#{target.id.to_s}/#{achievement.order_id}/#{"%.2f" % amount}/#{target.hash_key}"
+                    md5 = Digest::MD5.hexdigest(chk_string)
+                    if chk==md5
+                      achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+                    else
+                      achievement.additional_info = "Не совпал хэш :(\nприслан: #{chk}\nстрока для проверки: #{chk_string}\nmd5: #{md5}"
+                    end
+                  else
+                    achievement.accept(target.webmaster_price, target.advertiser_price)
+                  end
                 end
                 achievement.save
               end

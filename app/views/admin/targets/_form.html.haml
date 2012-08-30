@@ -1,15 +1,22 @@
 - auto_mode = (@target.confirm_mode==:auto)
 - needs_auth = !auto_mode && @target.confirm_needs_auth
+- set_price_on_achievement = @target.set_price_on_achievement
+- have_price = !auto_mode || set_price_on_achievement
 = simple_form_for([@user.becomes(User), @offer, @target], :html => {:class => 'form-horizontal' }) do |f|
 	= f.input :title, :input_html => { :class => "span6" }
 	= f.input :confirm_mode, :required => true, :as => :select, :collection => Target.get_confirm_mode_values, :input_html => { :class => "span6" }
 	.manual_mode_fields{:style => auto_mode ? 'display:none' : 'display:block'}
 		.well.well-small
 			= f.input :confirm_url, :input_html => { :class => "span6" }, :disabled => auto_mode, :placeholder => 'http://'
-			= f.input :confirm_needs_auth, :as => :boolean, :input_html => { :class => "span6" }, :disabled => auto_mode, :hint => 'Используется basic access authentication'
+			= f.input :confirm_needs_auth, :as => :boolean, :disabled => auto_mode, :hint => 'Используется basic access authentication'
 			.needs_auth_fields
 				= f.input :confirm_auth_username, :input_html => { :class => "span6" }, :disabled => !needs_auth
 				= f.input :confirm_auth_password, :input_html => { :class => "span6" }, :disabled => !needs_auth
+	.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
+		= f.input :set_price_on_achievement, :as => :boolean, :disabled => !auto_mode
+	.set_price_on_achievement_fields{:style => set_price_on_achievement ? 'display:block' : 'display:none'}
+		= f.input :hash_key, :input_html => { :class => "span6" }, :disabled => !set_price_on_achievement
+	.have_price_fields{:style => have_price ? 'display:block' : 'display:none'}
 		= f.input :prc_price, :required => true, :as => :float, :input_html => { :class => "span6" }, :disabled => auto_mode
 		= f.input :prc_prices_bronze, :required => true, :as => :float, :input_html => { :class => "span6" }, :disabled => auto_mode
 	= f.input :fixed_price, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_price }
@@ -29,18 +36,30 @@
 		var confirm_mode = $('#target_confirm_mode').val();
 		var auto_mode = (confirm_mode=='auto')
 		var needs_auth = !auto_mode && $('#target_confirm_needs_auth').prop("checked");
+		var set_price_on_achievement = $('#target_set_price_on_achievement').prop("checked");
+		var have_price = !auto_mode || set_price_on_achievement
 
 		var form = $('form.simple_form.form-horizontal');
 		var manual_mode_fields = form.find('.manual_mode_fields');
+		var auto_mode_fields = form.find('.auto_mode_fields');
 		var needs_auth_fields = form.find('.needs_auth_fields');
+		var have_price_fields = form.find('.have_price_fields');
+		var set_price_on_achievement_fields = form.find('.set_price_on_achievement_fields');
 
 		manual_mode_fields.toggle(!auto_mode);
+		auto_mode_fields.toggle(auto_mode);
+		have_price_fields.toggle(have_price);
+		set_price_on_achievement_fields.toggle(set_price_on_achievement);
 		manual_mode_fields.find('input').prop('disabled', auto_mode);
+		auto_mode_fields.find('input').prop('disabled', !auto_mode);
 		needs_auth_fields.find('input').prop('disabled', !needs_auth);
+		have_price_fields.find('input').prop('disabled', !have_price);
+		set_price_on_achievement_fields.find('input').prop('disabled', !set_price_on_achievement);
 	}
 
 	$(document).ready(function() {
 		toggle_form_elements();
 		$('#target_confirm_mode').change(function() {toggle_form_elements();});
 		$('#target_confirm_needs_auth').change(function() {toggle_form_elements();});
+		$('#target_set_price_on_achievement').change(function() {toggle_form_elements();});
 	});

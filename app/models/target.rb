@@ -23,6 +23,8 @@ class Target
   field :confirm_auth_username, type: String
   field :confirm_auth_password, type: String
 
+  field :set_price_on_achievement, type: Boolean, default: false
+  field :hash_key, type: String, default: ->{ rand(36**20).to_s(36) }
 
   field :hold, type: Integer, default: 20
 

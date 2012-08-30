@@ -91,6 +91,8 @@ ru:
         confirm_needs_auth: 'Требуется аутентификация'
         confirm_auth_username: 'Имя пользователя'
         confirm_auth_password: 'Пароль'
+        set_price_on_achievement: 'Задание цены при достижении цели'
+        hash_key: 'Ключ для API'
         fixed_price: 'Стоимость (руб.)'
         fixed_price_cents: 'Стоимость (руб.)'
         fixed_prices_bronze: 'Стоимость фиксированная (Бронза)'
