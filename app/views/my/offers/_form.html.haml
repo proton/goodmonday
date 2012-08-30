@@ -11,6 +11,7 @@
 		= f.input :excepted_categories, :collection => Category.all, :input_html => { :multiple => true, :class => "span6"}
 		= f.input :excepted_ground_types, :collection => Ground.get_type_values, :input_html => { :multiple => true, :class => "span6"}
 	-#
+	= f.input :hash_key, :input_html => { :class => "span6" }
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Отмена', offers_path, :class => "btn btn-danger"
 

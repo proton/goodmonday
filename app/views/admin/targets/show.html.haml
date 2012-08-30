@@ -29,12 +29,12 @@
 				= "/"
 				= content_tag(:span, 'AMOUNT', :class => "atn")
 				= "/"
-				= @target.hash_key
+				= @offer.hash_key
 				= "')"
 			%br
-			%code= @target.hash_key
-			= "- ключ хэш функции, заданный вами в"
-			= link_to 'настройках цели', edit_user_offer_target_path(@user, @offer, @target)
+			%code= @offer.hash_key
+			= "- ключ для доступа к API, заданный вами в"
+			= link_to 'настройках кампании', edit_user_offer_path(@user, @offer)
 			= '.'
 	- else
 		%pre.prettyprint

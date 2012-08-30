@@ -14,8 +14,6 @@
 				= f.input :confirm_auth_password, :input_html => { :class => "span6" }, :disabled => !needs_auth
 	.auto_mode_fields{:style => auto_mode ? 'display:block' : 'display:none'}
 		= f.input :set_price_on_achievement, :as => :boolean, :disabled => !auto_mode
-	.set_price_on_achievement_fields{:style => set_price_on_achievement ? 'display:block' : 'display:none'}
-		= f.input :hash_key, :input_html => { :class => "span6" }, :disabled => !set_price_on_achievement
 	.have_price_fields{:style => have_price ? 'display:block' : 'display:none'}
 		= f.input :prc_price, :required => true, :as => :float, :input_html => { :class => "span6" }, :disabled => !have_price
 	= f.input :fixed_price, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_price }
@@ -38,17 +36,14 @@
 		var auto_mode_fields = form.find('.auto_mode_fields');
 		var needs_auth_fields = form.find('.needs_auth_fields');
 		var have_price_fields = form.find('.have_price_fields');
-		var set_price_on_achievement_fields = form.find('.set_price_on_achievement_fields');
 
 		manual_mode_fields.toggle(!auto_mode);
 		auto_mode_fields.toggle(auto_mode);
 		have_price_fields.toggle(have_price);
-		set_price_on_achievement_fields.toggle(set_price_on_achievement);
 		manual_mode_fields.find('input').prop('disabled', auto_mode);
 		auto_mode_fields.find('input').prop('disabled', !auto_mode);
 		needs_auth_fields.find('input').prop('disabled', !needs_auth);
 		have_price_fields.find('input').prop('disabled', !have_price);
-		set_price_on_achievement_fields.find('input').prop('disabled', !set_price_on_achievement);
 	}
 
 	$(document).ready(function() {

@@ -36,6 +36,8 @@ class Offer
   field :excepted_categories_ids, type: Array, default: []
   field :excepted_ground_types, type: Array, default: []
 
+  field :hash_key, type: String, default: ->{ rand(36**20).to_s(36) }
+
   mount_uploader :logo, OfferLogoUploader
 
 	def excepted_categories

@@ -83,6 +83,7 @@ ru:
         redirect_options: 'Опции редиректа'
         accept_custom_urls: 'Позволить вебмастерам указывать свои url в ссылках'
         achievement_task_marker: 'Идетификатор для задачи для сбора достижений целей'
+        hash_key: 'Ключ для доступа к API'
       target:
         title: 'Название'
         repeatable: 'Повторяемая'
@@ -92,7 +93,6 @@ ru:
         confirm_auth_username: 'Имя пользователя'
         confirm_auth_password: 'Пароль'
         set_price_on_achievement: 'Задание цены при достижении цели'
-        hash_key: 'Ключ для API'
         fixed_price: 'Стоимость (руб.)'
         fixed_price_cents: 'Стоимость (руб.)'
         fixed_prices_bronze: 'Стоимость фиксированная (Бронза)'
