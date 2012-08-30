@@ -1,5 +1,6 @@
 class Banner < Advert
-	field :url, type: String
+  field :url, type: String
+  field :description, type: String
 
 	embeds_many :banner_images
 

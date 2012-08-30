@@ -115,6 +115,7 @@ ru:
         text: 'Текст'
       banner:
         url: 'Ссылка'
+        description: 'Описание'
       filter:
         date_total: 'За весь период'
         date_start: 'От'

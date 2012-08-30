@@ -4,6 +4,10 @@
 			%b= 'URL: '
 			= @advert.url
 			= link_to '(редактировать)', edit_offer_advert_path(@offer, @advert)
+			- if @advert.description
+				%br
+				%b= 'Описание: '
+				= @advert.description
 %hr
 - case @advert.class
 	- when Banner
