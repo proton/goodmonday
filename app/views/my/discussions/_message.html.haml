@@ -1,5 +1,5 @@
 .message
-	%b= message.user.email
+	%b= message.user.email if message.user
 	%blockquote
 		%p= message.text
 		%i= message.created_at
