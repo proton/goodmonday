@@ -1,5 +1,14 @@
+- show_emails = (@current_user.is_a? Operator)
+- user = message.user
 .message
-	%b= message.user.email if message.user
+	%b
+		- if show_emails
+			= user.email if user
+		- else
+			- if user.is_a? Operator
+				Оператор техподдержки
+			- else
+				Вы
 	%blockquote
 		%p= message.text
-		%i= message.created_at
+		%small= message.created_at
