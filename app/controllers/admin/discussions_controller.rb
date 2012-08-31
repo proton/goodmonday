@@ -11,7 +11,7 @@ class Admin::DiscussionsController < Admin::BaseController
 
 	def show
 		@discussion = Discussion.find(params[:id])
-		add_crumb "Дискуссия №#{@discussion.num}"
+    add_crumb "Дискуссия №#{@discussion.num}: #{@discussion.subject}"
 		gon.discussion_id = @discussion.id.to_s
 		gon.discussion_last = @discussion.messages.max(:created_at).strftime('%Y-%m-%dT%H:%M:%S')
 		gon.url = request.fullpath

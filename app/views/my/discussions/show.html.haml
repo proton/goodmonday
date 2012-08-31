@@ -1,4 +1,3 @@
-%h2.title= @discussion.subject
 .messages= render :partial => 'my/discussions/message', :collection => @discussion.messages
 - if @discussion.state==:open
 	= form_tag discussion_message_path(@discussion) do
