@@ -4,6 +4,13 @@
 	%b
 		- if show_emails
 			= user.email if user
+      - case user.class
+      	- when Webmaster
+      		= ' (Вебмастер)'
+      	- when Advertiser
+      		= ' (Рекламодатель)'
+      	- when Operator
+      		= ' (Оператор техподдержки)'
 		- else
 			- if user.is_a? Operator
 				Оператор техподдержки
