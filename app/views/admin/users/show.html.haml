@@ -73,7 +73,7 @@
 					%b Допустимый кредит:
 					= number_to_currency @user.overdraft
 					%br
-				%b Всего выплат:
+				%b Всего заработано:
 				= number_to_currency @user.total_payments
 				%br
 				- if @user.is_a? Webmaster
