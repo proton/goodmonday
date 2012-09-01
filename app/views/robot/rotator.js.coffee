@@ -62,7 +62,9 @@ if elems.length > 0
             if sub_id?
               if sub_id.length>0
                 sub_id = sub_id[0].substring(6)
-                banner_code = banner_code.replace('/goto',"/goto?sub_id=#{sub_id}")
+#                banner_code = banner_code.replace('/goto',"/goto?sub_id=#{sub_id}")
+#            <a href="http://r.goodmonday.ru/5008459c487a762f0b00000c/goto/5008011c487a762f0b000001/501c0d8b487a76456000002a"><img src="http://ext.goodmonday.ru/uploads/banner_image/image/501c0fa1487a764560000040/bedn.jpg"></a>
+#          <a href="http://r.goodmonday.ru/5008459c487a762f0b00000c/goto/5008011c487a762f0b000001/501c0d8b487a76456000002a?sub_id=#{sub_id}"><img src="http://ext.goodmonday.ru/uploads/banner_image/image/501c0fa1487a764560000040/bedn.jpg"></a>
             size_elems[i].innerHTML = banner_code
             i++
 
