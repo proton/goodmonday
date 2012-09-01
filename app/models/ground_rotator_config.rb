@@ -17,11 +17,11 @@ class GroundRotatorConfig
   end
 
   def offers
-    if categories.empty?
-      Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful)
-    else
-      Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful).any_in(categories_ids: self.categories_ids)
-    end
+    ret = Offer.all
+    ret = ret.where(:is_adult => false) if self.block_adult
+    ret = ret.where(:is_doubtful => false) if self.block_doubtful
+    ret = ret.any_in(categories_ids: self.categories_ids) unless categories.empty?
+    ret
   end
 
 end
