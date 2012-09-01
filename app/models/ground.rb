@@ -130,11 +130,13 @@ class Ground
 	has_many :achievements
 
 	def accepted_offers
-		offers = case self.mode
+		offers = case self.rotator_mode
 			when :manual
-				return Offer.any_in(_id: self.accepted_rotator_offers_ids)
-			when :automatic
-				return Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful)
+				Offer.any_in(_id: self.accepted_rotator_offers_ids)
+			when :auto
+				self.ground_rotator_config.offers
+      else
+        Offer.all
 			end
 		offers.accepted
 	end

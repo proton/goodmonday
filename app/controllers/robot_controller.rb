@@ -11,7 +11,7 @@ class RobotController < ApplicationController
 	def show
 		sizes = params[:sizes]
 		ground = Ground.find(params[:ground_id])
-		if sizes.empty? || !ground
+		if !sizes || sizes.empty? || !ground
 			render :json => nil
 		else
 			used_offers = []

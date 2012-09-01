@@ -14,6 +14,10 @@ class GroundRotatorConfig
 
 	def categories= (ids)
 		self.categories_ids = ids.reject(&:blank?)
-	end
+  end
+
+  def offers
+    Offer.where(:is_adult => !self.block_adult).where(:is_doubtful => !self.block_doubtful).any_in(categories_ids: self.categories_ids)
+  end
 
 end
