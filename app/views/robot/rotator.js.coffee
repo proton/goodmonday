@@ -58,11 +58,11 @@ if elems.length > 0
           i = 0
           while i < len
             banner_code = size_banners[i]
-            sub_id = a.match(/subid_\S+/)
+            sub_id = size_elems[i].className.match(/subid_\S+/)  #TODO: not banner_code, INFA 100%
             if sub_id?
               if sub_id.length>0
                 sub_id = sub_id[0].substring(6)
-                banner_code = banner_code.replace('/goto',"?sub_id=#{sub_id}/goto")
+                banner_code = banner_code.replace('/goto',"/goto?sub_id=#{sub_id}")
             size_elems[i].innerHTML = banner_code
             i++
 

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class RobotController < ApplicationController
-	after_filter :set_access_control_headers, :only => [:advert]
+	after_filter :set_access_control_headers, :only => [:show]
 
 	def rotator
 		@ground = Ground.find(params[:ground_id])
