@@ -1,7 +1,7 @@
 class Advert
   include Mongoid::Document
 
-	before_save :update_offer_adverts_sizes
+  before_save :update_offer_adverts_sizes
 	before_destroy :update_offer_adverts_sizes
 
 	embedded_in :offer
@@ -11,6 +11,7 @@ class Advert
 	scope :for_size, ->(size) { any_in(:sizes => [size.to_sym]) }
 
 	def update_offer_adverts_sizes
+    puts 'advert.update_offer_adverts_sizes'
 		self.offer.update_adverts_sizes
 	end
 
