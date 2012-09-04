@@ -27,11 +27,15 @@ class Admin::OffersController < Admin::BaseController
 		respond_with(@offer, :location => user_offers_path(@user))
 	end
 
-	def new
-		@offer = Offer.new
-		add_crumb "Рекламные кампании", offers_path
-		add_crumb "Новая рекламная кампания"
-	end
+  def new
+ 		@offer = Offer.new
+ 		add_crumb "Рекламные кампании", offers_path
+ 		add_crumb "Новая рекламная кампания"
+ 	end
+
+  def edit
+ 		add_crumb "Правка"
+ 	end
 
 	def update_advertiser
     @offer = @user.offers.find(params[:offer_id])

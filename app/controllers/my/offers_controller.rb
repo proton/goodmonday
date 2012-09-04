@@ -32,6 +32,10 @@ class My::OffersController < My::BaseController
 		add_crumb "Новая рекламная кампания"
 	end
 
+  def edit
+ 		add_crumb "Правка"
+ 	end
+
 	protected
 
 	def find_object
