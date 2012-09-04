@@ -26,5 +26,6 @@ class BannerImage
 
 	def update_advert_sizes
 		self.banner.update_sizes
+    true
 	end
 end

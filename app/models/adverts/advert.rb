@@ -13,6 +13,7 @@ class Advert
 	def update_offer_adverts_sizes
     puts 'advert.update_offer_adverts_sizes'
 		self.offer.update_adverts_sizes
+    true
 	end
 
 	def self.html_code(size)
