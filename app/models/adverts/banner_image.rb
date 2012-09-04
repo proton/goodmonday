@@ -4,7 +4,7 @@ class BannerImage
 	include Mongoid::Timestamps
 	embedded_in :banner
 
-	before_save :update_advert_sizes
+	after_save :update_advert_sizes
 	before_destroy :update_advert_sizes
 
   symbolize :size, :in => ADVERTS_SIZES
