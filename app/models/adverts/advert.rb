@@ -11,7 +11,6 @@ class Advert
 	scope :for_size, ->(size) { any_in(:sizes => [size.to_sym]) }
 
 	def update_offer_adverts_sizes
-    puts 'advert.update_offer_adverts_sizes'
 		self.offer.update_adverts_sizes
     true
 	end
