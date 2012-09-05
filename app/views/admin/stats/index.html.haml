@@ -12,8 +12,8 @@
 					%th CPC
 			%tbody
 				- @stats.each do |stat|
-					- income = stat['income_count'].to_i
-					- expenditure = stat['expenditure_count'].to_i
+					- income = stat['income_count'].to_f
+					- expenditure = stat['expenditure_count'].to_f
 					- clicks = stat['clicks_count'].to_i
 					- targets = stat['targets_count'].to_i
 					%tr
@@ -39,7 +39,7 @@
 						%td= number_to_currency(income/100)
 						%td= number_to_currency(expenditure/100)
 						%td= "%.5f" % (targets.to_f/clicks)
-						%td= number_to_currency(income.to_f/100/clicks)
+						%td= number_to_currency(income/100/clicks)
 	.span3
 		.well
 			%b Фильтрация

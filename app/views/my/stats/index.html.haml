@@ -18,9 +18,9 @@
 				- @stats.each do |stat|
 					- income = case current_user.class
 						- when Webmaster
-							- stat['income_count'].to_i
+							- stat['income_count'].to_f
 						- when Advertiser
-							- stat['expenditure_count'].to_i
+							- stat['expenditure_count'].to_f
 					- clicks = stat['clicks_count'].to_i
 					- targets = stat['targets_count'].to_i
 					%tr
@@ -29,7 +29,7 @@
 						%td= targets
 						%td= number_to_currency(income/100)
 						%td= "%.5f" % (targets.to_f/clicks)
-						%td= number_to_currency(income.to_f/100/clicks)
+						%td= number_to_currency(income/100/clicks)
 	.span3
 		.well
 			%b Фильтрация
