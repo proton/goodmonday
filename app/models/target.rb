@@ -33,7 +33,7 @@ class Target
   validates :hold, presence: true
 
   def webmaster_price(price = nil)
-    if price && self.confirm_mode==:manual
+    if price && self.prc_prices_bronze.to_f>0
       self.fixed_prices_bronze + Money.new(self.prc_prices_bronze*price) #тут умножаем на сто (приводим к копейкам) и делим на сто (ибо проценты)
     else
       self.fixed_prices_bronze
@@ -41,7 +41,7 @@ class Target
   end
 
   def advertiser_price(price = nil)
-    if price && self.confirm_mode==:manual
+    if price && self.prc_price.to_f>0
       self.fixed_price + Money.new(self.prc_price*price) #тут умножаем на сто (приводим к копейкам) и делим на сто (ибо проценты)
     else
       self.fixed_price
