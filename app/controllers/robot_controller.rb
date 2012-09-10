@@ -179,12 +179,14 @@ class RobotController < ApplicationController
                   if target.set_price_on_achievement && achievement.order_id && params[:amount] && !params[:amount].empty? && params[:chk] && !params[:chk].empty?
                     amount = params[:amount].to_f
                     chk = params[:chk].to_s.downcase
-                    chk_string = "#{offer.id.to_s}/target/#{target.id.to_s}/#{achievement.order_id}/#{"%.2f" % amount}/#{offer.hash_key}"
-                    md5 = Digest::MD5.hexdigest(chk_string)
-                    if chk==md5
+                    chk_string1 = "#{offer.id.to_s}/target/#{target.id.to_s}/#{achievement.order_id}/#{"%.2f" % amount}/#{offer.hash_key}"
+                    chk_string2 = "#{offer.id.to_s}/target/#{target.id.to_s}/#{achievement.order_id}/#{params[:amount].to_s}/#{offer.hash_key}"
+                    md5_1 = Digest::MD5.hexdigest(chk_string1)
+                    md5_2 = Digest::MD5.hexdigest(chk_string2)
+                    if chk==md5_1 || chk==md5_2
                       achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
                     else
-                      achievement.additional_info = "Не совпал хэш :(\nприслан: #{chk}\nстрока для проверки: #{chk_string}\nmd5: #{md5}"
+                      achievement.additional_info = "Не совпал хэш :(\nприслан: #{chk}\nстрока для проверки: #{chk_string}\nmd5: #{md5_1} или #{md5_2}"
                     end
                   else
                     achievement.accept(target.webmaster_price, target.advertiser_price)
