@@ -184,7 +184,7 @@ class RobotController < ApplicationController
                     md5_1 = Digest::MD5.hexdigest(chk_string1)
                     md5_2 = Digest::MD5.hexdigest(chk_string2)
                     if chk==md5_1 || chk==md5_2
-                      achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+                      achievement.accept(target.webmaster_price(amount), target.advertiser_price(amount))
                     else
                       achievement.additional_info = "Не совпал хэш :(\nприслан: #{chk}\nстрока для проверки: #{chk_string}\nmd5: #{md5_1} или #{md5_2}"
                     end
