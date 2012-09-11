@@ -52,7 +52,7 @@
 								- changed_value = @moderation.changed_fields[key]
 								- accepted_value = @moderation.accepted_fields[key]
 								- type = :default
-								- if changed_value.class==BSON::ObjectId && key[-3..-1]=='_id'
+								- if changed_value.class==Moped::BSON::ObjectId && key[-3..-1]=='_id'
 									- klass = key[0..-4].camelize.constantize
 									- type = :association
 								- elsif moderated_class.const_defined?(:MODERATED_ATTRS_INFO) && moderated_class::MODERATED_ATTRS_INFO[key]

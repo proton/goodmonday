@@ -15,6 +15,6 @@ class Webmaster < Member
   def accepted_offers
     ground_ids = self.grounds.distinct(:_id)
     offer_ids = GroundOffer.where(state: :accepted).any_in(ground_id: ground_ids).distinct(:offer_id)
-    Offer.find(offer_ids)
+    Offer.any_in(_id: offer_ids)
   end
 end

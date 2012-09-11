@@ -6,7 +6,7 @@ class BlackIp
   symbolize :type, :in => [:permanently, :temporarily], :default => :permanently, :scopes => true
 
 	field :ip, type: String
-	index :ip, unique: true
+	index({ip: 1}, {unique: true})
 	field :discard_at, type: DateTime
   field :reason, type: String
 

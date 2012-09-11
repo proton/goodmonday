@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
 	protected
 
 	def find_object
-		@article = Article.find_by_slug(params[:id])
+		@article = Article.find(params[:id])
 	end
 
 	def and_crumbs

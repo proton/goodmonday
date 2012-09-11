@@ -15,16 +15,16 @@ class Achievement
 	belongs_to :offer
 	belongs_to :visitor
 
-  field :target_id, type: BSON::ObjectId
-  field :webmaster_payment_id, type: BSON::ObjectId
-  field :advertiser_payment_id, type: BSON::ObjectId
-  field :affiliator_payment_id, type: BSON::ObjectId
+  field :target_id, type: Moped::BSON::ObjectId
+  field :webmaster_payment_id, type: Moped::BSON::ObjectId
+  field :advertiser_payment_id, type: Moped::BSON::ObjectId
+  field :affiliator_payment_id, type: Moped::BSON::ObjectId
 
   field :accepted_at, type: DateTime
 
 	field :page, type: String
 	field :ip, type: String
-	index :ip
+  index({ip: 1}, {background: true})
 
   field :sub_id, type: String
 

@@ -44,7 +44,7 @@ class Admin::StatsController < Admin::BaseController
         when :symbol
           v = v.to_sym
         when :id
-          v = BSON::ObjectId(v)
+          v = Moped::BSON::ObjectId(v)
         when :text
           v = v.to_s
         when :boolean

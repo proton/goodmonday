@@ -2,8 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-gem 'mongoid', '~> 2.4'
-gem 'bson_ext'
+gem 'mongoid', '~> 3.0.0'
 
 gem 'symbolize', :require => 'symbolize/mongoid'
 
@@ -13,7 +12,8 @@ gem 'haml-rails'
 gem 'mongoid_auto_increment'
 #gem 'mongoid_activity'
 gem 'mongoid_denormalize'
-gem 'mongoid_slug'
+#gem 'mongoid_slug'
+gem 'mongoid_slug', :git => 'git://github.com/digitalplaywright/mongoid-slug.git'
 gem 'mongoid-eager-loading'
 
 gem 'mongoid_money_field'
@@ -21,7 +21,8 @@ gem 'mongoid_money_field'
 gem 'simple_form'
 gem 'bootstrap-sass'
 
-gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+#gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem "carrierwave-mongoid", :git => 'git://github.com/jnicklas/carrierwave-mongoid.git', :branch => "mongoid-3.0"
 gem 'mini_magick'
 gem "fog", "~> 1.3.1"
 

@@ -13,6 +13,7 @@ class Ground
 
   auto_increment :alternative_id
   index :alternative_id
+  index({active: 1 }, { unique: true })
 
 	symbolize :type, :in => [:website, :doorway, :socialnet, :context, :email, :etc], :default => :website
 
@@ -27,10 +28,18 @@ class Ground
 	field :denied_link_offers_ids, type: Array, default: []
 	field :pending_link_offers_ids, type: Array, default: []
 
-	define_method(:advert_offers_ids) { self.accepted_rotator_offers_ids+self.denied_rotator_offers_ids+self.pending_rotator_offers_ids }
-	define_method(:advert_offers) { Offer.find(advert_offers_ids) }
-	define_method(:link_offers_ids) { self.accepted_link_offers_ids+self.denied_link_offers_ids+self.pending_link_offers_ids }
-	define_method(:link_offers) { Offer.find(link_offers_ids) }
+	def advert_offers_ids
+    self.accepted_rotator_offers_ids+self.denied_rotator_offers_ids+self.pending_rotator_offers_ids
+  end
+	def advert_offers
+    Offer.any_in(_id: advert_offers_ids)
+  end
+	def link_offers_ids
+    self.accepted_link_offers_ids+self.denied_link_offers_ids+self.pending_link_offers_ids
+  end
+  def link_offers
+    Offer.any_in(_id: link_offers_ids)
+  end
 
 	def find_offer_permission(offer_id)
 		self.ground_offers.where(:offer_id => offer_id).first

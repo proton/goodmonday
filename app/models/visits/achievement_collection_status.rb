@@ -8,6 +8,6 @@ class AchievementCollectionStatus
   symbolize :state, :in => [:success, :error], :default => :success, :scopes => true
 
   field :idn, type: String
- 	index :idn
+  index({idn: 1}, {background: true})
 	field :message, type: String
 end

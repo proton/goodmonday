@@ -39,7 +39,7 @@ class Offer
   field :hash_key, type: String, default: ->{ rand(36**20).to_s(36) }
 
   field :active, type: Boolean, default: true
-  index :active
+  index({active: 1 }, { background: true })
   scope :active, where(active: true)
   def active?
     self.active

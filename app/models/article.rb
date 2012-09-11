@@ -11,7 +11,7 @@ class Article
   validates_presence_of :title
 
   field :active, type: Boolean, default: true
-  index :active
+  index({active: 1 }, { background: true })
   scope :active, where(active: true)
   def active?
     self.active

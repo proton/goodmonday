@@ -7,7 +7,7 @@ class Visitor
 	has_many :achievements
 	has_many :suspicions
 
-	field :advert_id, type: BSON::ObjectId
+	field :advert_id, type: Moped::BSON::ObjectId
 
 	field :initial_page, type: String
 	field :initial_ip, type: String
