@@ -1,7 +1,6 @@
 class Article
   include Mongoid::Document
  	include Mongoid::Timestamps
- 	include Mongoid::Activity
  	include Mongoid::Slug
 
  	field :title, :type => String
@@ -10,4 +9,11 @@ class Article
   field :show_in_menu, :type => Boolean, :default => false
 
   validates_presence_of :title
+
+  field :active, type: Boolean, default: true
+  index :active
+  scope :active, where(active: true)
+  def active?
+    self.active
+  end
 end
