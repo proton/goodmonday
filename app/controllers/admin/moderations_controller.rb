@@ -4,7 +4,7 @@ class Admin::ModerationsController < Admin::BaseController
 	before_filter :find_moderation, :only => [:show, :accept, :deny, :destroy]
 
 	def index
-		moderations = Moderation.order_by(:updated_at, :desc)
+		moderations = Moderation.desc(:updated_at)
 		@moderations_accepted = moderations.accepted
 		@moderations_denied = moderations.denied
 		@moderations_pending = moderations.pending
