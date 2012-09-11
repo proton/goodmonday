@@ -17,7 +17,7 @@
 								.thumbnail= image_tag offer.logo
 				%td= offer.title
 				%td= state_label(offer.moderated_state)
-				%td=t offer.active?
+				%td=t offer.active?.to_s
 				%td
 					= offer.clicks
 					= ' / '
@@ -41,6 +41,7 @@
 					= link_to user_offer_path(@user, offer), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
 						%i.icon-trash.icon-white
 						= 'Удалить'
+
 = link_to new_user_offer_path(@user), :class => 'btn btn-primary' do
 	%i.icon-plus-sign.icon-white
 	= 'Добавить'
