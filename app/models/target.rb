@@ -32,6 +32,13 @@ class Target
 
   validates :hold, presence: true
 
+  field :active, type: Boolean, default: true
+  index :active
+  scope :active, where(active: true)
+  def active?
+    self.active
+  end
+
   def webmaster_price(price = nil)
     if price && self.prc_prices_bronze.to_f>0
       self.fixed_prices_bronze + Money.new(self.prc_prices_bronze*price) #тут умножаем на сто (приводим к копейкам) и делим на сто (ибо проценты)
