@@ -3,7 +3,7 @@
 class OffersController < ApplicationController
 
 	def index
-    @offers = Offer.accepted.where('targets.moderated_state' => :accepted).order_by([:epc_cents, :desc])
+    @offers = Offer.active_n_accepted.where('targets.moderated_state' => :accepted).order_by([:epc_cents, :desc])
     add_crumb "Рекламные кампании"
   end
 
