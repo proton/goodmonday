@@ -12,8 +12,7 @@ class Ground
 	field :url, type: String, default: ''
 
   auto_increment :alternative_id
-  index :alternative_id
-  index({active: 1 }, { unique: true })
+  index({alternative_id: 1 }, { unique: true })
 
 	symbolize :type, :in => [:website, :doorway, :socialnet, :context, :email, :etc], :default => :website
 
