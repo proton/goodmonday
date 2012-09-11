@@ -21,7 +21,7 @@ class My::GroundAdvertOffersController < My::BaseController
 
 	def new
 		add_crumb 'Новый оффер'
-		@offers = Offer.accepted.not_in(_id: @ground.advert_offers_ids)
+		@offers = Offer.accepted.active.not_in(_id: @ground.advert_offers_ids)
 	end
 
 	def create

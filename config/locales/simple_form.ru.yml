@@ -84,6 +84,7 @@ ru:
         accept_custom_urls: 'Позволить вебмастерам указывать свои url в ссылках'
         achievement_task_marker: 'Идетификатор для задачи для сбора достижений целей'
         hash_key: 'Ключ для доступа к API'
+        active: 'Активна'
       target:
         title: 'Название'
         repeatable: 'Повторяемая'
@@ -106,6 +107,7 @@ ru:
         hold: 'Холд (дней)'
         cookieless_achievement: 'Достижение целей без использования cookie'
         achievement_task_marker: 'Идетификатор для задачи для сбора достижений целей'
+        active: 'Активна'
       article:
         title: 'Название'
         content: 'Содержимое'

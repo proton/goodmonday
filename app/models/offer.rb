@@ -38,6 +38,15 @@ class Offer
 
   field :hash_key, type: String, default: ->{ rand(36**20).to_s(36) }
 
+  field :active, type: Boolean, default: true
+  index :active
+  scope :active, where(active: true)
+  def active?
+    self.active
+  end
+
+  scope :active_n_accepted, where(active: true).where(:moderated_state => :accepted)
+
   mount_uploader :logo, OfferLogoUploader
 
 	def excepted_categories
@@ -48,7 +57,7 @@ class Offer
 		self.excepted_categories_ids = ids.reject(&:blank?)
 	end
 
-	scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).order_by(:epc, :desc) }
+  scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).order_by(:epc, :desc) }
 
 	def update_adverts_sizes
 		self.adverts_sizes = self.adverts.where(moderated_state: :accepted).collect{|a| a.sizes}.flatten.compact

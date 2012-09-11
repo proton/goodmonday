@@ -19,6 +19,7 @@
 	= f.input :fixed_price, :required => true, :as => :float, :input_html => { :class => "span6", :value => @target.fixed_price }
 	= f.input :repeatable, :as => :boolean
 	= f.input :hold, :input_html => { :class => "span6" }
+	= f.input :active, :as => :boolean
 	= f.button :submit, :class => 'btn-primary'
 	= link_to 'Отмена', offer_targets_path(@offer), :class => "btn btn-danger"
 

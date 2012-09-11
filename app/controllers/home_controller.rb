@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @news = News.desc(:created_at).limit(3)
     # @offers = Offer.accepted.where(is_adult: false).order_by([:epc, :desc]).limit(3)
     #@offers = Offer.accepted.order_by([:epc_cents, :desc]).limit(3)
-    @offers = Offer.accepted.where('targets.moderated_state' => :accepted).order_by([:epc_cents, :desc]).limit(3)
+    @offers = Offer.active_n_accepted.where('targets.moderated_state' => :accepted).order_by([:epc_cents, :desc]).limit(3)
   end
 
   protected

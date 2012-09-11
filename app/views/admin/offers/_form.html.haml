@@ -17,6 +17,7 @@
 		= f.input :excepted_ground_types, :collection => Ground.get_type_values, :input_html => { :multiple => true, :class => "span6"}
 
 	= f.input :hash_key, :input_html => { :class => "span6" }
+	= f.input :active, :as => :boolean
 	%hr
 
 	= f.input :is_adult, :as => :boolean

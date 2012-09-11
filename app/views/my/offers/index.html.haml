@@ -4,7 +4,7 @@
 			%th= 'Логотип'
 			%th= 'Название'
 			%th= 'Статус'
-			-#%th= 'Режим'
+			%th= 'Активна'
 			%th= 'Клики/Выплаты'
 			%th= 'Действия'
 	%tbody
@@ -17,6 +17,7 @@
 								.thumbnail= image_tag offer.logo
 				%td= offer.title
 				%td= state_label(offer.moderated_state)
+				%td=t offer.active?
 				-#%td= offer.mode
 				%td
 					= offer.clicks

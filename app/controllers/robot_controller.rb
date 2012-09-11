@@ -19,10 +19,10 @@ class RobotController < ApplicationController
 			#
 			sizes.each_pair do |size,count_str|
 				count = count_str.to_i
-				offers = ground.accepted_offers.for_advert_size(size).not_in(_id: used_offers)
+				offers = ground.accepted_offers.active.for_advert_size(size).not_in(_id: used_offers)
 				offers_count = offers.count
 				if offers_count<count
-					offers = ground.accepted_offers.for_advert_size(size)
+					offers = ground.accepted_offers.active.for_advert_size(size)
 					offers_count = offers.count
 				end
 				if offers_count>=count
@@ -155,10 +155,10 @@ class RobotController < ApplicationController
 		ip = request.remote_ip
 		if BlackIp.exclude(ip) && check_for_suspicions(request)
 			offer = Offer.find(params[:offer_id])
-			if offer
+			if offer && offer.active?
         target_id = params[:target_id]
         target = offer.targets.find(target_id)
-        if target
+        if target && target.active?
           if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
             visitor_id = cookies[offer.id.to_s]
           elsif target.cookieless_achievement && params[:visitor] && !params[:visitor].empty?
