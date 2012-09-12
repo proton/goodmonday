@@ -28,6 +28,11 @@ class StatCounter
   def self.group_by(key_field, opts = {})
     pipeline = []
 
+    #matching
+    if opts[:cond] && !opts[:cond].empty?
+      pipeline << {"$match" => opts[:cond]}
+    end
+
     #grouping
     h = {}
     h['_id'] = "$#{key_field.to_s}"
@@ -41,11 +46,6 @@ class StatCounter
       end
     end
     pipeline << {"$group" => h}
-
-    #matching
-    #if opts[:cond] && !opts[:cond].empty?
-    #  pipeline << {"$match" => opts[:cond]}
-    #end
 
     #sorting
     h = {}
