@@ -26,44 +26,42 @@ class StatCounter
   end
 
   def self.group_by(key_field, opts = {})
-    h = {}
+    pipeline = []
 
-    group_h = {}
-    group_h['_id'] = "$#{key_field.to_s}"
+    #grouping
+    h = {}
+    h['_id'] = "$#{key_field.to_s}"
     agregation_methods = [:first, :last, :max, :mix, :avg, :sum, :push] #http://docs.mongodb.org/manual/reference/aggregation/group/#_S_group
     agregation_methods.each do |method|
       if opts[method]
         opts[method].each do |field|
           field = field.to_s
-          group_h["#{field}_#{method}"] = {"$#{method}" => "$#{field}"}
+          h["#{field}_#{method}"] = {"$#{method}" => "$#{field}"}
         end
       end
     end
-    h["$group"] = group_h
+    pipeline << {"$group" => h}
 
-    #if opts[:cond]
-    #  h["$match"] = opts[:cond]
-    #end
+    #matching
+    if opts[:cond]
+      pipeline << {"$match" => opts[:cond]}
+    end
 
+    #sorting
+    h = {}
     if opts[:sort_asc]
-      h["$sort"] = {} unless h["$sort"]
       opts[:sort_asc].each do |field|
-        field = field.to_s
-        h["$sort"]["$#{field}"] = 1
+        h["$#{field}"] = 1
       end
     end
     if opts[:sort_desc]
-      h["$sort"] = {} unless h["$sort"]
       opts[:sort_desc].each do |field|
-        field = field.to_s
-        h["$sort"]["$#{field}"] = -1
+        h["$#{field}"] = -1
       end
     end
-
-    puts h["$group"]
-    puts h["$match"]
-    puts h["$sort"]
-    puts h
+    unless h.empty?
+      pipeline << {"$sort" => h}
+    end
 
     collection.aggregate(h)
   end
