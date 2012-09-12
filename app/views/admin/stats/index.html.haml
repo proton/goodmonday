@@ -26,7 +26,7 @@
 										- else
 											= stat['_id'].strftime('%d/%m/%Y')
 									- else
-										- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat[@group_by.to_s])
+										- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat['_id'])
 										- if [:advertiser_id, :webmaster_id].include? (@group_by)
 											= link_to obj.title, user_path(obj)
 										- elsif @group_by==:ground_id

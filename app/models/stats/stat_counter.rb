@@ -63,8 +63,8 @@ class StatCounter
       pipeline << {"$sort" => h}
     end
 
-    collection.aggregate(pipeline)
-
     puts pipeline
+
+    collection.aggregate(pipeline)
   end
 end
