@@ -43,9 +43,9 @@ class StatCounter
     pipeline << {"$group" => h}
 
     #matching
-    if opts[:cond] && !opts[:cond].empty?
-      pipeline << {"$match" => opts[:cond]}
-    end
+    #if opts[:cond] && !opts[:cond].empty?
+    #  pipeline << {"$match" => opts[:cond]}
+    #end
 
     #sorting
     h = {}
