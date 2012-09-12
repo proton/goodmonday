@@ -41,9 +41,9 @@ class StatCounter
     end
     h["$group"] = group_h
 
-    if opts[:cond]
-      h["$match"] = opts[:cond]
-    end
+    #if opts[:cond]
+    #  h["$match"] = opts[:cond]
+    #end
 
     if opts[:sort_asc]
       h["$sort"] = {} unless h["$sort"]
@@ -59,6 +59,11 @@ class StatCounter
         h["$sort"]["$#{field}"] = -1
       end
     end
+
+    puts h["$group"]
+    puts h["$match"]
+    puts h["$sort"]
+    puts h
 
     collection.aggregate(h)
   end
