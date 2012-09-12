@@ -11,35 +11,36 @@
 					%th PPC
 					%th CPC
 			%tbody
-				- @stats.each do |stat|
-					- income = stat['income_sum'].to_f
-					- expenditure = stat['expenditure_sum'].to_f
-					- clicks = stat['clicks_sum'].to_i
-					- targets = stat['targets_sum'].to_i
-					%tr
-						%td
-							- case @group_by
-								- when :date
-									- if @date_total
-										= 'Все'
+				- if @stats
+					- @stats.each do |stat|
+						- income = stat['income_sum'].to_f
+						- expenditure = stat['expenditure_sum'].to_f
+						- clicks = stat['clicks_sum'].to_i
+						- targets = stat['targets_sum'].to_i
+						%tr
+							%td
+								- case @group_by
+									- when :date
+										- if @date_total
+											= 'Все'
+										- else
+											= stat['_id'].strftime('%d/%m/%Y')
 									- else
-										= stat['_id'].strftime('%d/%m/%Y')
-								- else
-									- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat[@group_by.to_s])
-									- if [:advertiser_id, :webmaster_id].include? (@group_by)
-										= link_to obj.title, user_path(obj)
-									- elsif @group_by==:ground_id
-										= link_to obj.title, user_ground_path(obj.webmaster, obj)
-									- elsif @group_by==:offer_id
-										= link_to obj.title, user_offer_path(obj.advertiser, obj)
-									- else
-										= obj.title
-						%td= clicks
-						%td= targets
-						%td= number_to_currency(income/100)
-						%td= number_to_currency(expenditure/100)
-						%td= "%.5f" % (targets.to_f/clicks)
-						%td= number_to_currency(income/100/clicks)
+										- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat[@group_by.to_s])
+										- if [:advertiser_id, :webmaster_id].include? (@group_by)
+											= link_to obj.title, user_path(obj)
+										- elsif @group_by==:ground_id
+											= link_to obj.title, user_ground_path(obj.webmaster, obj)
+										- elsif @group_by==:offer_id
+											= link_to obj.title, user_offer_path(obj.advertiser, obj)
+										- else
+											= obj.title
+							%td= clicks
+							%td= targets
+							%td= number_to_currency(income/100)
+							%td= number_to_currency(expenditure/100)
+							%td= "%.5f" % (targets.to_f/clicks)
+							%td= number_to_currency(income/100/clicks)
 	.span3
 		.well
 			%b Фильтрация

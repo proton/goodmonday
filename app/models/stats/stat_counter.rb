@@ -43,7 +43,7 @@ class StatCounter
     pipeline << {"$group" => h}
 
     #matching
-    if opts[:cond]
+    if opts[:cond] && !opts[:cond].empty?
       pipeline << {"$match" => opts[:cond]}
     end
 
@@ -63,9 +63,8 @@ class StatCounter
       pipeline << {"$sort" => h}
     end
 
-    collection.aggregate(h)
-  end
+    collection.aggregate(pipeline)
 
-  def self.inst()
+    puts pipeline
   end
 end
