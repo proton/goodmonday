@@ -138,6 +138,10 @@ class RobotController < ApplicationController
  	end
 
 	def visit
+    if params[:offer_id]=='OFFER_ID'
+      logger.info "WARNING! Wrong script installed! Referer: #{request.referer}."
+      return
+    end
 		offer = Offer.find(params[:offer_id])
 		if cookies[offer.id.to_s] && !cookies[offer.id.to_s].empty?
 			visitor_id = cookies[offer.id.to_s]
