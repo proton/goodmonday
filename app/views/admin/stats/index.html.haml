@@ -23,7 +23,7 @@
 									- if @date_total
 										= 'Все'
 									- else
-										= stat['date'].strftime('%d/%m/%Y')
+										= stat['_id'].strftime('%d/%m/%Y')
 								- else
 									- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(stat[@group_by.to_s])
 									- if [:advertiser_id, :webmaster_id].include? (@group_by)

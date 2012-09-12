@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 
 gem 'mongoid', '~> 3.0.0'
+gem 'moped', '~> 1.3.0', :git => 'git://github.com/mongoid/moped.git' #remove this string after moped 1.3.0 stabilization
 
 gem 'symbolize', :require => 'symbolize/mongoid'
 

@@ -24,7 +24,7 @@
 					- clicks = stat['clicks_count'].to_i
 					- targets = stat['targets_count'].to_i
 					%tr
-						%td= stat['date'].strftime('%d/%m/%Y')
+						%td= stat['_id'].strftime('%d/%m/%Y')
 						%td= clicks
 						%td= targets
 						%td= number_to_currency(income/100)

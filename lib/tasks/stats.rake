@@ -6,13 +6,13 @@ namespace :stats do
 			offer.ground_offers.each do |ground_offer|
 				total_time = Time.utc(0)
 				cond = {:date => total_time, :offer_id => offer.id, :ground_id => ground_offer.ground_id}
-        stats = StatCounter.group_by(%w[income clicks], :date, cond)
+        stats = StatCounter.group_by(:date, :sum => %w[income clicks], :cond => cond)
 
 				unless stats.empty?
 					stat = stats.first
 
-					clicks = stat['clicks_count'].to_i
-          income = stat['income_count'].to_i
+					clicks = stat['clicks_sum'].to_i
+          income = stat['income_sum'].to_i
 
 					total_clicks += clicks
           total_income += income

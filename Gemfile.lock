@@ -17,6 +17,12 @@ GIT
       mongoid-grid_fs (~> 1.3.1)
 
 GIT
+  remote: git://github.com/mongoid/moped.git
+  revision: 26e744f3117ed36a02006b05e5429677659de38e
+  specs:
+    moped (1.3.0)
+
+GIT
   remote: git://github.com/proton/crummy.git
   revision: 2cf9de3ce70f6b1442c69de3614568f2aa9d21a7
   specs:
@@ -175,7 +181,6 @@ GEM
     mongoid_money_field (1.0.1)
       money
       mongoid
-    moped (1.2.1)
     multi_json (1.3.6)
     net-http-digest_auth (1.2.1)
     net-http-persistent (2.7)
@@ -315,6 +320,7 @@ DEPENDENCIES
   mongoid_denormalize
   mongoid_money_field
   mongoid_slug!
+  moped (~> 1.3.0)!
   rails (= 3.2.8)
   rb-inotify
   rnotify
