@@ -18,11 +18,11 @@
 				- @stats.each do |stat|
 					- income = case current_user.class
 						- when Webmaster
-							- stat['income_count'].to_f
+							- stat['income_sum'].to_f
 						- when Advertiser
-							- stat['expenditure_count'].to_f
-					- clicks = stat['clicks_count'].to_i
-					- targets = stat['targets_count'].to_i
+							- stat['expenditure_sum'].to_f
+					- clicks = stat['clicks_sum'].to_i
+					- targets = stat['targets_sum'].to_i
 					%tr
 						%td= stat['_id'].strftime('%d/%m/%Y')
 						%td= clicks

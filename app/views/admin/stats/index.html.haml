@@ -12,10 +12,10 @@
 					%th CPC
 			%tbody
 				- @stats.each do |stat|
-					- income = stat['income_count'].to_f
-					- expenditure = stat['expenditure_count'].to_f
-					- clicks = stat['clicks_count'].to_i
-					- targets = stat['targets_count'].to_i
+					- income = stat['income_sum'].to_f
+					- expenditure = stat['expenditure_sum'].to_f
+					- clicks = stat['clicks_sum'].to_i
+					- targets = stat['targets_sum'].to_i
 					%tr
 						%td
 							- case @group_by
