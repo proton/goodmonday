@@ -91,11 +91,6 @@ class Achievement
 
   def accept(webmaster_amount, advertiser_amount)
     offer = self.offer
-    ground = self.ground
-    target_id = self.target_id
-    target = offer.targets.find(target_id)
-    advertiser_id = offer.advertiser.id
-    webmaster_id = ground.webmaster.id
     #
     self.state = :accepted
     self.accepted_at = Time.now
@@ -114,15 +109,7 @@ class Achievement
     offer.payments += webmaster_amount
     offer.save
 
-    #collecting statistic:
-    today_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: self.created_at, sub_id: self.sub_id, target_id: target_id)
-    total_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
-    today_stat.inc(:targets, 1)
-    total_stat.inc(:targets, 1)
-    today_stat.inc(:income, self.webmaster_amount.cents)
-    today_stat.inc(:expenditure, self.advertiser_amount.cents)
-    total_stat.inc(:income, self.webmaster_amount.cents)
-    total_stat.inc(:expenditure, self.advertiser_amount.cents)
+    collect_statistic
   end
 
   def cancel!
@@ -131,8 +118,8 @@ class Achievement
       offer = self.offer
       ground = self.ground
       target_id = self.target_id
-      advertiser_id = offer.advertiser_id
-      webmaster_id = ground.webmaster_id
+      advertiser_id = self.advertiser_id
+      webmaster_id = self.webmaster_id
       webmaster = self.webmaster
       advertiser = self.advertiser
       webmaster_amount = self.webmaster_amount
@@ -141,15 +128,15 @@ class Achievement
       offer.payments -= webmaster_amount
       offer.save
 
-      #h = {ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: self.created_at, sub_id: self.sub_id, target_id: target_id}
-      today_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: self.created_at, sub_id: self.sub_id, target_id: target_id)
-      total_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
-      today_stat.inc(:targets, -1)
-      today_stat.inc(:income, -self.webmaster_amount.cents)
-      today_stat.inc(:expenditure, -self.advertiser_amount.cents)
-      total_stat.inc(:targets, -1)
-      total_stat.inc(:income, -self.webmaster_amount.cents)
-      total_stat.inc(:expenditure, -self.advertiser_amount.cents)
+      #collecting statistic:
+      h = {ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, sub_id: self.sub_id, target_id: target_id}
+      today_stat = StatCounter.find_or_create_by(h.merge(date: self.created_at))
+      total_stat = StatCounter.find_or_create_by(h.merge(date: Date.new(0)))
+      [today_stat, total_stat].each do |s|
+        s.inc(:targets, -1)
+        s.inc(:income, -self.webmaster_amount.cents)
+        s.inc(:expenditure, -self.advertiser_amount.cents)
+      end
 
       case self.payment_state
       when :unpaid
@@ -190,5 +177,24 @@ class Achievement
     end
     self.state = :denied
     self.save!
+  end
+
+  def target
+    offer.targets.find(self.target_id)
+  end
+
+  def collect_statistic(decrease = false)
+    h = {ground_id: self.ground_id, offer_id: self.offer_id, advertiser_id: self.advertiser_id, webmaster_id: self.webmaster_id, sub_id: self.sub_id, target_id: self.target_id}
+    today_stat = StatCounter.find_or_create_by(h.merge(date: self.created_at))
+    total_stat = StatCounter.find_or_create_by(h.merge(date: Date.new(0)))
+    values = {}
+    values[:targets] = 1
+    values[:income] = self.webmaster_amount.cents
+    values[:expenditure] = self.advertiser_amount.cents
+    [today_stat, total_stat].each do |s|
+      values.each do |k,v|
+        s.inc(k, decrease ? -v : v)
+      end
+    end
   end
 end
