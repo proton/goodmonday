@@ -141,6 +141,7 @@ class Achievement
       offer.payments -= webmaster_amount
       offer.save
 
+      #h = {ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: self.created_at, sub_id: self.sub_id, target_id: target_id}
       today_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: self.created_at, sub_id: self.sub_id, target_id: target_id)
       total_stat = StatCounter.find_or_create_by(ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, date: Date.new(0), sub_id: self.sub_id, target_id: target_id)
       today_stat.inc(:targets, -1)

@@ -51,17 +51,19 @@ class StatCounter
     h = {}
     if opts[:sort_asc]
       opts[:sort_asc].each do |field|
-        h["$#{field}"] = 1
+        h[field.to_s] = 1
       end
     end
     if opts[:sort_desc]
       opts[:sort_desc].each do |field|
-        h["$#{field}"] = -1
+        h[field.to_s] = -1
       end
     end
     unless h.empty?
       pipeline << {"$sort" => h}
     end
+
+    puts pipeline
 
     collection.aggregate(pipeline)
   end

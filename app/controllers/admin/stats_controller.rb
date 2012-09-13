@@ -30,7 +30,12 @@ class Admin::StatsController < Admin::BaseController
     cond[:ground_id] = @ground_id if @ground_id
     cond[:sub_id] = @sub_id if @sub_id
 
-    @stats = StatCounter.group_by(@group_by, :sum => %w[targets income expenditure clicks], :cond => cond)
+    opts = {}
+    opts[:sum] = %w[targets income expenditure clicks]
+    opts[:cond] = cond
+    opts[:sort_desc] = [:date] if @group_by==:date && !@date_total
+
+    @stats = StatCounter.group_by(@group_by, opts)
   end
 
   private
