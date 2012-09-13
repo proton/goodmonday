@@ -24,8 +24,12 @@ class My::StatsController < My::BaseController
     else
       cond[:date] = {'$gte' => t_start, '$lte' => t_stop}
     end
-    cond[:webmaster_id] = @webmaster_id if @webmaster_id
-    cond[:advertiser_id] = @advertiser_id if @advertiser_id
+
+    if current_user.class==Webmaster
+      cond[:webmaster_id] = current_user.id.to_s
+    elsif current_user.class==Advertiser
+      cond[:advertiser_id] = current_user.id.to_s
+    end
     cond[:offer_id] = @offer_id if @offer_id
     cond[:ground_id] = @ground_id if @ground_id
     cond[:sub_id] = @sub_id if @sub_id
