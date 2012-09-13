@@ -116,10 +116,6 @@ class Achievement
     if self.state==:accepted
       self.accepted_at = nil
       offer = self.offer
-      ground = self.ground
-      target_id = self.target_id
-      advertiser_id = self.advertiser_id
-      webmaster_id = self.webmaster_id
       webmaster = self.webmaster
       advertiser = self.advertiser
       webmaster_amount = self.webmaster_amount
@@ -128,15 +124,7 @@ class Achievement
       offer.payments -= webmaster_amount
       offer.save
 
-      #collecting statistic:
-      h = {ground_id: ground.id, offer_id: offer.id, advertiser_id: advertiser_id, webmaster_id: webmaster_id, sub_id: self.sub_id, target_id: target_id}
-      today_stat = StatCounter.find_or_create_by(h.merge(date: self.created_at))
-      total_stat = StatCounter.find_or_create_by(h.merge(date: Date.new(0)))
-      [today_stat, total_stat].each do |s|
-        s.inc(:targets, -1)
-        s.inc(:income, -self.webmaster_amount.cents)
-        s.inc(:expenditure, -self.advertiser_amount.cents)
-      end
+      collect_statistic(false)
 
       case self.payment_state
       when :unpaid
