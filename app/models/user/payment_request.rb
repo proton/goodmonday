@@ -3,6 +3,7 @@
 class PaymentRequest
   include Mongoid::Document
   include Mongoid::Symbolize
+  include Mongoid::MoneyField
  	include Mongoid::Timestamps::Created
 
   belongs_to :user
@@ -10,12 +11,14 @@ class PaymentRequest
 
   symbolize :state, :in => [:unpaid, :paid, :canceled], :default => :unpaid
 
+  money_field :amount
+
   field :wallet, type: String, default: ''
 
   def pay
     p = self.user.payments.new
     p.description = "Выплата средств по запросу на кошелёк #{self.wallet}"
-    p.amount = -user.balance
+    p.amount = -self.amount
     p.save and self.update_attributes(state: :paid)
   end
 

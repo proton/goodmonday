@@ -13,6 +13,7 @@
 					%tr
 						%th= 'Пользователь'
 						%th= 'Сумма'
+						%th= 'Баланс'
 						%th= 'Дата'
 						%th= 'Кошелёк'
 						%th= 'Действия'
@@ -21,9 +22,10 @@
 						- user = payment_request.user 
 						%tr
 							%td= link_to user.email, user_path(user)
+							%td= number_to_currency(payment_request.amount)
 							%td= number_to_currency(user.balance)
 							%td= payment_request.created_at
-							%td= payment_request.amount
+							%td= payment_request.wallet
 							%td
 								- if payment_request.state==:unpaid
 									= link_to payment_request_pay_path(payment_request), :class => 'btn btn-small' do

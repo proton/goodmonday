@@ -10,6 +10,7 @@ class My::PaymentRequestsController < My::BaseController
 
   def create
     @payment_request = current_user.payment_requests.new(params[:payment_request])
+    @payment_request.amount = current_user.balance
     flash[:notice] = 'Выплата запрошена' if @payment_request.save
     redirect_to root_path
   end
