@@ -109,7 +109,7 @@ class Achievement
     offer.payments += webmaster_amount
     offer.save
 
-    collect_statistic
+    collect_statistics
   end
 
   def cancel!
@@ -124,7 +124,7 @@ class Achievement
       offer.payments -= webmaster_amount
       offer.save
 
-      collect_statistic(false)
+      collect_statistics(false)
 
       case self.payment_state
       when :unpaid
@@ -171,7 +171,7 @@ class Achievement
     offer.targets.find(self.target_id)
   end
 
-  def collect_statistic(decrease = false)
+  def collect_statistics(decrease = false)
     h = {ground_id: self.ground_id, offer_id: self.offer_id, advertiser_id: self.advertiser_id, webmaster_id: self.webmaster_id, sub_id: self.sub_id, target_id: self.target_id}
     today_stat = StatCounter.find_or_create_by(h.merge(date: self.created_at))
     total_stat = StatCounter.find_or_create_by(h.merge(date: Date.new(0)))
