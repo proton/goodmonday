@@ -11,18 +11,19 @@
 - else
 	%b= 'Закрыто'
 
-:javascript
-	$(document).ready(function() {
-		var reload_posts;
-		reload_messages = function() {
-			$.ajax(gon.url, {
-				type: 'GET',
-				data: {
-					last: gon.discussion_last
-				},
-				dataType: 'script'
-			});
-			return window.setTimeout(reload_messages, 5000);
-		};
-		return window.setTimeout(reload_messages, 3000);
-	});
+- if @discussion.state==:open
+	:javascript
+		$(document).ready(function() {
+			var reload_posts;
+			reload_messages = function() {
+				$.ajax(gon.url, {
+					type: 'GET',
+					data: {
+						last: gon.discussion_last
+					},
+					dataType: 'script'
+				});
+				return window.setTimeout(reload_messages, 5000);
+			};
+			return window.setTimeout(reload_messages, 3000);
+		});
