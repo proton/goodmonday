@@ -26,9 +26,9 @@ class My::StatsController < My::BaseController
     end
 
     if current_user.class==Webmaster
-      cond[:webmaster_id] = current_user.id.to_s
+      cond[:webmaster_id] = current_user.id
     elsif current_user.class==Advertiser
-      cond[:advertiser_id] = current_user.id.to_s
+      cond[:advertiser_id] = current_user.id
     end
     cond[:offer_id] = @offer_id if @offer_id
     cond[:ground_id] = @ground_id if @ground_id
