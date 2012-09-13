@@ -23,7 +23,7 @@
 				%tbody
 					- @achievements[state].each do |achievement|
 						- offer = achievement.offer
-						- target = offer.targets.find(achievement.target_id)
+						- target = achievement.target
 						- ground = achievement.ground
 						- price = case current_user.class
 						- when Webmaster
@@ -31,9 +31,9 @@
 						- when Advertiser
 							- achievement.advertiser_amount
 						%tr{:class => achievement.is_accepted? ? '' : 'muted'}
-							%td= offer.title
-							%td= target.title
-							%td= "#{ground.title} (#{ground.url})"
+							%td= offer.title if offer
+							%td= target.title if target
+							%td= "#{ground.title} (#{ground.url})" if ground
 							%td
 								- if achievement.state==:accepted && price
 									= number_to_currency(price)

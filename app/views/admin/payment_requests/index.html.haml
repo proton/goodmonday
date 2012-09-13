@@ -23,7 +23,7 @@
 							%td= link_to user.email, user_path(user)
 							%td= number_to_currency(user.balance)
 							%td= payment_request.created_at
-							%td= payment_request.wallet
+							%td= payment_request.amount
 							%td
 								- if payment_request.state==:unpaid
 									= link_to payment_request_pay_path(payment_request), :class => 'btn btn-small' do

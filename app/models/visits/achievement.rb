@@ -168,7 +168,8 @@ class Achievement
   end
 
   def target
-    offer.targets.find(self.target_id)
+    return offer.targets.find(self.target_id) if offer
+    nil
   end
 
   def collect_statistics(decrease = false)

@@ -1,5 +1,5 @@
 - offer = @achievement.offer
-- target = offer.targets.find(@achievement.target_id)
+- target = @achievement.target
 - ground =  @achievement.ground
 - visitor =  @achievement.visitor
 - user_agent = AgentOrange::UserAgent.new(visitor.user_agent).device
@@ -11,13 +11,13 @@
 
 %h3= 'Основная информация'
 %b= 'Оффер:'
-= offer.title
+= offer.title if offer
 %br
 %b= 'Цель:'
-= target.title
+= target.title if target
 %br
 %b= 'Площадка:'
-= "#{ground.title} (#{ground.url})"
+= "#{ground.title} (#{ground.url})" if ground
 %br
 %b= 'Дата взятия:'
 = @achievement.created_at
