@@ -1,6 +1,6 @@
 # coding: utf-8
 
-class ReferalsController < ApplicationController
+class ReferralsController < ApplicationController
 
 	def show
     if params[:id] && !params[:id].empty?

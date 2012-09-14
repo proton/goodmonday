@@ -10,7 +10,7 @@ class My::RegistrationsController < Devise::RegistrationsController
 		if cookies[:referral] && !cookies[:referral].empty?
 			@affiliator_id = cookies[:referral]
       @affiliator = Member.where(:_id => @affiliator_id).first
-      @affiliator.inc(:referal_count, 1) if @affiliator
+      @affiliator.inc(:referral_count, 1) if @affiliator
 		end
   end
 

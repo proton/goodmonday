@@ -10,10 +10,10 @@ class Member < User
   money_field :total_payments
   embeds_many :payments #, cascade_callbacks: true
 
-  #referal system
-  field :referal_count, type: Integer, default: 0
-  money_field :referal_total_payments
-  field :referal_reward_paid, type: Boolean, default: false
+  #referral system
+  field :referral_count, type: Integer, default: 0
+  money_field :referral_total_payments
+  field :referral_reward_paid, type: Boolean, default: false
 
   field :blocked, type: Boolean, default: false
 
@@ -51,5 +51,9 @@ class Member < User
       end
     end
     stat
+  end
+
+  def referral_pay
+    #
   end
 end
