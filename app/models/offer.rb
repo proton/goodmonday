@@ -70,7 +70,15 @@ class Offer
 		self.save!
 		StatCounter.where(:offer_id => self.id, :advertiser_id => old_advertiser_id).update(advertiser_id: new_advertiser.id)
     self.achievements.update(advertiser_id: new_advertiser.id)
-	end
+  end
+
+  def self.find_by_mark(marker)
+    return self.where(:achievement_task_marker => marker).first
+  end
+
+  def find_marked_target(marker)
+    return targets.where(:achievement_task_marker => marker).first
+  end
 
 	MODERATED_ATTRS = %w[title url landing_url category_id logo]
   MODERATED_ATTRS_INFO = {'logo' => {:type => :carrierwave_image} }

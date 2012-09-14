@@ -82,6 +82,12 @@ class Achievement
         p.amount = affiliator_amount
         p.save!
         self.affiliator_payment_id = p.id
+        #
+        offer = Offer.find_by_mark('goodmonday_referal')
+        if offer
+          offer.payments += affiliator_amount
+          offer.save
+        end
       end
       #
       self.payment_state = :paid

@@ -3,18 +3,10 @@
 namespace :achievements do
   namespace :collect do
 
-    def find_marked_offer(marker)
-      return Offer.where(:achievement_task_marker => marker).first
-    end
-
-    def find_marked_target(offer, marker)
-      return offer.targets.where(:achievement_task_marker => marker).first
-    end
-
     task :aviasales => :environment do
-      offer = find_marked_offer('aviasales')
+      offer = Offer.find_by_mark('aviasales')
       next unless offer
-      target = find_marked_target(offer, 'aviasales_booking')
+      target = offer.find_marked_target('aviasales_booking')
       next unless target
 
       require 'hpricot'
@@ -55,9 +47,9 @@ namespace :achievements do
     end
 
     task :topshop => :environment do
-      offer = find_marked_offer('topshop')
+      offer = Offer.find_by_mark('topshop')
       next unless offer
-      target = find_marked_target(offer, 'topshop_order')
+      target = offer.find_marked_target('topshop_order')
       next unless target
 
       require 'hpricot'
@@ -102,9 +94,9 @@ namespace :achievements do
     end
 
     task :domadengi => :environment do
-      offer = find_marked_offer('domadengi')
+      offer = Offer.find_by_mark('domadengi')
       next unless offer
-      target = find_marked_target(offer, 'domadengi_order')
+      target = offer.find_marked_target('domadengi_order')
       next unless target
 
       require 'hpricot'
@@ -149,9 +141,9 @@ namespace :achievements do
     end
 
     task :aforex => :environment do
-      offer = find_marked_offer('aforex')
+      offer = Offer.find_by_mark('aforex')
       next unless offer
-      target = find_marked_target(offer, 'aforex_record')
+      target = offer.find_marked_target('aforex_record')
       next unless target
 
       require 'hpricot'
@@ -199,19 +191,19 @@ namespace :achievements do
 
     task :nikitaonline => :environment do
       offers = {}
-      offers[3] = find_marked_offer('nikitaonline_dom3')
-      offers[9] = find_marked_offer('nikitaonline_sphere')
-      offers[34] = find_marked_offer('nikitaonline_rappelz')
-      offers[40] = find_marked_offer('nikitaonline_4story')
-      offers[42] = find_marked_offer('nikitaonline_dragononline')
-      offers[44] = find_marked_offer('nikitaonline_fantazium')
-      offers[48] = find_marked_offer('nikitaonline_karos')
-      offers[54] = find_marked_offer('nikitaonline_kok')
-      #offers[503] = find_marked_offer('nikitaonline') #Lost Magic
+      offers[3] = Offer.find_by_mark('nikitaonline_dom3')
+      offers[9] = Offer.find_by_mark('nikitaonline_sphere')
+      offers[34] = Offer.find_by_mark('nikitaonline_rappelz')
+      offers[40] = Offer.find_by_mark('nikitaonline_4story')
+      offers[42] = Offer.find_by_mark('nikitaonline_dragononline')
+      offers[44] = Offer.find_by_mark('nikitaonline_fantazium')
+      offers[48] = Offer.find_by_mark('nikitaonline_karos')
+      offers[54] = Offer.find_by_mark('nikitaonline_kok')
+      #offers[503] = Offer.find_by_mark('nikitaonline') #Lost Magic
 
       targets = {}
       offers.each do |key, offer|
-        targets[key] = find_marked_target(offer, 'nikitaonline_payments') if offer
+        targets[key] = offer.find_marked_target('nikitaonline_payments') if offer
       end
 
       require 'hpricot'
@@ -259,9 +251,9 @@ namespace :achievements do
     end
 
     task :sapato => :environment do
-      offer = find_marked_offer('sapato')
+      offer = Offer.find_by_mark('sapato')
       next unless offer
-      target = find_marked_target(offer, 'sapato_order')
+      target = offer.find_marked_target('sapato_order')
       next unless target
 
       require 'hpricot'
