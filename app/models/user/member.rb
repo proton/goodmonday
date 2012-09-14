@@ -13,6 +13,7 @@ class Member < User
   #referal system
   field :referal_count, type: Integer, default: 0
   money_field :referal_total_payments
+  field :referal_reward_paid, type: Boolean, default: false
 
   field :blocked, type: Boolean, default: false
 
