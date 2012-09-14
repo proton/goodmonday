@@ -57,7 +57,7 @@ class Offer
 		self.excepted_categories_ids = ids.reject(&:blank?)
 	end
 
-  scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).order_by(:epc, :desc) }
+  scope :for_advert_size, ->(size) { any_in(:adverts_sizes => [size]).desc(:epc) }
 
 	def update_adverts_sizes
 		self.adverts_sizes = self.adverts.where(moderated_state: :accepted).collect{|a| a.sizes}.flatten.compact
