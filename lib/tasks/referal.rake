@@ -1,3 +1,5 @@
+# coding: utf-8
+
 namespace :referal do
 	task :pay_reward => :environment do
     Webmaster.where(:total_payments_cents.gt => 4000*100, :blocked => false, :referal_reward_paid => false).each do |webmaster|
