@@ -74,7 +74,10 @@ class Achievement
       self.advertiser_payment_id = p.id
       #
       affiliator = webmaster.affiliator
-      affiliator.referral_pay(webmaster_amount*0.05, :percentage) if affiliator
+      if affiliator
+        payment_id = affiliator.referral_pay(webmaster_amount*0.05, :percentage)
+        self.affiliator_payment_id = payment_id
+      end
       #
       self.payment_state = :paid
       self.save!

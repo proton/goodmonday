@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Member < User
   include Mongoid::MoneyField
 
@@ -54,12 +56,13 @@ class Member < User
   end
 
   def referral_pay(amount, marker)
+    payment_id = nil
     if amount>0
       self.referral_total_payments += amount
       self.save!
       p = self.payments.new(description: 'Перечисление средств по реферальной программе')
       p.amount = affiliator_amount
-      p.save!
+      payment_id = p.id if p.save!
     end
 
     offer = Offer.find_by_mark('goodmonday_referral')
@@ -86,6 +89,6 @@ class Member < User
       end
     end
 
-    return true
+    return payment_id
   end
 end
