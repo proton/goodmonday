@@ -6,17 +6,8 @@ namespace :referral do
 			affiliator = webmaster.affiliator
       next unless affiliator
       affiliator_amount = Money.new(500*100)
-      affiliator.referral_total_payments += affiliator_amount
-      affiliator.save!
-      p = affiliator.payments.new(description: 'Перечисление средств по реферальной программе (за активного вебмастера)')
-      p.amount = affiliator_amount
-      p.save!
-      webmaster.update_attribute(:referral_reward_paid, true)
-      #
-      offer = Offer.find_by_mark('goodmonday_referral')
-      if offer
-        offer.payments += affiliator_amount
-        offer.save
+      if affiliator.referral_pay(affiliator_amount, :reward)
+        webmaster.update_attribute(:referral_reward_paid, true)
       end
 		end
 	end

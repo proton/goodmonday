@@ -74,21 +74,7 @@ class Achievement
       self.advertiser_payment_id = p.id
       #
       affiliator = webmaster.affiliator
-      if affiliator
-        affiliator_amount = webmaster_amount*0.05
-        affiliator.referral_total_payments += affiliator_amount
-        affiliator.save!
-        p = affiliator.payments.new(description: 'Перечисление средств по реферальной программе')
-        p.amount = affiliator_amount
-        p.save!
-        self.affiliator_payment_id = p.id
-        #
-        offer = Offer.find_by_mark('goodmonday_referral')
-        if offer
-          offer.payments += affiliator_amount
-          offer.save
-        end
-      end
+      affiliator.referral_pay(webmaster_amount*0.05, :percentage) if affiliator
       #
       self.payment_state = :paid
       self.save!
