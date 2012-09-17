@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Advert
   include Mongoid::Document
 

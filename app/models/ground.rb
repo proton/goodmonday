@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Ground
   include Mongoid::Document
 	include Mongoid::Symbolize

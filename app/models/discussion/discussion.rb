@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Discussion
 	include Mongoid::Document
 	include Mongoid::Timestamps

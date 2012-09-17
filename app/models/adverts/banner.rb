@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Banner < Advert
   field :url, type: String
   field :description, type: String

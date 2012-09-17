@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Target
 	include Mongoid::Document
 	include Mongoid::Symbolize

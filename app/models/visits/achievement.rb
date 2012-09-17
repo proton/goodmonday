@@ -5,6 +5,7 @@ class Achievement
 	include Mongoid::Timestamps
 	include Mongoid::Symbolize
   include Mongoid::MoneyField
+  include Extensions::Aggregations
 
   symbolize :state, :in => [:pending, :accepted, :denied], :default => :pending, :scopes => true
   symbolize :payment_state, :in => [:unpaid, :paid], :default => :unpaid, :scopes => true
