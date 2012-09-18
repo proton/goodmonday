@@ -18,12 +18,7 @@
 						%tr
 							%td
 								- case @group_by
-									- when :created_at
-										- if @created_at_total
-											= 'Все'
-										- else
-											= data['_id'].strftime('%d/%m/%Y')
-									- when :accepted_at
+									- when :created_at, :accepted_at
 										= data['_id'].strftime('%d/%m/%Y') if data['_id']
 									- when :webmaster_amount, :advertiser_amount
 										= number_to_currency(data['_id']/100.0)
