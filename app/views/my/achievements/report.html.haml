@@ -9,6 +9,8 @@
 					%th
 			%tbody
 				- if @achievements_data
+					- total_amount = 0
+					- total_count = 0
 					- @achievements_data.each do |data|
 						- amount = case current_user.class
 							- when Webmaster
@@ -17,24 +19,30 @@
 								- data['advertiser_amount_cents_sum'].to_f
 						- ids = data['_id_push']
 						- count = ids ? ids.size : 0
+						- total_amount += amount
+						- total_count += count
 						%tr
 							%td
-								- if data['_id']
-									- case @group_by
-										- when :created_at, :accepted_at
-											= data['_id'] if data['_id']
-										- when :webmaster_amount, :advertiser_amount, :amount
-											= number_to_currency(data['_id']/100.0)
-										- else
-											- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
-											- if obj
-												= obj.title
+								- case @group_by
+									- when :created_at, :accepted_at
+										= data['_id'] if data['_id']
+									- when :webmaster_amount, :advertiser_amount, :amount
+										= number_to_currency(data['_id']/100.0)
+									- else
+										- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
+										- if obj
+											= obj.title
 							%td= number_to_currency(amount/100.0)
 							%td= count
 							%td
 								- if ids
 									- ids.each do |id|
 										= link_to 'открыть', achievement_path(id)
+					%tr
+						%th Итого:
+						%td= number_to_currency(total_amount/100.0)
+						%td= total_count
+
 	.span3
 		.well
 			%b Фильтрация

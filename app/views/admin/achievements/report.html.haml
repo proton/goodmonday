@@ -17,23 +17,22 @@
 						- count = ids ? ids.size : 0
 						%tr
 							%td
-								- if data['_id']
-									- case @group_by
-										- when :created_at, :accepted_at
-											= data['_id']
-										- when :webmaster_amount, :advertiser_amount
-											= number_to_currency(data['_id']/100.0)
-										- else
-											- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
-											- if obj
-												- if [:advertiser_id, :webmaster_id].include? (@group_by)
-													= link_to obj.title, user_path(obj)
-												- elsif @group_by==:ground_id
-													= link_to obj.title, user_ground_path(obj.webmaster, obj)
-												- elsif @group_by==:offer_id
-													= link_to obj.title, user_offer_path(obj.advertiser, obj)
-												- else
-													= obj.title
+								- case @group_by
+									- when :created_at, :accepted_at
+										= data['_id']
+									- when :webmaster_amount, :advertiser_amount
+										= number_to_currency(data['_id']/100.0)
+									- else
+										- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
+										- if obj
+											- if [:advertiser_id, :webmaster_id].include? (@group_by)
+												= link_to obj.title, user_path(obj)
+											- elsif @group_by==:ground_id
+												= link_to obj.title, user_ground_path(obj.webmaster, obj)
+											- elsif @group_by==:offer_id
+												= link_to obj.title, user_offer_path(obj.advertiser, obj)
+											- else
+												= obj.title
 							%td= number_to_currency(webmaster_amount/100.0)
 							%td= number_to_currency(advertiser_amount/100.0)
 							%td= count
@@ -41,6 +40,10 @@
 								- if ids
 									- ids.each do |id|
 										= link_to 'открыть', user_achievement_path(@user, id)
+					%tr
+						%th Итого:
+						%td= number_to_currency(total_amount/100.0)
+						%td= total_count
 	.span3
 		.well
 			%b Фильтрация
