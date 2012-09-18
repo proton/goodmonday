@@ -45,6 +45,11 @@ ru:
         confirm_mode:
           auto: 'Автоматически при осуществлении действия'
           manual: 'Вызовом url, содержащим xml со статусом и суммой'
+      achievement:
+        state:
+          accepted: 'Одобрено'
+          denied: 'Отклонено'
+          pending: 'Ожидание'
       user:
         rank:
           bronze: 'Бронзовый'

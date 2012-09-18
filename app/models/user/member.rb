@@ -27,6 +27,17 @@ class Member < User
     (self.balance+self.overdraft) > sum
   end
 
+  def usable_offers
+    case self.class
+      when Webmaster
+        accepted_offers
+      when Advertiser
+        offers
+      else
+        []
+    end
+  end
+
   def common_stats
     user_counters = case self.class
       when Webmaster

@@ -42,10 +42,10 @@
 				- case current_user.class
 					- when Webmaster
 						= f.input :ground, :collection => current_user.grounds, :include_blank => true, :selected => @ground_id
-						= f.input :offer, :collection => @user_offers, :include_blank => true, :selected => @offer_id unless @user_offers.empty?
+						= f.input :offer, :collection => current_user.usable_offers, :include_blank => true, :selected => @offer_id
 						= f.input :sub_id, :collection => current_user.sub_ids, :include_blank => true, :selected => @sub_id
 					- when Advertiser
-						= f.input :offer, :collection => @user_offers, :include_blank => true, :selected => @offer_id unless @user_offers.empty?
+						= f.input :offer, :collection => current_user.usable_offers, :include_blank => true, :selected => @offer_id
 						-#= f.input :target
 
 				= f.submit 'Фильтровать', :class => 'btn'

@@ -35,12 +35,6 @@ class My::StatsController < My::BaseController
     cond[:sub_id] = @sub_id if @sub_id
 
     @stats = StatCounter.group_by(@group_by, :sum => %w[targets income expenditure clicks], :cond => cond, :sort_desc => [:_id])
-
-    if current_user.class==Webmaster
-      @user_offers = current_user.accepted_offers
-    elsif current_user.class==Advertiser
-      @user_offers = current_user.offers
-    end
   end
 
   private

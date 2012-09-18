@@ -43,3 +43,7 @@
 								= link_to user_achievement_path(@user, achievement), :class => 'btn btn-small' do
 									%i.icon-cog
 									= 'Открыть'
+%hr
+= link_to report_user_achievements_path(@user), :class => 'btn' do
+	%i.icon-list-alt
+	= 'Отчёт'

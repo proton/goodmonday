@@ -133,6 +133,10 @@ ru:
         ground: 'Площадка'
         sub_id: 'Sub id'
         group_by: 'Группировать по'
+        created_at_total: 'За весь период'
+        created_at_start: 'Достигнуто (от)'
+        created_at_stop: 'Достигнуто (до)'
+        state: 'Состояние'
       payment:
         amount: 'Сумма'
         description: 'Описание'
@@ -146,6 +150,11 @@ ru:
           advertiser_id: 'Рекламодатель'
           offer_id: 'Оффер'
           ground_id: 'Площадка'
+          created_at: 'Достигнуто'
+          accepted_at: 'Одобрено'
+          amount: 'Стоимость'
+          webmaster_amount: 'Стоимость для вебмастера'
+          advertiser_amount: 'Стоимость для рекламодателя'
 
     hints:
       ground:

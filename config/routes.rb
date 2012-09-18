@@ -42,7 +42,9 @@ Cpa::Application.routes.draw do
 				resources :adverts, :controller => "ground_advert_offers"
 			end
 			#advertiser & webmaster
-      resources :achievements
+      resources :achievements do
+        get :report, :on => :collection
+      end
       resources :payments
       resources :stats
 			resources :discussions do
@@ -91,7 +93,8 @@ Cpa::Application.routes.draw do
         end
         resource :profile
 				resources :achievements do
-					get :cancel
+          get :cancel
+          get :report, :on => :collection
 				end
 			end
       resources :stats

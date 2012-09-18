@@ -1,0 +1,50 @@
+.row
+	.span6
+		%table.table.table-striped.table-bordered.table-condensed
+			%thead
+				%tr
+					%th= t("simple_form.options.filter.group_by.#{@group_by}")
+					%th Сумма
+					%th Количество
+					%th
+			%tbody
+				- if @achievements_data
+					- @achievements_data.each do |data|
+						- amount = case current_user.class
+							- when Webmaster
+								- data['webmaster_amount_sum'].to_f
+							- when Advertiser
+								- data['advertiser_amount_sum'].to_f
+						- ids = data['_id_push']
+						- count = ids ? ids.size : 0
+						%tr
+							%td
+								- if @group_by==:amount
+									= number_to_currency(data['_id'])
+								- else
+									= data['_id']
+							%td= number_to_currency(amount/100.0)
+							%td= count
+							%td
+								- if ids
+									- ids.each do |id|
+										= link_to 'открыть', achievement_path(id)
+	.span3
+		.well
+			%b Фильтрация
+			%br
+			%br
+			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'spanm' } } do |f|
+				= f.input :created_at_start, :input_html => { :value => @created_at_start, :class => 'date_picker spanm' }
+				= f.input :created_at_stop, :input_html => { :value => @created_at_stop, :class => 'date_picker spanm' }
+				-#= f.input :accepted_at_start, :input_html => { :value => @accepted_at_start, :class => 'date_picker spanm' }
+				-#= f.input :accepted_at_stop, :input_html => { :value => @accepted_at_stop, :class => 'date_picker spanm' }
+				= f.input :state, :collection => Achievement.get_state_values, :include_blank => true, :selected => @state
+				- case current_user.class
+					- when Webmaster
+						= f.input :ground, :collection => current_user.grounds, :include_blank => true, :selected => @ground_id
+					- when Advertiser
+				= f.input :offer, :collection => current_user.usable_offers, :include_blank => true, :selected => @offer_id
+				= f.input :group_by, :collection => [:created_at, :accepted_at, :advertiser_id, :offer_id, :ground_id, :amount], :selected => @group_by
+
+				= f.submit 'Фильтровать', :class => 'btn'

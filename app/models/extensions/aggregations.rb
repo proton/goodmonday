@@ -43,6 +43,8 @@ module Extensions
           pipeline << {"$sort" => h}
         end
 
+        puts pipeline
+
         collection.aggregate(pipeline)
       end
     end

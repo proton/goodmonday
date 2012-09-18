@@ -1,0 +1,75 @@
+.row
+	.span6
+		%table.table.table-striped.table-bordered.table-condensed
+			%thead
+				%tr
+					%th= t("simple_form.options.filter.group_by.#{@group_by}")
+					%th Сумма для вебмастера
+					%th Сумма для рекламодателя
+					%th Количество
+					%th
+			%tbody
+				- if @achievements_data
+					- @achievements_data.each do |data|
+						- webmaster_amount = data['webmaster_amount_sum'].to_f
+						- advertiser_amount = data['advertiser_amount_sum'].to_f
+						- ids = data['_id_push']
+						- count = ids ? ids.size : 0
+						%tr
+							%td
+								- case @group_by
+									- when :created_at
+										- if @created_at_total
+											= 'Все'
+										- else
+											= data['_id'].strftime('%d/%m/%Y')
+									- when :accepted_at
+										= data['_id'].strftime('%d/%m/%Y') if data['_id']
+									- when :webmaster_amount, :advertiser_amount
+										= number_to_currency(data['_id']/100.0)
+									- else
+										- obj = @group_by.to_s.split('_').first.camelcase.constantize.find(data['_id'])
+										- if [:advertiser_id, :webmaster_id].include? (@group_by)
+											= link_to obj.title, user_path(obj)
+										- elsif @group_by==:ground_id
+											= link_to obj.title, user_ground_path(obj.webmaster, obj)
+										- elsif @group_by==:offer_id
+											= link_to obj.title, user_offer_path(obj.advertiser, obj)
+										- else
+											= obj.title
+							%td= number_to_currency(webmaster_amount/100.0)
+							%td= number_to_currency(advertiser_amount/100.0)
+							%td= count
+							%td
+								- if ids
+									- ids.each do |id|
+										= link_to 'открыть', achievement_path(id)
+	.span3
+		.well
+			%b Фильтрация
+			%br
+			%br
+			= simple_form_for :filter, :method => :get, :defaults => { :input_html => { :class => 'spanm' } } do |f|
+				= f.input :created_at_total, :as => :select, :input_html => { :value => @created_at_total }, :selected => @created_at_total
+				.created_at_not_total{:class =>  @created_at_total ? 'muted' : ''}
+					= f.input :created_at_start, :input_html => { :value => @created_at_start, :class => 'date_picker spanm', :disabled => @created_at_total}
+					= f.input :created_at_stop, :input_html => { :value => @created_at_stop, :class => 'date_picker spanm', :disabled => @created_at_total }
+				-#= f.input :accepted_at_start, :input_html => { :value => @accepted_at_start, :class => 'date_picker spanm' }
+				-#= f.input :accepted_at_stop, :input_html => { :value => @accepted_at_stop, :class => 'date_picker spanm' }
+				= f.input :state, :collection => Achievement.get_state_values, :include_blank => true, :selected => @state
+				= f.input :webmaster, :collection => Webmaster.all, :include_blank => true, :selected => @webmaster_id
+				= f.input :advertiser, :collection => Advertiser.all, :include_blank => true, :selected => @advertiser_id
+				= f.input :ground, :collection => Ground.all, :include_blank => true, :selected => @ground_id
+				= f.input :offer, :collection => Offer.all, :include_blank => true, :selected => @offer_id
+				= f.input :group_by, :collection => [:created_at, :accepted_at, :webmaster_id, :advertiser_id, :offer_id, :ground_id, :webmaster_amount, :advertiser_amount], :selected => @group_by
+
+				= f.submit 'Фильтровать', :class => 'btn'
+
+:javascript
+	$(document).ready(function() {
+		$('#filter_created_at_total').change(function () {
+			var is_total = ($(this).val()=='true');
+			$('.created_at_not_total').toggleClass('muted', is_total);
+			$('.created_at_not_total input').prop('disabled', is_total);
+		});
+	});
