@@ -170,19 +170,17 @@ class Achievement
 
   def collect_statistics(decrease = false)
     h = {ground_id: self.ground_id, offer_id: self.offer_id, advertiser_id: self.advertiser_id, webmaster_id: self.webmaster_id, sub_id: self.sub_id, target_id: self.target_id}
-    today_stat = StatCounter.find_or_create_by(h.merge(date: self.created_at))
-    total_stat = StatCounter.find_or_create_by(h.merge(date: Date.new(0)))
-    values = {}
-    values[:targets] = 1
-    values[:income] = self.webmaster_amount.cents
-    values[:expenditure] = self.advertiser_amount.cents
-    [today_stat, total_stat].each do |s|
-      values.each do |k,v|
-        unless decrease
-          s.inc(k, v)
-        else
-          s.inc(k, -v)
-        end
+    dates = [self.created_at,  Date.new(0)]
+    dates.each do |date|
+      stat = StatCounter.find_or_create_by(h.merge(date: date))
+      unless decrease
+        stat.inc(:targets, 1)
+        stat.inc(:income, self.webmaster_amount.cents)
+        stat.inc(:expenditure, self.advertiser_amount.cents)
+      else
+        stat.inc(:targets, -1)
+        stat.inc(:income, -self.webmaster_amount.cents)
+        stat.inc(:expenditure, -self.advertiser_amount.cents)
       end
     end
   end
