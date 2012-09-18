@@ -19,15 +19,16 @@
 						- count = ids ? ids.size : 0
 						%tr
 							%td
-								- case @group_by
-									- when :created_at, :accepted_at
-										= data['_id'] if data['_id']
-									- when :webmaster_amount, :advertiser_amount, :amount
-										= number_to_currency(data['_id']/100.0)
-									- else
-										- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
-										- if obj
-											= obj.title
+								- if data['_id']
+									- case @group_by
+										- when :created_at, :accepted_at
+											= data['_id'] if data['_id']
+										- when :webmaster_amount, :advertiser_amount, :amount
+											= number_to_currency(data['_id']/100.0)
+										- else
+											- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
+											- if obj
+												= obj.title
 							%td= number_to_currency(amount/100.0)
 							%td= count
 							%td
