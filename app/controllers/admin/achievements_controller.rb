@@ -31,7 +31,7 @@ class Admin::AchievementsController < Admin::BaseController
     #@accepted_at_start = set_filter_param(Date.today-1.month, :accepted_at_start, :date)
     #@accepted_at_stop = set_filter_param(Date.today, :accepted_at_stop, :date)
     @webmaster_id = set_filter_param((@user.class==Webmaster && !params[:webmaster_id]) ? @user.id : nil, :webmaster, :id)
-    @advertiser_id = set_filter_param((@user.class==Advertiser && !params[:webmaster_id]) ? @user.id : nil, :advertiser, :id)
+    @advertiser_id = set_filter_param((@user.class==Advertiser && !params[:advertiser_id]) ? @user.id : nil, :advertiser, :id)
     @ground_id = set_filter_param(nil, :ground, :id)
     @offer_id = set_filter_param(nil, :offer, :id)
     @state = set_filter_param(nil, :state, :symbol)
