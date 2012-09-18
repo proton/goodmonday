@@ -58,7 +58,7 @@
 				= f.input :advertiser, :collection => Advertiser.all, :include_blank => true, :selected => @advertiser_id
 				= f.input :ground, :collection => Ground.all, :include_blank => true, :selected => @ground_id
 				= f.input :offer, :collection => Offer.all, :include_blank => true, :selected => @offer_id
-				= f.input :group_by, :collection => [:created_at, :accepted_at, :webmaster_id, :advertiser_id, :offer_id, :ground_id, :webmaster_amount, :advertiser_amount], :selected => @group_by
+				= f.input :group_by, :collection => [:created_at, :accepted_at, :webmaster_id, :advertiser_id, :offer_id, :ground_id, :webmaster_amount_cents, :advertiser_amount_cents], :selected => @group_by
 
 				= f.submit 'Фильтровать', :class => 'btn'
 

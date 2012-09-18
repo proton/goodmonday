@@ -153,8 +153,8 @@ ru:
           created_at: 'Достигнуто'
           accepted_at: 'Одобрено'
           amount: 'Стоимость'
-          webmaster_amount: 'Стоимость для вебмастера'
-          advertiser_amount: 'Стоимость для рекламодателя'
+          webmaster_amount_cents: 'Стоимость для вебмастера'
+          advertiser_amount_cents: 'Стоимость для рекламодателя'
           state: 'Статус'
 
     hints:

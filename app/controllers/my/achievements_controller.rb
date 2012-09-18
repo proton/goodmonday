@@ -48,7 +48,7 @@ class My::AchievementsController < My::BaseController
     group_by = @group_by
     if @group_by==:amount
       if current_user.class==Webmaster
-        group_by = :webmoster_amount_сents
+        group_by = :webmaster_amount_сents
       elsif current_user.class==Advertiser
         group_by = :advertiser_amount_сents
       end
