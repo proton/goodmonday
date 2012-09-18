@@ -120,7 +120,7 @@ class Achievement
       offer.payments -= webmaster_amount
       offer.save
 
-      collect_statistics(false)
+      collect_statistics(true)
 
       case self.payment_state
       when :unpaid
