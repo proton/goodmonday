@@ -178,7 +178,11 @@ class Achievement
     values[:expenditure] = self.advertiser_amount.cents
     [today_stat, total_stat].each do |s|
       values.each do |k,v|
-        s.inc(k, decrease ? -v : v)
+        unless decrease
+          s.inc(k, v)
+        else
+          s.inc(k, -v)
+        end
       end
     end
   end
