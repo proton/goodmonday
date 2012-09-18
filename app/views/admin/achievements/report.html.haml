@@ -44,7 +44,7 @@
 							%td
 								- if ids
 									- ids.each do |id|
-										= link_to 'открыть', achievement_path(id)
+										= link_to 'открыть', user_achievement_path(@user, id)
 	.span3
 		.well
 			%b Фильтрация
