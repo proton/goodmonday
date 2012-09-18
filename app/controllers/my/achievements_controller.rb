@@ -45,12 +45,12 @@ class My::AchievementsController < My::BaseController
     cond[:ground_id] = @ground_id if @ground_id
     cond[:state] = @state if @state
 
-    group_by = @group_by
+    group_by = @group_by.clone
     if @group_by==:amount
       if current_user.class==Webmaster
         group_by = :webmaster_amount_сents
       elsif current_user.class==Advertiser
-        group_by = :advertiser_amount_сents
+        group_by = :advertiser_amount_cents
       end
     end
 
