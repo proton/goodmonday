@@ -45,7 +45,7 @@ class My::AchievementsController < My::BaseController
     cond[:ground_id] = @ground_id if @ground_id
     cond[:state] = @state if @state
 
-    group_by = @group_by.clone
+    group_by = @group_by
     if @group_by==:amount
       if current_user.class==Webmaster
         group_by = :webmaster_amount_сents
