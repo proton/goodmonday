@@ -54,7 +54,7 @@ class My::AchievementsController < My::BaseController
       end
     end
 
-    @achievements_data = Achievement.group_by(group_by, :sum => %w[webmaster_amount_cents advertiser_amount_cents], :cond => cond, :sort_desc => [:_id])
+    @achievements_data = Achievement.group_by(group_by, :sum => %w[webmaster_amount_cents advertiser_amount_cents], :push => %w[_id], :cond => cond, :sort_desc => [:_id])
   end
 
   protected
