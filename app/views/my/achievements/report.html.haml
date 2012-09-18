@@ -26,7 +26,7 @@
 								- case @group_by
 									- when :created_at, :accepted_at
 										= data['_id'] if data['_id']
-									- when :webmaster_amount, :advertiser_amount, :amount
+									- when :webmaster_amount_cents, :advertiser_amount_cents, :amount
 										= number_to_currency(data['_id']/100.0)
 									- else
 										- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
