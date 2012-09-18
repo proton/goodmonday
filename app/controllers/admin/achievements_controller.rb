@@ -36,7 +36,7 @@ class Admin::AchievementsController < Admin::BaseController
     @advertiser_id = set_filter_param((user.class==Advertiser) ? user.id : nil, :advertiser, :id)
     @ground_id = set_filter_param(nil, :ground, :id)
     @offer_id = set_filter_param(nil, :offer, :id)
-    @sub_id = set_filter_param(nil, :sub_id, :text)
+    @state = set_filter_param(nil, :state, :symbol)
     @group_by = set_filter_param(:date, :group_by, :symbol)
 
     ct_start = date2time(@created_at_start)

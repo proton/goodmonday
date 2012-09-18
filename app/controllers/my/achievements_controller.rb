@@ -24,7 +24,7 @@ class My::AchievementsController < My::BaseController
     #@accepted_at_stop = set_filter_param(Date.today, :accepted_at_stop, :date)
     @ground_id = set_filter_param(nil, :ground, :id)
     @offer_id = set_filter_param(nil, :offer, :id)
-    @sub_id = set_filter_param(nil, :sub_id, :text)
+    @state = set_filter_param(nil, :state, :symbol)
     @group_by = set_filter_param(:date, :group_by, :symbol)
 
     ct_start = date2time(@created_at_start)
