@@ -37,7 +37,7 @@ class Admin::AchievementsController < Admin::BaseController
     @ground_id = set_filter_param(nil, :ground, :id)
     @offer_id = set_filter_param(nil, :offer, :id)
     @state = set_filter_param(nil, :state, :symbol)
-    @group_by = set_filter_param(:date, :group_by, :symbol)
+    @group_by = set_filter_param(:offer_id, :group_by, :symbol)
 
     ct_start = date2time(@created_at_start)
     ct_stop =  date2time(@created_at_stop)+1.day-1.second

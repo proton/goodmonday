@@ -19,10 +19,20 @@
 						- count = ids ? ids.size : 0
 						%tr
 							%td
-								- if @group_by==:amount
-									= number_to_currency(data['_id'])
-								- else
-									= data['_id']
+								- case @group_by
+									- when :created_at
+										- if @created_at_total
+											= 'Все'
+										- else
+											= data['_id'].strftime('%d/%m/%Y')
+									- when :accepted_at
+										= data['_id'].strftime('%d/%m/%Y') if data['_id']
+									- when :webmaster_amount, :advertiser_amount, :amount
+										= number_to_currency(data['_id']/100.0)
+									- else
+										- obj = @group_by.to_s.split('_').first.camelcase.constantize.where(:_id => data['_id']).first
+										- if obj
+											= obj.title
 							%td= number_to_currency(amount/100.0)
 							%td= count
 							%td
@@ -45,6 +55,6 @@
 						= f.input :ground, :collection => current_user.grounds, :include_blank => true, :selected => @ground_id
 					- when Advertiser
 				= f.input :offer, :collection => current_user.usable_offers, :include_blank => true, :selected => @offer_id
-				= f.input :group_by, :collection => [:created_at, :accepted_at, :advertiser_id, :offer_id, :ground_id, :amount], :selected => @group_by
+				= f.input :group_by, :collection => [:created_at, :accepted_at, :offer_id, :ground_id, :amount], :selected => @group_by
 
 				= f.submit 'Фильтровать', :class => 'btn'

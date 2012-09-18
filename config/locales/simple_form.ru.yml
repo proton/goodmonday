@@ -155,6 +155,7 @@ ru:
           amount: 'Стоимость'
           webmaster_amount: 'Стоимость для вебмастера'
           advertiser_amount: 'Стоимость для рекламодателя'
+          state: 'Статус'
 
     hints:
       ground:
