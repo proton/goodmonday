@@ -11,8 +11,8 @@
 			%tbody
 				- if @achievements_data
 					- @achievements_data.each do |data|
-						- webmaster_amount = data['webmaster_amount_sum'].to_f
-						- advertiser_amount = data['advertiser_amount_sum'].to_f
+						- webmaster_amount = data['webmaster_amount_cents_sum'].to_f
+						- advertiser_amount = data['advertiser_amount_cents_sum'].to_f
 						- ids = data['_id_push']
 						- count = ids ? ids.size : 0
 						%tr

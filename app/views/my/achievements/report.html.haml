@@ -12,9 +12,9 @@
 					- @achievements_data.each do |data|
 						- amount = case current_user.class
 							- when Webmaster
-								- data['webmaster_amount_sum'].to_f
+								- data['webmaster_amount_cents_sum'].to_f
 							- when Advertiser
-								- data['advertiser_amount_sum'].to_f
+								- data['advertiser_amount_cents_sum'].to_f
 						- ids = data['_id_push']
 						- count = ids ? ids.size : 0
 						%tr
