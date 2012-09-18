@@ -10,11 +10,17 @@
 					%th
 			%tbody
 				- if @achievements_data
+					- total_webmaster_amount = 0
+					- total_advertiser_amount = 0
+					- total_count = 0
 					- @achievements_data.each do |data|
 						- webmaster_amount = data['webmaster_amount_cents_sum'].to_f
 						- advertiser_amount = data['advertiser_amount_cents_sum'].to_f
 						- ids = data['_id_push']
 						- count = ids ? ids.size : 0
+						- total_webmaster_amount += webmaster_amount
+						- total_advertiser_amount += advertiser_amount
+						- total_count += count
 						%tr
 							%td
 								- case @group_by
@@ -42,7 +48,8 @@
 										= link_to 'открыть', user_achievement_path(@user, id)
 					%tr
 						%th Итого:
-						%td= number_to_currency(total_amount/100.0)
+						%td= number_to_currency(total_webmaster_amount/100.0)
+						%td= number_to_currency(total_advertiser_amount/100.0)
 						%td= total_count
 	.span3
 		.well
