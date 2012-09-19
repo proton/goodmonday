@@ -19,6 +19,7 @@
 						%th= 'Дата взятия'
 						- if state==:accepted
 							%th= 'Дата подтверждения'
+						%th= 'Номер заказа'
 						%th= 'Действия'
 				%tbody
 					- @achievements[state].each do |achievement|
@@ -39,6 +40,7 @@
 							%td= achievement.created_at
 							- if state==:accepted
 								%td= achievement.accepted_at if achievement.accepted_at
+							%td= achievement.order_id if achievement.order_id
 							%td
 								= link_to user_achievement_path(@user, achievement), :class => 'btn btn-small' do
 									%i.icon-cog
