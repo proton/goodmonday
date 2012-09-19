@@ -46,6 +46,48 @@ namespace :achievements do
       end
     end
 
+    task :travelmenu => :environment do
+      offer = Offer.find_by_mark('travelmenu')
+      next unless offer
+      target = offer.find_marked_target('travelmenu_booking')
+      next unless target
+
+      require 'hpricot'
+      require 'open-uri'
+
+      url = "http://www.travelmenu.ru/a_index.goodmonday?date_from=#{(Date.today-2.months).to_s}date_to=#{Date.tomorrow.to_s}"
+
+      doc = Hpricot(open(url))
+      (doc/:items/:booking).each do |item|
+        order_id = item.at('id').inner_text
+        state = item.at('status').inner_text
+        achievement = offer.achievements.where(:order_id => order_id).first
+        unless achievement
+          visitor_id = item.at('visitor').inner_text
+          visitor = Visitor.find(visitor_id)
+          achievement = Achievement.new
+          achievement.build_prototype(offer, visitor, target.id)
+          achievement.order_id = order_id
+        end
+        case state
+          when 'done'
+            unless achievement.state==:accepted
+              currency = item.at('currency').inner_text.to_f
+              throw "Wrong currency: #{currency}" if currency!='RUR100'
+              #price = item.at('comission').inner_text.to_f #уже именно наша комиссия (в копейках), из неё нужно высчитывать webmaster_amount
+              #achievement.accept(, )
+              achievement.save
+            end
+          when 'cancel'
+            unless achievement.state==:denied
+              achievement.cancel!
+            end
+          else
+            achievement.save if achievement.new_record?
+        end
+      end
+    end
+
     task :topshop => :environment do
       offer = Offer.find_by_mark('topshop')
       next unless offer
@@ -314,7 +356,7 @@ namespace :achievements do
 
     #task :all => [:aviasales, :topshop, :domadengi, :nikitaonline, :aforex, :sapato]
     task :all => :environment do
-      offers = %w[aviasales topshop domadengi nikitaonline aforex sapato]
+      offers = %w[aviasales travelmenu topshop domadengi nikitaonline aforex sapato]
       offers.each do |t|
         collection_status =  AchievementCollectionStatus.new(:idn => t)
         begin
