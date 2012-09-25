@@ -73,7 +73,7 @@
 	%thead
 		%tr
 			%th= 'Изображение'
-			%th{'min-width' => '200px'}= 'Код'
+			%th{:style => 'min-width: 200px'}= 'Код'
 	- @offer.adverts.each do |advert|
 		- if advert.is_a? Banner
 			- advert.sizes.each do |size|
