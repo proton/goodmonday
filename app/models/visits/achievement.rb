@@ -169,6 +169,8 @@ class Achievement
   end
 
   def collect_statistics(decrease = false)
+    self.created_at ||= Time.now
+    #
     h = {ground_id: self.ground_id, offer_id: self.offer_id, advertiser_id: self.advertiser_id, webmaster_id: self.webmaster_id, sub_id: self.sub_id, target_id: self.target_id}
     dates = [self.created_at,  Date.new(0)]
     dates.each do |date|
