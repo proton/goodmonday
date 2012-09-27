@@ -46,6 +46,32 @@ namespace :achievements do
       end
     end
 
+    task :cafeprint => :environment do
+      #offer = Offer.find_by_mark('cafeprint')
+      #next unless offer
+      #target = offer.find_marked_target('cafeprint_order')
+      #next unless target
+
+      require 'xmlrpc/client'
+      require 'pp'
+      require 'digest/md5'
+      require 'php_serialize'
+
+      XMLRPC::Config.send(:remove_const, :ENABLE_NIL_PARSER)
+      XMLRPC::Config.send(:const_set, :ENABLE_NIL_PARSER, true)
+
+      client = XMLRPC::Client.new2("http://sdev:sdev4567@newartprint.ru/api/")
+      api_key = '1234567890'
+      site_host = '2.mrt.z8.ru'
+      order_number = '0821-8685'
+      fields = {'api_key' => api_key, 'site_host' => site_host, 'order_number' => order_number}
+      serialized_fields = PHP.serialize(fields)
+      key = Digest::MD5.hexdigest(Digest::MD5.hexdigest(api_key)+Digest::MD5.hexdigest(serialized_fields))
+      result = client.call('order_api.get_order', key, site_host, order_number)
+      pp result
+
+    end
+
     task :travelmenu => :environment do
       offer = Offer.find_by_mark('travelmenu')
       next unless offer

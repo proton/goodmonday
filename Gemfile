@@ -70,5 +70,7 @@ end
 #for task achievements:confirm
 gem 'hpricot', :require => false
 gem 'mechanize', :require => false
+gem 'mechanize', :require => false
+gem 'php_serialize', :require => false
 
 gem 'cucumber' #хз зачем, но без него не стартует ( O_o )
