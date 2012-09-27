@@ -47,10 +47,10 @@ namespace :achievements do
     end
 
     task :cafeprint => :environment do
-      #offer = Offer.find_by_mark('cafeprint')
-      #next unless offer
-      #target = offer.find_marked_target('cafeprint_order')
-      #next unless target
+      offer = Offer.find_by_mark('cafeprint')
+      next unless offer
+      target = offer.find_marked_target('cafeprint_order')
+      next unless target
 
       require 'xmlrpc/client'
       require 'pp'
@@ -63,13 +63,50 @@ namespace :achievements do
       client = XMLRPC::Client.new2("http://sdev:sdev4567@newartprint.ru/api/")
       api_key = '1234567890'
       site_host = '2.mrt.z8.ru'
-      order_number = '0821-8685'
-      fields = {'api_key' => api_key, 'site_host' => site_host, 'order_number' => order_number}
-      serialized_fields = PHP.serialize(fields)
-      key = Digest::MD5.hexdigest(Digest::MD5.hexdigest(api_key)+Digest::MD5.hexdigest(serialized_fields))
-      result = client.call('order_api.get_order', key, site_host, order_number)
-      pp result
 
+      target.achievements.pending.each do |achievement|
+        next unless achievement.order_id
+        order_number = achievement.order_id
+
+        fields = {'api_key' => api_key, 'site_host' => site_host, 'order_number' => order_number}
+        serialized_fields = PHP.serialize(fields)
+        key = Digest::MD5.hexdigest(Digest::MD5.hexdigest(api_key)+Digest::MD5.hexdigest(serialized_fields))
+
+        result = client.call('order_api.get_order', key, site_host, order_number)
+        #{"name"=>"Крикунов ALEKSEY KRIKUNOV",
+        # "email"=>"mailto.aleksey@gmail.com",
+        # "good_cost"=>"960",
+        # "good_count"=>"2",
+        # "delivery_cost"=>"250",
+        # "delivery_type"=>"COURIER",
+        # "delivery_address"=>"Москва 1 st, 14,25",
+        # "delivery_articul"=>"0",
+        # "total_cost"=>1210,
+        # "order_number"=>"0821-8685",
+        # "site_host"=>"2.mrt.z8.ru",
+        # "status"=>"new_z",
+        # "last_update_status"=>nil,
+        # "payed"=>"0"}
+        if result
+          status = result["status"]
+          #new_z - вновь поступивший заказ
+          #cancel - заказ отменен (отказ клиента или некорректные данные)
+          #podtverjd - клиент подтвердил заказ
+          #pechat - заказ отправлен в работу
+          #gotov - заказ изготовлен
+          #send_to - заказ отправлен
+          #poluchen - заказ получен клиентом
+          #returns - заказ возвращен клиентом (отказ от получения)
+          #anticipation - заказ в ожидании (ожидает уточнения от клиента или поступления товара на склад)
+          if status=='cancel'
+            achievement.cancel!
+          elsif [''].include? status
+            price = result["good_cost"].to_i
+            achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
+            achievement.save
+          end
+        end
+      end
     end
 
     task :travelmenu => :environment do
