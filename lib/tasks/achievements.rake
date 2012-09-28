@@ -62,7 +62,7 @@ namespace :achievements do
 
       client = XMLRPC::Client.new2("http://sdev:sdev4567@newartprint.ru/api/")
       api_key = '1234567890'
-      site_host = '2.mrt.z8.ru'
+      site_host = 'goodm.cafeprint.su'
 
       target.achievements.pending.each do |achievement|
         next unless achievement.order_id
