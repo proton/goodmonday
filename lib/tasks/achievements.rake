@@ -100,7 +100,7 @@ namespace :achievements do
           #anticipation - заказ в ожидании (ожидает уточнения от клиента или поступления товара на склад)
           if status=='cancel'
             achievement.cancel!
-          elsif [''].include? status
+          elsif status=='poluchen'
             price = result["good_cost"].to_i
             achievement.accept(target.webmaster_price(price), target.advertiser_price(price))
             achievement.save
