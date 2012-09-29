@@ -164,8 +164,11 @@ class Achievement
   end
 
   def target
-    return offer.targets.find(self.target_id) if offer
-    nil
+    if offer
+      offer.targets.where(:_id => self.target_id).first
+    else
+      nil
+    end
   end
 
   def collect_statistics(decrease = false)
