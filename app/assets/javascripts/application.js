@@ -15,5 +15,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require chosen-jquery
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 //= require_tree ../../../vendor/assets/javascripts
 //= require_tree .

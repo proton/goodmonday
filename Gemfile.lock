@@ -61,6 +61,8 @@ GEM
     agent_orange (0.1.3)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    bootstrap-datepicker-rails (0.6.18)
+      railties (>= 3.0)
     bootstrap-sass (2.1.0.0)
     builder (3.0.3)
     capistrano (2.13.3)
@@ -296,6 +298,7 @@ PLATFORMS
 
 DEPENDENCIES
   agent_orange
+  bootstrap-datepicker-rails
   bootstrap-sass
   capistrano
   carrierwave-mongoid!

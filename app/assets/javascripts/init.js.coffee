@@ -14,5 +14,7 @@ $ ->
   $("a[rel=tooltip]").tooltip()
   #chosen
   $('select').attr("data-placeholder","Выберите элементы из списка...").chosen(allow_single_deselect: true)
-  #jquery
-#  $(".date_picker").datepicker dateFormat: "yy-mm-dd" #problems with jquery ui theme
+  #http://www.eyecon.ro/bootstrap-datepicker/
+  $('.date_picker').datepicker
+    format: 'yyyy-mm-dd'
+    language: 'ru'
