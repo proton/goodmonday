@@ -7,7 +7,7 @@ class Admin::OffersController < Admin::BaseController
 	before_filter :and_crumbs, :only => [:show, :edit]
 
 	def index
-		@offers = @user.offers
+		@offers =  ((defined? @user) && @user)? @user.offers : Offer.all
 		add_crumb "Рекламные кампании"
 	end
 
@@ -47,16 +47,18 @@ class Admin::OffersController < Admin::BaseController
 	protected
 
 	def find_nested_objects
-		@user = User.find(params[:user_id])
+		@user = User.find(params[:user_id]) if params[:user_id]
 	end
 
 	def and_nested_crumbs
-		add_crumb "Пользователи", users_path
-		add_crumb "Пользователь «#{@user.email}»", user_path(@user)
+    if (defined? @user) && @user
+      add_crumb "Пользователи", users_path
+      add_crumb "Пользователь «#{@user.email}»", user_path(@user)
+    end
 	end
 
 	def find_object
-		@offer = @user.offers.find(params[:id])
+		@offer = Offer.find(params[:id])
 	end
 
 	def and_crumbs

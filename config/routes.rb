@@ -70,7 +70,8 @@ Cpa::Application.routes.draw do
 			resources :discussions do
 				post :message
 				put :close
-			end
+      end
+      resources :offers
 			resources :users do
         get :block
 

@@ -23,6 +23,7 @@
 					= ' / '
 					= number_to_currency offer.payments
 				%td
+					- @user = offer.advertiser unless (defined? @user) && @user
 					= link_to user_offer_path(@user, offer), :class => 'btn btn-small' do
 						%i.icon-edit
 						= 'Код'
