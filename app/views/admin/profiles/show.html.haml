@@ -1,5 +1,1 @@
-- case @user.class
-	- when Webmaster
-		= render 'webmaster_profile_form'
-	- when Advertiser
-		= render 'advertiser_profile_form'
+= render "#{@user.class.name.downcase}_profile_form"

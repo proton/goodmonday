@@ -1,5 +1,5 @@
-- case @current_user.class
-	- when Webmaster
-		= render 'webmaster_profile_form'
-	- when Advertiser
-		= render 'advertiser_profile_form'
+= render "#{@current_user.class.name.downcase}_profile_form"
+%hr
+= link_to edit_user_registration_path(:host => request.domain), :class => 'btn' do
+	%i.icon-edit
+	= 'Сменить email или пароль'
