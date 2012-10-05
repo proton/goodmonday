@@ -23,26 +23,26 @@
 					= ' / '
 					= number_to_currency offer.payments
 				%td
-					- @user = offer.advertiser unless (defined? @user) && @user
-					= link_to user_offer_path(@user, offer), :class => 'btn btn-small' do
+					= link_to user_offer_path(offer.advertiser_id, offer), :class => 'btn btn-small' do
 						%i.icon-edit
 						= 'Код'
-					= link_to user_offer_targets_path(@user, offer), :class => 'btn btn-small' do
+					= link_to user_offer_targets_path(offer.advertiser_id, offer), :class => 'btn btn-small' do
 						%i.icon-screenshot
 						= 'Цели'
-					= link_to user_offer_adverts_path(@user, offer), :class => 'btn btn-small' do
+					= link_to user_offer_adverts_path(offer.advertiser_id, offer), :class => 'btn btn-small' do
 						%i.icon-picture
 						= 'Банеры'
-					= link_to user_offer_grounds_path(@user, offer), :class => 'btn btn-small' do
+					= link_to user_offer_grounds_path(offer.advertiser_id, offer), :class => 'btn btn-small' do
 						%i.icon-road
 						= 'Площадки'
-					= link_to edit_user_offer_path(@user, offer), :class => 'btn btn-small' do
+					= link_to edit_user_offer_path(offer.advertiser_id, offer), :class => 'btn btn-small' do
 						%i.icon-cog
 						= 'Настройки'
-					= link_to user_offer_path(@user, offer), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
+					= link_to user_offer_path(offer.advertiser_id, offer), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
 						%i.icon-trash.icon-white
 						= 'Удалить'
 
-= link_to new_user_offer_path(@user), :class => 'btn btn-primary' do
-	%i.icon-plus-sign.icon-white
-	= 'Добавить'
+- if (defined? @user) && @user
+	= link_to new_user_offer_path(@user), :class => 'btn btn-primary' do
+		%i.icon-plus-sign.icon-white
+		= 'Добавить'
