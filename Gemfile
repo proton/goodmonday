@@ -50,6 +50,8 @@ gem 'imperavi-rails', '>= 0.0.12.beta'
 gem 'chosen-rails'
 gem 'bootstrap-datepicker-rails'
 
+gem 'detect_timezone_rails'
+
 gem 'crummy', :git => 'git://github.com/proton/crummy.git' #waiting for fixing html_list format
 
 gem 'agent_orange'

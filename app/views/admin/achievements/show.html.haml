@@ -17,11 +17,11 @@
 = "#{ground.title} (#{ground.url})" if ground
 %br
 %b= 'Дата взятия:'
-= @achievement.created_at
+= print_datetime @achievement.created_at
 %br
 - if @achievement.state==:accepted
 	%b= 'Дата подтверждения:'
-	= @achievement.accepted_at
+	= print_datetime @achievement.accepted_at
 	%br
 %b= 'Стоимость (для вебмастера):'
 - if @achievement.state==:accepted && webmaster_price

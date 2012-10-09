@@ -51,7 +51,7 @@
 						%td=t "model.#{moderation.moderated_type}"
 						%td=t "common.reason.#{moderation.reason.to_s}"
 						%td= state_label moderation.state
-						%td= moderation.updated_at
+						%td= print_datetime moderation.updated_at
 						%td
 							= link_to moderation_path(moderation), :class => 'btn btn-small' do
 								%i.icon-cog

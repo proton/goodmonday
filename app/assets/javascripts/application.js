@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require detect_timezone
 //= require bootstrap
 //= require chosen-jquery
 //= require bootstrap-datepicker/core

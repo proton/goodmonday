@@ -20,4 +20,8 @@ module ApplicationHelper
     source ||= "rails.png"
     image_tag(source, options)
   end
+
+  def print_datetime(dt)
+    content_tag(:span, dt.to_s, :class => 'datetime', :data => {:timestamp => dt.utc.strftime('%Y/%m/%d/%H/%M')})
+  end
 end

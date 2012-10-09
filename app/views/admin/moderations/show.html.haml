@@ -28,7 +28,7 @@
 				- @moderation.destroy
 			- else
 				%b= 'Дата: '
-				= @moderation.updated_at
+				= print_datetime @moderation.updated_at
 				%br
 				%b= 'Статус: '
 				= state_label @moderation.state

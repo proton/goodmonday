@@ -37,9 +37,9 @@
 								- else
 									= 'н/д'
 							%td= state_label achievement.state
-							%td= achievement.created_at
+							%td= print_datetime achievement.created_at
 							- if state==:accepted
-								%td= achievement.accepted_at if achievement.accepted_at
+								%td= print_datetime achievement.accepted_at if achievement.accepted_at
 							%td= achievement.order_id if achievement.order_id
 							%td
 								= link_to user_achievement_path(@user, achievement), :class => 'btn btn-small' do
