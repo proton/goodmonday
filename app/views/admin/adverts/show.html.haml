@@ -48,7 +48,7 @@
 
 			= form_for @advert.banner_images.new, :url => user_offer_advert_banner_images_path(@user, @offer, @advert), :html => { :multipart => true } do |f|
 				.row.fileupload-buttonbar
-					.span5
+					.span6
 						%span.btn.btn-success.fileinput-button
 							%i.icon-plus.icon-white
 							%span Добавить изображения...
@@ -63,7 +63,7 @@
 						-#%button.btn.btn-danger.delete{:type => "button"}
 						-#	%i.icon-trash.icon-white
 						-#	%span Удалить
-					.span4
+					.span3
 						.progress.progress-success.progress-striped.active.fade
 							.bar{:style => "width:0%;"}
 						.fileupload-loading
