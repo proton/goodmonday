@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class BannerImageUploader < CarrierWave::Uploader::Base
-	include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
 	def extension_white_list
   	%w(jpg jpeg gif png)

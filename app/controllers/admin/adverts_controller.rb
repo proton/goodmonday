@@ -8,7 +8,7 @@ class Admin::AdvertsController < Admin::BaseController
 
 	def index
 		@adverts = @offer.adverts
-	end
+  end
 
 	def create
 		@type = params[:type]

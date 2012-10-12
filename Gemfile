@@ -23,9 +23,9 @@ gem 'simple_form'
 gem 'bootstrap-sass'
 
 #gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
-gem "carrierwave-mongoid", :git => 'git://github.com/jnicklas/carrierwave-mongoid.git', :branch => "mongoid-3.0"
+gem 'carrierwave-mongoid', :git => 'git://github.com/jnicklas/carrierwave-mongoid.git', :branch => "mongoid-3.0"
 gem 'mini_magick'
-gem "fog", "~> 1.3.1"
+gem 'fog', "~> 1.3.1"
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
@@ -35,6 +35,7 @@ group :assets do
 	gem 'execjs'
 	gem 'therubyracer'
   gem 'uglifier'
+  gem 'jquery-fileupload-rails'
 end
 
 gem 'coffee-rails', '~> 3.2.1'

@@ -16,6 +16,7 @@
 //= require detect_timezone
 //= require bootstrap
 //= require chosen-jquery
+//= require jquery-fileupload
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.ru.js
 //= require_tree ../../../vendor/assets/javascripts

@@ -123,6 +123,8 @@ ru:
       banner:
         url: 'Ссылка'
         description: 'Описание'
+      banner_image:
+        image: 'Изображение'
       filter:
         date_total: 'За весь период'
         date_start: 'От'
