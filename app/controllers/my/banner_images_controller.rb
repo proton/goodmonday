@@ -3,10 +3,25 @@
 class My::BannerImagesController < My::BaseController
 	before_filter :find_advert
 
-	def find_advert
-		@offer = current_user.offers.find(params[:offer_id])
-		@advert = @offer.adverts.find(params[:advert_id])
-	end
+  def index
+    respond_to do |format|
+      format.json { render :json => @advert.banner_images.collect { |p| p.to_jq_upload }.to_json }
+    end
+  end
+
+  def show
+    @banner_image = @advert.banner_images.find(params[:id])
+    respond_to do |format|
+      format.json { render json: @banner_image }
+    end
+  end
+
+  def new
+    @banner_image = @advert.banner_images.new
+    respond_to do |format|
+      format.json { render json: @banner_image }
+    end
+  end
 
 	def create
 		@banner_image = @advert.banner_images.build(params[:banner_image])
@@ -15,19 +30,32 @@ class My::BannerImagesController < My::BaseController
 		#else
 		#	flash[:error] = 'invalid'
 		#end
-		if @banner_image.save
-			flash[:notice] = 'Изображение добавлено.'
-		else
-			flash[:error] = @banner_image.errors.messages[:size] ? 'Неверный размер изображения' : @banner_image.errors.full_messages
-		end
-		redirect_to offer_advert_path(@offer, @advert)
-		#respond_with(@banner_image, :location => offer_advert_path(@offer, @advert))
+    respond_to do |format|
+      if @banner_image.save
+        format.html { redirect_to offer_advert_path(@offer, @advert), notice: 'Изображение добавлено.' }
+        format.json { render :json => [ @banner_image.to_jq_upload ].to_json }
+      else
+        error = @banner_image.errors.messages[:size] ? 'Неверный размер изображения' : @banner_image.errors.full_messages
+        format.html { redirect_to offer_advert_path(@offer, @advert), error: error }
+        format.json { render :json => [ @banner_image.to_jq_upload.merge({ :error => error }) ].to_json }
+      end
+    end
 	end
 
 	def destroy
-		@banner_image = @advert.banner_images.find(params[:id])
-		flash[:notice] = 'Изображение удалено.' if @banner_image.destroy
-		redirect_to offer_advert_path(@offer, @advert)
+    @banner_image = @advert.banner_images.find(params[:id])
+    @banner_image.destroy
+    respond_to do |format|
+      format.html { redirect_to offer_advert_path(@offer, @advert), notice: 'Изображение удалено.' }
+      format.json { render :json => true }
+    end
  end
+
+  private
+
+	def find_advert
+		@offer = current_user.offers.find(params[:offer_id])
+		@advert = @offer.adverts.find(params[:advert_id])
+	end
 	
 end

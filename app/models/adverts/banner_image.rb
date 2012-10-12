@@ -37,14 +37,15 @@ class BannerImage
   def to_jq_upload
     advert = banner
     offer = advert.offer
-    user_id = offer.advertiser_id
+    #user_id = offer.advertiser_id
     {
     "id" => read_attribute(:_id),
     "name" => read_attribute(:image),
     "size" => read_attribute(:size),
     'moderated_state' => read_attribute(:moderated_state),
     "url" => image.url,
-    "delete_url" => user_offer_advert_banner_image_path(user_id, offer, advert, id),
+    #"delete_url" => user_offer_advert_banner_image_path(user_id, offer, advert, id),
+    "delete_url" => offer_advert_banner_image_path(offer, advert, id),
     "delete_type" => "DELETE"
   }
   end

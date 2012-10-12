@@ -30,7 +30,6 @@ class Admin::BannerImagesController < Admin::BaseController
 		#else
 		#	flash[:error] = 'invalid'
 		#end
-    puts params[:banner_image]
     respond_to do |format|
       if @banner_image.save
         format.html { redirect_to user_offer_advert_path(@user, @offer, @advert), notice: 'Изображение добавлено.' }

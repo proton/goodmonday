@@ -12,35 +12,49 @@
 - case @advert.class
 	- when Banner
 		%h2= 'Изображения'
-		%table.table.table-bordered.table-striped
-			%thead
-				%tr
-					%th= 'Предпросмотр'
-					%th= 'Статус'
-					%th= 'Размер'
-					%th= 'Дополнительно'
-					%th= 'Действия'
-			%tbody
-				- @advert.banner_images.each do |banner_image|
-					%tr{:class => banner_image.is_accepted? ? '' : 'muted'}
-						%td
-							- if banner_image.image.present?
-								%ul.thumbnails
-									%li.span3
-										.thumbnail= image_tag banner_image.image
-						%td= state_label banner_image.moderated_state
-						%td= banner_image.size
-						%td
-							= 'Создано автоматически' if banner_image.auto_generated
-						%td
-							= link_to offer_advert_banner_image_path(@offer, @advert, banner_image), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
-								%i.icon-trash.icon-white
-								= 'Удалить'
-		%h3= 'Новое изображение'
+		#fileupload
+			%table.table.table-bordered.table-striped
+				%thead
+					%tr
+						%th= 'Предпросмотр'
+						%th= 'Статус'
+						%th= 'Размер'
+						%th= 'Дополнительно'
+						%th= 'Действия'
+				%tbody.files
+					- @advert.banner_images.each do |banner_image|
+						%tr{:class => banner_image.is_accepted? ? '' : 'muted'}
+							%td
+								- if banner_image.image.present?
+									%ul.thumbnails
+										%li.span3
+											.thumbnail= image_tag banner_image.image
+							%td= state_label banner_image.moderated_state
+							%td= banner_image.size
+							%td
+								= 'Создано автоматически' if banner_image.auto_generated
+							%td
+								= link_to offer_advert_banner_image_path(@offer, @advert, banner_image), :class => 'btn btn-small btn-danger', :method => :delete, :data => { :confirm => "Вы уверены?"} do
+									%i.icon-trash.icon-white
+									= 'Удалить'
+
+			= form_for @advert.banner_images.new, :url => offer_advert_banner_images_path(@offer, @advert), :html => { :multipart => true } do |f|
+				.row.fileupload-buttonbar
+					.span6
+						%span.btn.btn-success.fileinput-button
+							%i.icon-plus.icon-white
+							%span Добавить изображения...
+							= f.file_field :image, multiple: true, name: 'banner_image[image]'
+						%button.btn.btn-primary.start{:type => "submit"}
+							%i.icon-upload.icon-white
+							Начать загрузку
+					.span3
+						.progress.progress-success.progress-striped.active.fade
+							.bar{:style => "width:0%;"}
+						.fileupload-loading
+
+
+		= render :partial => 'templates'
 		%p
-			= 'Загрузите изображение одного из следующих размеров: '
+			= 'Загрузите изображения следующих размеров: '
 			= ADVERTS_SIZES.to_sentence
-		= simple_form_for(@advert.banner_images.new, :url => offer_advert_banner_images_path(@offer, @advert), :html => {:class => 'form-inline' }) do |f|
-			-#= f.input :size, :as => :select, :collection => ADVERTS_SIZES, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
-			= f.input :image, :as => :file, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
-			= f.button :submit, :class => 'btn-primary'
