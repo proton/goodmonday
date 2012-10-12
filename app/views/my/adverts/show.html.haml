@@ -58,3 +58,11 @@
 		%p
 			= 'Загрузите изображения следующих размеров: '
 			= ADVERTS_SIZES.to_sentence
+
+		%br
+		%hr
+		Если по каким-то причинам у вас не работает современная форма загрузки, вы можете воспользоваться классической формой:
+		%br
+		= simple_form_for(@advert.banner_images.new, :url => offer_advert_banner_images_path(@offer, @advert), :html => {:class => 'form-inline' }) do |f|
+			= f.input :image, :as => :file, :input_html => { :class => "inline" }, :wrapper_html => { :class => "inline" }
+			= f.button :submit, :class => 'btn'
