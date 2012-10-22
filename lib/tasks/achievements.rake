@@ -445,7 +445,7 @@ namespace :achievements do
         offer = achievement.offer
         target = offer.targets.find(achievement.target_id)
         url = target.confirm_url
-        raise "Empty url (#{achievement.id.to_s})" if !url || url.empty?
+        raise "Empty url (#{achievement.id.to_s}/#{offer.title})" if !url || url.empty?
         if url.include? '?'
           url = "#{url}&targets=#{order_id}"
         else
